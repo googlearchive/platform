@@ -1,3 +1,6 @@
 [submodule "ShadowDOM"]
 	path = ShadowDOM
 	url = https://github.com/toolkitchen/ShadowDOM.git
+[submodule "CustomElements"]
+	path = CustomElements
+	url = https://github.com/toolkitchen/CustomElements.git

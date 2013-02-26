@@ -7,13 +7,12 @@ license that can be found in the LICENSE file.
 <html>
   <head>
     <title></title>
-    <script src="../webcomponents.js"></script>
+    <script src="../platform.js"></script>
   </head>
   <body>
     <element name="x-foo">
       <template>
-        It LIVES <content></content>
-        <div thing="{{value}}">Value Thing</div>
+        If it's blue, then IT LIVES (<content></content>)
       </template>
       <script>
         this.component && this.component({
@@ -37,7 +36,7 @@ license that can be found in the LICENSE file.
               var template = element.querySelector('template');
               if (template) {
                 var root = this.webkitCreateShadowRoot();
-                root.appendChild(template.content.cloneNode(true));
+                root.appendChild(templateContent(template).cloneNode(true));
               }
               inPrototype.created.call(this);
             }

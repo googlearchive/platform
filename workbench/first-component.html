@@ -3,7 +3,10 @@ Copyright 2013 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
+
+<!-- 404 to test this failure condition -->
 <link rel="components" href="components/before-components.html">
+
 <element name="x-first">
   <template>
       [x-first from template-]<content></content>[-x-first from template]
@@ -26,11 +29,12 @@ license that can be found in the LICENSE file.
       lifecycle: {
         created: function() {
           var root = this.webkitCreateShadowRoot();
-          root.appendChild(template.content);
+          root.appendChild(templateContent(template));
           this.style.color = 'orange';
         }
       }
     });
   </script>
 </element>
+
 <link rel="components" href="components/moar-components.html">
