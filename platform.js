@@ -85,10 +85,12 @@ console.log(flags);
 
 // assemble list of dependencies
 
-var CustomElements = [
-  'CustomElements/src/CustomElements.js',
-  'CustomElements/src/HTMLElementElement.js',
-  'CustomElements/src/ComponentDocument.js'
+var platform = [
+  'CustomElements/custom-elements.js',
+  'PointerGestures/src/pointergestures.js',
+  'mdv/mdv-loader.js',
+  'lib/lang.js',
+  'lib/dom_token_list.js'
 ];
 
 var ShadowDOMShim = [
@@ -98,7 +100,8 @@ var ShadowDOMShim = [
   'ShadowDOMShim/ShadowDOM.js'
 ];
 
-modules = CustomElements;
+modules = platform;
+
 if (flags.shadow !== 'native') {
   modules = modules.concat(ShadowDOMShim);
   window.templateContent = function(inTemplate) {

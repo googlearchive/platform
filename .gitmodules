@@ -4,3 +4,6 @@
 [submodule "CustomElements"]
 	path = CustomElements
 	url = https://github.com/toolkitchen/CustomElements.git
+[submodule "PointerGestures"]
+	path = PointerGestures
+	url = https://github.com/toolkitchen/PointerGestures.git
