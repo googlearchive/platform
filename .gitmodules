@@ -1,6 +1,3 @@
 [submodule "ShadowDOM"]
 	path = ShadowDOM
 	url = https://github.com/toolkitchen/ShadowDOM.git
-[submodule "WebComponents"]
-	path = WebComponents
-	url = https://github.com/toolkitchen/WebComponents.git
