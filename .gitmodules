@@ -7,3 +7,6 @@
 [submodule "PointerGestures"]
 	path = PointerGestures
 	url = https://github.com/toolkitchen/PointerGestures.git
+[submodule "MDV/mdv"]
+	path = MDV/mdv
+	url = https://github.com/toolkitchen/mdv.git
