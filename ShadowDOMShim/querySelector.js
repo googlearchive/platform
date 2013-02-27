@@ -18,7 +18,7 @@ var generateMatcher = function(inSlctr) {
   }
   var c = inSlctr[0];
   if (inSlctr === "~") {
-    return function(inNode) { 
+    return function(inNode) {
       return Boolean(inNode.lightDOM);
     };
   }
@@ -45,7 +45,7 @@ var generateMatcher = function(inSlctr) {
       return inNode.hasAttribute && inNode.hasAttribute(m);
     };
   }
-  var slctrs = inSlctr.split(',');
+  var slctrs = inSlctr.toLowerCase().split(',');
   return function(inNode) {
     return (slctrs.indexOf(inNode.localName) >= 0);
     //return (inNode.localName === inSlctr);
