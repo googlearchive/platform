@@ -163,7 +163,7 @@
   var describe = function(inNode) {
     var tag = '<tag>' + '&lt;';
     var name = inNode.localName || 'shadow-root';
-    if (inNode.webkitShadowRoot) {
+    if (inNode.webkitShadowRoot || inNode.shadowRoot) {
       tag += ' <button idx="' + drillable.length +
         '" onclick="api.shadowize.call(this)">' + name + '</button>';
       drillable.push(inNode);
@@ -186,7 +186,7 @@
     //alert(idx);
     var node = drillable[idx];
     if (node) {
-      sinspect(node.webkitShadowRoot, node)
+      sinspect(node.webkitShadowRoot || node.shadowRoot, node)
     } else {
       console.log("bad shadowize node");
       console.dir(this);
