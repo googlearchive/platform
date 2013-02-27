@@ -89,7 +89,8 @@ console.log(flags);
 var platform = [
   'CustomElements/custom-elements.js',
   //'PointerGestures/src/pointergestures.js',
-  //'mdv/mdv-loader.js',
+  //'MDV/src/mdv.js',
+  //'lib/dirty-check.js',
   'lib/lang.js',
   'lib/dom_token_list.js',
   'lib/patches.js'
