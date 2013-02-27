@@ -39,7 +39,8 @@ var flags = {};
 
 // shadow defaults
 
-flags.shadow = HTMLElement.prototype.webkitCreateShadowRoot ? 'native' : 'shim';
+flags.shadow = HTMLElement.prototype.webkitCreateShadowRoot ? 'native'
+    : 'polyfill';
 
 // acquire flags from script tag attributes
 
@@ -87,10 +88,11 @@ console.log(flags);
 
 var platform = [
   'CustomElements/custom-elements.js',
-  'PointerGestures/src/pointergestures.js',
-  'mdv/mdv-loader.js',
+  //'PointerGestures/src/pointergestures.js',
+  //'mdv/mdv-loader.js',
   'lib/lang.js',
-  'lib/dom_token_list.js'
+  'lib/dom_token_list.js',
+  'lib/patches.js'
 ];
 
 var ShadowDOMShim = [
@@ -100,17 +102,15 @@ var ShadowDOMShim = [
   'ShadowDOMShim/ShadowDOM.js'
 ];
 
+var ShadowDOM = [
+  'ShadowDOM/shadowdom.js',
+  'ShadowDOMShim/querySelector.js'
+];
+
 modules = platform;
 
-if (flags.shadow !== 'native') {
-  modules = modules.concat(ShadowDOMShim);
-  window.templateContent = function(inTemplate) {
-    return inTemplate.content;
-  };
-} else {
-  window.SDOM = function(inNode) {
-    return inNode;
-  };
+if (flags.shadow === 'polyfill') {
+  modules = ShadowDOM.concat(modules);
   window.templateContent = function(inTemplate) {
     if (!inTemplate.content && !inTemplate._content) {
       var frag = document.createDocumentFragment();
@@ -121,6 +121,25 @@ if (flags.shadow !== 'native') {
     }
     return inTemplate.content || inTemplate._content;
   };
+  window.SDOM = function(inNode) {return wrap(inNode);};
+  window.fixconsole = function(x) {return x;};
+}
+else if (flags.shadow === 'shim') {
+  modules = modules.concat(ShadowDOMShim);
+  window.templateContent = function(inTemplate) {
+    return inTemplate.content;
+  };
+  window.createShadowRoot = function(inElement) {
+    return inElement.createShadowRoot();
+  }
+} else {
+  window.wrap = window.SDOM = function(inNode) {
+    return inNode;
+  };
+  window.createShadowRoot = function(inElement) {
+    return inElement.webkitCreateShadowRoot();
+  };
+
 }
 modules.push('ShadowDOMShim/inspector.js');
 
