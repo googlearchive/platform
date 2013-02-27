@@ -24,23 +24,23 @@ license that can be found in the LICENSE file.
         //
         B = A.webkitShadowRoot.querySelector("g-B");
         B.webkitCreateShadowRoot().appendChild($("template#B").content);
-      };
+      }
     </script>
   </head>
   <body onload="change()">
-      <g-A><span id="a1">Where am I?</span><span id="a2">I like to be first</span></g-A>
+      <g-A><span id="a1">Where am I?</span></g-A>
 
-      <!-- content must project through shadow-content to become B content -->
-      <template id="A">[A-&gt;]<content select="#a2"></content><g-B><shadow></shadow></g-B>[&lt;-A]</template>
-      <!-- A's <shadow> is here, non #a2 content inserts here -->
-      <template id="Ab">[Ab-&gt;]<content></content>[&lt;-Ab]</template>
-      <!-- echo content matching #a1 (filters out "[Ab->][<-Ab]" nodes) -->
-      <template id="B">[B-&gt;]<content select="#a1"></content>[&lt;-B]</template>
+      <!-- content must project through shadow's content to become B content -->
+      <template id="A">[A->]<g-B><shadow></shadow></g-B>[<-A]</template>
+      <!-- content inserts into this shadow -->
+      <template id="Ab">[Ab->][<-Ab]</template>
+      <!-- simply echo content -->
+      <template id="B">[B->]<content></content>[<-B]</template>
 
       <hr/>
 
       Expected output (also, see console):
 
-      <div>[A-&gt;]I like to be first<div>[B-&gt;]<span id="a1">Where am I?</span>[&lt;-B]</div>[&lt;-A]</div>
+      <div>[A-&gt;]<div>[B-&gt;][Ab-&gt;][&lt;-Ab][&lt;-B]</div>[&lt;-A]</div>
 </body>
 </html>

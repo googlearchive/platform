@@ -19,10 +19,10 @@ license that can be found in the LICENSE file.
     <script>
       change = function() {
         A = $("g-A");
-        new ShadowRoot(A).appendChild($('template#A').content);
+        A.webkitCreateShadowRoot().appendChild($('template#A').content);
         //
         B = A.webkitShadowRoot.querySelector('g-B');
-        new ShadowRoot(B).appendChild($('template#B').content);
+        B.webkitCreateShadowRoot().appendChild($('template#B').content);
         //
         A.appendChild(document.createElement('span')).textContent = 'ADDED!!';
         A.appendChild(document.createTextNode('TEXT!!'));

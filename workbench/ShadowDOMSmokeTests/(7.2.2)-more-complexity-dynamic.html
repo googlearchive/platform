@@ -9,10 +9,7 @@ license that can be found in the LICENSE file.
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- -->
-    <script src="../shadowdom-polyfill.js" shadow="shim"></script>
-    <!-- -->
-    <script src="lib/util.js"></script>
-    <script src="lib/dump.js"></script>
+    <script src="lib/loader.js"></script>
     <script src="lib/Component.js"></script>
     <!-- -->
     <style>
@@ -41,10 +38,6 @@ license that can be found in the LICENSE file.
         n.id = 'a2';
         n.innerHTML = 'A2 too';
         A.appendChild(n);
-        //
-        ShadowDOM.distribute(A);
-        //
-        dumper(A);
       }
     </script>
   </head>
@@ -64,9 +57,9 @@ license that can be found in the LICENSE file.
       <template id="C">[C->]<shadow></shadow>[<-C]</template>
       <template id="Cb"><span>[Cb->]<shadow></shadow>[<-Cb]</span></template>
       <template id="Cbb">[Cbb->]</span><content></content></span>[<-Cbb]</template>
-      
+
       <hr/>
-      
+
       Expected output (also, see console):
 
       <div>[A->]

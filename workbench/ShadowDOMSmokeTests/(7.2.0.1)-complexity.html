@@ -22,9 +22,6 @@ license that can be found in the LICENSE file.
         Component.register("g-A", ["Base", "A"]);
         Component.register("g-B", ["Base", "B"]);
         Component.upgradeAll();
-        //
-        A = c$[0];
-        dumper(A);
       }
     </script>
   </head>
@@ -34,9 +31,9 @@ license that can be found in the LICENSE file.
       <template id="A">[A->]<g-B><content></content></g-B><g-B><shadow></shadow></g-B>[<-A]</template>
       <template id="B">[B->][<content select="#a2"></content>]<shadow></shadow>[<-B]</template>
       <template id="Base">[Base->]<content></content>[<-Base]</template>
-      
+
       <hr/>
-      
+
       Expected output (also, see console):
 
       <div>[A->]

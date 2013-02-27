@@ -8,7 +8,7 @@ var Component = function(inElement, inDefinition) {
   c$.push(elt);
   // make ShadowDOM
   for (var i=0, b; (b=inDefinition.bases[i]); i++) {
-    var root = new ShadowRoot(elt);
+    var root = elt.webkitCreateShadowRoot();
     root.appendChild(SDOM($("template#" + b).content.cloneNode(true)));
     Component.upgradeAll(root);
   }
@@ -19,7 +19,7 @@ var Component = function(inElement, inDefinition) {
   //elt.node.__proto__ = inDefinition.proto;
   //elt.__proto__.__proto__.__proto__.__proto__ = inDefinition.proto;
   // force distribution
-  elt.distribute();
+  //elt.distribute();
   // call initializer
   //elt.created();
   // the element is the Component

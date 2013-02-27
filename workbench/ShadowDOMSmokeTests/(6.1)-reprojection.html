@@ -22,11 +22,11 @@ license that can be found in the LICENSE file.
     <script>
       change = function() {
         A = $("g-A");
-        var root = new ShadowRoot(A);
+        var root = A.webkitCreateShadowRoot();
         root.appendChild($("template#A").content);
         //
         B = root.querySelector("g-B");
-        new ShadowRoot(B).appendChild($("template#B").content);
+        B.webkitCreateShadowRoot().appendChild($("template#B").content);
       }
     </script>
   </head>

@@ -9,10 +9,7 @@ license that can be found in the LICENSE file.
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- -->
-    <script src="../shadowdom-polyfill.js" shadow="shim"></script>
-    <!-- -->
-    <script src="lib/util.js"></script>
-    <script src="lib/dump.js"></script>
+    <script src="lib/loader.js"></script>
     <script src="lib/Component.js"></script>
     <!-- -->
     <style>
@@ -30,7 +27,7 @@ license that can be found in the LICENSE file.
             this.content = ShadowDOM.localQuery(this.shadows.lastChild, "content");
           },
           alter: function() {
-            if (this.content.hasAttribute("select") && this.content.attributes.select.value == "#a2") {
+            if (this.content.hasAttribute("select") && this.content.attributes.select.value === "#a2") {
               this.content.setAttribute("select", "#a1");
             } else {
               this.content.setAttribute("select", "#a2");
@@ -40,14 +37,12 @@ license that can be found in the LICENSE file.
           }
         });
         Component.upgradeAll();
-        //
-        dumper(c$[0]);
       }
     </script>
   </head>
   <body onload="change()" onclick="c$[0].alter()">
     <p>Click for effects</p>
-    
+
     <g-A><span id="a1">Where am I?</span><span id="a2">Where do I go?</span></g-A>
 
     <template id="A">[A->]<content></content>[<-A]</template>
