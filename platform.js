@@ -110,26 +110,17 @@ var ShadowDOM = [
 
 modules = platform;
 
+window.templateContent = function(inTemplate) {
+  return inTemplate.content;
+};
+
 if (flags.shadow === 'polyfill') {
   modules = ShadowDOM.concat(modules);
-  window.templateContent = function(inTemplate) {
-    if (!inTemplate.content && !inTemplate._content) {
-      var frag = document.createDocumentFragment();
-      while (inTemplate.firstChild) {
-        frag.appendChild(inTemplate.firstChild);
-      }
-      inTemplate._content = frag;
-    }
-    return inTemplate.content || inTemplate._content;
-  };
   window.SDOM = function(inNode) {return wrap(inNode);};
   window.fixconsole = function(x) {return x;};
 }
 else if (flags.shadow === 'shim') {
   modules = modules.concat(ShadowDOMShim);
-  window.templateContent = function(inTemplate) {
-    return inTemplate.content;
-  };
   window.createShadowRoot = function(inElement) {
     return inElement.createShadowRoot();
   }
@@ -140,7 +131,16 @@ else if (flags.shadow === 'shim') {
   window.createShadowRoot = function(inElement) {
     return inElement.webkitCreateShadowRoot();
   };
-
+  window.templateContent = function(inTemplate) {
+    if (!inTemplate.content && !inTemplate._content) {
+      var frag = document.createDocumentFragment();
+      while (inTemplate.firstChild) {
+        frag.appendChild(inTemplate.firstChild);
+      }
+      inTemplate._content = frag;
+    }
+    return inTemplate.content || inTemplate._content;
+  };
 }
 modules.push('ShadowDOMShim/inspector.js');
 
