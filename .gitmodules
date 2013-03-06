@@ -3,7 +3,7 @@
 	url = https://github.com/toolkitchen/ShadowDOM.git
 [submodule "CustomElements"]
 	path = CustomElements
-	url = https://github.com/toolkitchen/CustomElements.git
+	url = git@github.com:toolkitchen/CustomElements.git
 [submodule "PointerGestures"]
 	path = PointerGestures
 	url = https://github.com/toolkitchen/PointerGestures.git
