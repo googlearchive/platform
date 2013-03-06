@@ -9,7 +9,8 @@ var Component = function(inElement, inDefinition) {
   // make ShadowDOM
   for (var i=0, b; (b=inDefinition.bases[i]); i++) {
     var root = elt.webkitCreateShadowRoot();
-    root.appendChild(SDOM($("template#" + b).content.cloneNode(true)));
+    //root.appendChild(SDOM($("template#" + b).content.cloneNode(true)));
+    root.appendChild($("template#" + b).content.cloneNode(true));
     Component.upgradeAll(root);
   }
   // mark it upgraded
