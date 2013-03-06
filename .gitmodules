@@ -10,3 +10,6 @@
 [submodule "MDV"]
 	path = MDV
 	url = https://github.com/toolkitchen/mdv.git
+[submodule "WebAnimations"]
+	path = WebAnimations
+	url = https://github.com/web-animations/web-animations-js.git
