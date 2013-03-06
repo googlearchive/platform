@@ -9,4 +9,4 @@
 	url = https://github.com/toolkitchen/PointerGestures.git
 [submodule "MDV"]
 	path = MDV
-	url = https://sjmiles@github.com/toolkitchen/mdv.git
+	url = https://github.com/toolkitchen/mdv.git
