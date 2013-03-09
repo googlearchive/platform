@@ -13,8 +13,8 @@ license that can be found in the LICENSE file.
   </head>
   <body>
     <script>
-      body = SDOM(document.body);
-      componentDocument.parse(document, function() {
+      body = wrap(document.body);
+      window.addEventListener('load', function() {
         first = document.createElement('x-first');
         body.appendChild(first).appendChild(
             document.createElement('span')).textContent = '[x-first]';
