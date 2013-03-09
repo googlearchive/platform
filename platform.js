@@ -88,6 +88,7 @@ console.log(flags);
 
 var platform = [
   'CustomElements/custom-elements.js',
+  'WebComponents/web-components.js',
   //'PointerGestures/src/pointergestures.js',
   //'MDV/src/mdv.js',
   //'lib/dirty-check.js',
@@ -142,6 +143,7 @@ else if (flags.shadow === 'shim') {
     return inTemplate.content || inTemplate._content;
   };
 }
+
 modules.push('ShadowDOMShim/inspector.js');
 
 // write script tags for dependencies
