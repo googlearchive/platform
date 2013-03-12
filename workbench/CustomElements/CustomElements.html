@@ -12,7 +12,7 @@ license that can be found in the LICENSE file.
   </head>
   <body>
     <script>
-      window.onload = function() {
+      window.addEventListener('WebComponentsReady', function() {
         body = wrap(document.body);
         //
         XFoo = document.register('x-foo');
@@ -44,7 +44,7 @@ license that can be found in the LICENSE file.
         //
         xbar = document.createElement('x-bar');
         body.appendChild(xbar).textContent = 'x-bar2';
-      }
+      });
     </script>
   </body>
 </html>
