@@ -27,7 +27,7 @@ license that can be found in the LICENSE file.
         }
       },
       lifecycle: {
-        created: function() {
+        readyCallback: function() {
           var root = this.webkitCreateShadowRoot();
           root.appendChild(templateContent(template));
           this.style.color = 'orange';
