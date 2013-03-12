@@ -125,6 +125,9 @@ else if (flags.shadow === 'shim') {
   window.createShadowRoot = function(inElement) {
     return inElement.createShadowRoot();
   }
+  window.wrap = function(inNode) {
+    return SDOM(inNode);
+  }
 } else {
   window.wrap = window.SDOM = function(inNode) {
     return inNode;
