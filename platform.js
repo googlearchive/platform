@@ -87,8 +87,8 @@ console.log(flags);
 // assemble list of dependencies
 
 var platform = [
-  'CustomElements/custom-elements.js',
   'WebComponents/web-components.js',
+  'CustomElements/custom-elements.js',
   //'PointerGestures/src/pointergestures.js',
   //'MDV/src/mdv.js',
   //'lib/dirty-check.js',
