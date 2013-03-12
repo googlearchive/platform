@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Copyright 2012 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
@@ -8,9 +8,14 @@ license that can be found in the LICENSE file.
   <head>
     <title></title>
     <meta charset="UTF-8">
-    <script src="../../platform.js"></script>
+    <!-- -->
+    <script src="../../../platform.js"></script>
     <script src="lib/util.js"></script>
+    <!-- -->
     <style>
+      template {
+        display: none;
+      }
       div, g-A {
         display: block;
         border: 1px dotted red;
@@ -20,19 +25,23 @@ license that can be found in the LICENSE file.
     </style>
     <script>
       change = function() {
-        A = $("g-A");
-        A.webkitCreateShadowRoot().appendChild($("template#A").content);
+//        root = $("g-A").webkitCreateShadowRoot();
+//        content = $("#A").content;
+//        root.appendChild(content);
+        $("g-A").createShadowRoot().appendChild(($("#A").content));
       }
     </script>
   </head>
   <body onload="change()">
-      <g-A><span>Where am I?</span></g-A>
-      <template id="A"><span>A's template, content goes here: [<content></content>]</span></template>
+      <g-A>
+        <span>Where am I?</span>
+      </g-A>
+      <template id="A"><span>A's Template</span></template>
 
       <hr/>
 
       Expected output (also, see console):
 
-      <div><span>A's template, content goes here: [Where am I?]</span></div>
+      <div><span>A's Template</span></div>
   </body>
 </html>

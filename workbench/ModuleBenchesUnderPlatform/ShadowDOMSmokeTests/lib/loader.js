@@ -1,7 +1,7 @@
 (function() {
   var root = "";
   [
-    "../../platform.js",
+    "../../../platform.js",
     "lib/util.js"
   ].forEach(function(p) {
     document.write('<script src="' + root + p + '"></script>');

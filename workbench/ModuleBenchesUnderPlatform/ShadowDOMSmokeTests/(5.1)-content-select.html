@@ -8,33 +8,36 @@ license that can be found in the LICENSE file.
   <head>
     <title></title>
     <meta charset="UTF-8">
-    <script src="../../platform.js"></script>
+    <script src="../../../platform.js"></script>
     <script src="lib/util.js"></script>
     <style>
       div, g-A {
         display: block;
-        border: 1px dotted red;
+        border: 1px solid lightblue;
         margin: 8px;
         padding: 8px;
+      }
+      content * {
+        background-color: magenta;
       }
     </style>
     <script>
       change = function() {
-        A = $("g-A");
-        A.webkitCreateShadowRoot().appendChild($("template#A").content);
+        $("g-A").webkitCreateShadowRoot().appendChild($("template#A").content);
       }
     </script>
   </head>
   <body onload="change()">
       <g-A>
-        <div class="a">To DIV.a perchance</div><span class="b">To SPAN.b or not</span>
+        <div>To DIV perchance</div><span>To SPAN or not</span>
       </g-A>
+
       <template id="A">
         A's template<br/>
         div content:
-        <content select=".a"></content>
+        <content select="div"></content>
         span content:
-        <content select=".b"></content>
+        <content select="span"></content>
       </template>
 
       <hr/>
@@ -44,9 +47,9 @@ license that can be found in the LICENSE file.
       <div>
         A's template<br/>
         div content:
-        <div>To DIV.a perchance</div>
+        <div>To DIV perchance</div>
         span content:
-        <span>To SPAN.b or not</span>
+        <span>To SPAN or not</span>
       </div>
   </body>
 </html>
