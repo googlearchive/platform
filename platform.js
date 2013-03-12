@@ -93,8 +93,7 @@ var platform = [
   //'MDV/src/mdv.js',
   //'lib/dirty-check.js',
   'lib/lang.js',
-  'lib/dom_token_list.js',
-  'lib/patches.js'
+  'lib/dom_token_list.js'
 ];
 
 var ShadowDOMShim = [
@@ -106,7 +105,9 @@ var ShadowDOMShim = [
 
 var ShadowDOM = [
   'ShadowDOM/shadowdom.js',
-  'ShadowDOMShim/querySelector.js'
+  'ShadowDOMShim/querySelector.js',
+  'lib/HTMLTemplateElement.js',
+  'lib/patches.js'
 ];
 
 modules = platform;
