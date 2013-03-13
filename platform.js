@@ -90,8 +90,6 @@ var platform = [
   'WebComponents/web-components.js',
   'CustomElements/custom-elements.js',
   //'PointerGestures/src/pointergestures.js',
-  //'MDV/src/mdv.js',
-  //'lib/dirty-check.js',
   'lib/lang.js',
   'lib/dom_token_list.js'
 ];
@@ -147,6 +145,13 @@ else if (flags.shadow === 'shim') {
     return inTemplate.content || inTemplate._content;
   };
 }
+
+// TODO(sjmiles): load MDV first: it modifies Node prototypes which must happen
+// before ShadowDOM
+modules.unshift(
+  'MDV/src/mdv.js',   
+  'lib/dirty-check.js'
+);
 
 modules.push('ShadowDOMShim/inspector.js');
 
