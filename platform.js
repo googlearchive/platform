@@ -104,7 +104,7 @@ var ShadowDOMShim = [
 var ShadowDOM = [
   'ShadowDOM/shadowdom.js',
   'ShadowDOMShim/querySelector.js',
-  'lib/HTMLTemplateElement.js',
+  //'lib/HTMLTemplateElement.js',
   'lib/patches.js'
 ];
 
