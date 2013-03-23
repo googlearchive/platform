@@ -84,7 +84,18 @@ scope.flags = flags;
 
 console.log(flags);
 
-// assemble list of dependencies
+// module dependencies
+
+var MDV = [
+  'MDV/src/mdv.js',   
+  'lib/dirty-check.js'
+];
+
+var ShadowDOM = [
+  'ShadowDOM/shadowdom.js',
+  'lib/querySelector.js',
+  'lib/inspector.js',
+];
 
 var platform = [
   'WebComponents/web-components.js',
@@ -94,66 +105,28 @@ var platform = [
   'lib/dom_token_list.js'
 ];
 
-var ShadowDOMShim = [
-  'ShadowDOMShim/sdom.js',
-  'ShadowDOMShim/ShadowDOMNohd.js',
-  'ShadowDOMShim/querySelector.js',
-  'ShadowDOMShim/ShadowDOM.js'
-];
+// active dependency list
 
-var ShadowDOM = [
-  'ShadowDOM/shadowdom.js',
-  'ShadowDOMShim/querySelector.js',
-  //'lib/HTMLTemplateElement.js',
-  'lib/patches.js'
-];
+modules = [];
 
-modules = platform;
-
-window.templateContent = function(inTemplate) {
-  return inTemplate.content;
-};
+// TODO(sjmiles): load MDV before ShadowDOM: MDV modifies Node prototypes which 
+// must happen before ShadowDOM polyfill loads
+if (flags.shadow !== 'polyfill') {
+  modules = modules.concat(MDV);
+}
 
 if (flags.shadow === 'polyfill') {
-  modules = ShadowDOM.concat(modules);
-  window.SDOM = function(inNode) {return wrap(inNode);};
-  window.fixconsole = function(x) {return x;};
-}
-else if (flags.shadow === 'shim') {
-  modules = modules.concat(ShadowDOMShim);
-  window.createShadowRoot = function(inElement) {
-    return inElement.createShadowRoot();
-  }
-  window.wrap = function(inNode) {
-    return SDOM(inNode);
-  }
-} else {
-  window.wrap = window.SDOM = function(inNode) {
-    return inNode;
-  };
-  window.createShadowRoot = function(inElement) {
-    return inElement.webkitCreateShadowRoot();
-  };
-  window.templateContent = function(inTemplate) {
-    if (!inTemplate.content && !inTemplate._content) {
-      var frag = document.createDocumentFragment();
-      while (inTemplate.firstChild) {
-        frag.appendChild(inTemplate.firstChild);
-      }
-      inTemplate._content = frag;
-    }
-    return inTemplate.content || inTemplate._content;
-  };
+  modules = modules.concat(ShadowDOM);
 }
 
-// TODO(sjmiles): load MDV first: it modifies Node prototypes which must happen
-// before ShadowDOM
-modules.unshift(
-  'MDV/src/mdv.js',   
-  'lib/dirty-check.js'
+modules = modules.concat(platform);
+
+
+// integration patches
+
+modules.push(
+  'lib/patches.js'
 );
-
-modules.push('ShadowDOMShim/inspector.js');
 
 // write script tags for dependencies
 

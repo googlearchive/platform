@@ -4,28 +4,80 @@
  * license that can be found in the LICENSE file.
  */
 module.exports = function(grunt) {
+  WebComponents = [
+    'WebComponents/src/WebComponents.js'
+  ];
+  
   CustomElements = [
     'CustomElements/src/CustomElements.js',
     'CustomElements/src/HTMLElementElement.js',
-    'CustomElements/src/ComponentDocument.js'
+    'CustomElements/src/Parser.js'
   ];
-  ShadowDOMShim = [
-    'ShadowDOM/src/sdom.js',
-    'ShadowDOM/src/ShadowDOMNohd.js',
-    'ShadowDOM/src/querySelector.js',
-    'ShadowDOM/src/ShadowDOM.js',
-    'ShadowDOM/src/inspector.js'
+  
+  ShadowDOM = [
+    'sidetable.js',
+    'wrappers.js',
+    'wrappers/node-interfaces.js',
+    'wrappers/EventTarget.js',
+    'wrappers/MouseEvent.js',
+    'wrappers/Node.js',
+    'wrappers/CharacterData.js',
+    'wrappers/NodeList.js',
+    'wrappers/Element.js',
+    'wrappers/HTMLElement.js',
+    'wrappers/HTMLUnknownElement.js',
+    'wrappers/HTMLContentElement.js',
+    'wrappers/HTMLShadowElement.js',
+    'wrappers/HTMLTemplateElement.js',
+    'wrappers/generic.js',
+    'wrappers/ShadowRoot.js',
+    'ShadowRenderer.js',
+    'wrappers/Document.js'
   ];
-  Platform = CustomElements.concat(ShadowDOMShim);
+  ShadowDOM = ShadowDOM.map(function(p) {
+    return 'ShadowDOM/src/' + p;
+  });
+  
+  Lib = [
+    'lib/querySelector.js',
+    'lib/inspector.js',
+    'lib/patches.js'
+  ];
+  
+  Platform = [].concat(
+    WebComponents, 
+    CustomElements,
+    Lib
+  );
+    
+  PlatformPoly = [].concat(
+    ShadowDOM,
+    WebComponents, 
+    CustomElements,
+    Lib
+  );
 
   grunt.initConfig({
     uglify: {
       Platform: {
+        /*
         options: {
           sourceMap: 'platform.min.source-map.js'
         },
+        */
         files: {
           'platform.min.js': Platform
+        }
+      },
+      PlatformPoly: {
+        options: {
+          compress: false,
+          mangle: false,
+          beautify: true,
+          Xreport: 'gzip'
+        },
+        files: {
+          'platform.poly.min.js': PlatformPoly
         }
       }
     },
