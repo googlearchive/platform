@@ -11,7 +11,7 @@ var thisFile = 'platform.js';
 // NOTE: use attributes on the script tag for this file as directives
 
 // exportAs="[name]"		exports polyfill scope into window as 'name'
-// shadow="shim"        use shim version of ShadowDOM (otherwise native)
+// shadow="polyfill"    use polyfill version of ShadowDOM (otherwise native)
 
 // NOTE: uses 'window' and 'document' globals
 
@@ -97,7 +97,7 @@ var ShadowDOM = [
   'lib/inspector.js',
 ];
 
-var platform = [
+var WebElements = [
   'WebComponents/web-components.js',
   'CustomElements/custom-elements.js',
   //'PointerGestures/src/pointergestures.js',
@@ -105,28 +105,17 @@ var platform = [
   'lib/dom_token_list.js'
 ];
 
-// active dependency list
+var Patches = [
+  'lib/patches.js'
+];
+
+// construct active dependency list
 
 modules = [];
-
-// TODO(sjmiles): load MDV before ShadowDOM: MDV modifies Node prototypes which 
-// must happen before ShadowDOM polyfill loads
-if (flags.shadow !== 'polyfill') {
-  modules = modules.concat(MDV);
-}
-
 if (flags.shadow === 'polyfill') {
   modules = modules.concat(ShadowDOM);
 }
-
-modules = modules.concat(platform);
-
-
-// integration patches
-
-modules.push(
-  'lib/patches.js'
-);
+modules = modules.concat(MDV, WebElements, Patches);
 
 // write script tags for dependencies
 
