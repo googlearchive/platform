@@ -93,8 +93,7 @@ var MDV = [
 
 var ShadowDOM = [
   'ShadowDOM/shadowdom.js',
-  'lib/querySelector.js',
-  'lib/inspector.js',
+  'lib/querySelector.js'
 ];
 
 var WebElements = [
@@ -106,7 +105,8 @@ var WebElements = [
 ];
 
 var Patches = [
-  'lib/patches.js'
+  'lib/patches.js',
+  'lib/inspector.js'
 ];
 
 // construct active dependency list
