@@ -6,49 +6,44 @@
 
 (function(scope) {
 
+// NOTE: uses 'window' and 'document' globals
+
 var thisFile = 'platform.js';
 
 // NOTE: use attributes on the script tag for this file as directives
 
-// exportAs="[name]"		exports polyfill scope into window as 'name'
-// shadow="polyfill"    use polyfill version of ShadowDOM (otherwise native)
-
-// NOTE: uses 'window' and 'document' globals
+// exportAs="[name]"            exports polyfill scope into window as 'name'
+// shadow="polyfill|native"     use polyfill version of ShadowDOM (default native)
+// log="data,bind,event,[...]"  enable logging categories
 
 // acquire directives and base path from script element
 
-var source, base = '';
+var source, base = '', attrs = [];
 
 (function() {
   var s$ = document.querySelectorAll('script[src]');
   Array.prototype.forEach.call(s$, function(s) {
     var src = s.getAttribute('src');
     if (src.slice(-thisFile.length) === thisFile) {
-      source = s;
+      attrs = s.attributes;
       base = src.slice(0, -thisFile.length);
     }
   });
-  source = source || {
-    getAttribute: nop
-  };
 })();
 
-// flags
+// default flags
 
-var flags = {};
+var flags = {
+  shadow: HTMLElement.prototype.webkitCreateShadowRoot ? 'native' : 'polyfill'
+};
 
-// shadow defaults
+// acquire override flags from script tag attributes
 
-flags.shadow = HTMLElement.prototype.webkitCreateShadowRoot ? 'native'
-    : 'polyfill';
-
-// acquire flags from script tag attributes
-
-for (var i=0, a; (a=source.attributes[i]); i++) {
+for (var i=0, a; (a=attrs[i]); i++) {
   flags[a.name] = a.value || true;
 }
 
-// acquire flags from url
+// acquire override flags from url
 
 if (!flags.noOpts) {
   location.search.slice(1).split('&').forEach(function(o) {
@@ -80,42 +75,23 @@ window.__exported_components_polyfill_scope__ = scope;
 
 scope.flags = flags;
 
+if (flags.debug) {
+  // TODO(sjmiles): ham-handed communication with debug loader
+  window.__platform__ = {
+    flags: flags,
+    base: base
+  };
+}
+
 // report effective flags
 
 console.log(flags);
 
 // module dependencies
 
-var MDV = [
-  'MDV/src/mdv.js',   
-  'lib/dirty-check.js'
-];
-
-var ShadowDOM = [
-  'ShadowDOM/shadowdom.js',
-  'lib/querySelector.js'
-];
-
-var WebElements = [
-  'WebComponents/web-components.js',
-  'CustomElements/custom-elements.js',
-  //'PointerGestures/src/pointergestures.js',
-  'lib/lang.js',
-  'lib/dom_token_list.js'
-];
-
-var Patches = [
-  'lib/patches.js',
-  'lib/inspector.js'
-];
-
-// construct active dependency list
-
-modules = [];
-if (flags.shadow === 'polyfill') {
-  modules = modules.concat(ShadowDOM);
-}
-modules = modules.concat(MDV, WebElements, Patches);
+var modules = flags.debug ? ['platform.debug.js'] :
+    flags.shadow ==='polyfill' ? ['platform.poly.min.js'] :
+      ['platform.min.js'];
 
 // write script tags for dependencies
 
