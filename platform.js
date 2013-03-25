@@ -99,4 +99,14 @@ modules.forEach(function(inSrc) {
   document.write('<script src="' + base + inSrc + '"></script>');
 });
 
+// css dependencies
+
+// TODO(sjmiles): ad-hoc, no build support for CSS as yet
+var sheets = flags.debug ? [] : ['MDV/src/template_element.css'];
+
+// write link tags for styles
+
+sheets.forEach(function(inSrc) {
+  document.write('<link rel="stylesheet" href="' + base + inSrc + '">');
+});
 })(window.__exported_components_polyfill_scope__);
