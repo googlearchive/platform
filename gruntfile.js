@@ -38,6 +38,27 @@ module.exports = function(grunt) {
     return 'ShadowDOM/src/' + p;
   });
   
+  var MDV = [
+    '../third_party/ChangeSummary/planner.js',
+    '../third_party/ChangeSummary/change_summary.js',
+    'compat.js',
+    'side_table.js',
+    'model.js',
+    'script_value_binding.js',
+    'text_replacements_binding.js',
+    'element_attribute_bindings.js',
+    'element_bindings.js',
+    'input_bindings.js',
+    'template_element.js',
+    'delegates.js'
+  ];
+  MDV = MDV.map(function(p) {
+    return 'MDV/src/' + p;
+  });
+  MDV.push(
+    'lib/dirty-check.js'
+  );
+  
   Lib = [
     'lib/querySelector.js',
     'lib/inspector.js',
