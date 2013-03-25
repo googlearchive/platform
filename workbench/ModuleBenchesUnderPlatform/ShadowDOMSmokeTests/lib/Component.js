@@ -9,6 +9,7 @@ var Component = function(inElement, inDefinition) {
   // make ShadowDOM
   for (var i=0, b; (b=inDefinition.bases[i]); i++) {
     var root = elt.webkitCreateShadowRoot();
+    root.applyAuthorStyles = true;
     //root.appendChild(SDOM($("template#" + b).content.cloneNode(true)));
     root.appendChild($("template#" + b).content.cloneNode(true));
     Component.upgradeAll(root);
@@ -59,7 +60,7 @@ Component.register = function(inName, inBases, inProto) {
 };
 
 Component.upgradeAll = function(inNode) {
-  var node = inNode || SDOM(document.body);
+  var node = inNode || wrap(document.body);
   Component.registry.forEach(function(d) {
     Component.upgradeName(node, d);
   });
