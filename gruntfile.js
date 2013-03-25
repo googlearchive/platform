@@ -68,6 +68,7 @@ module.exports = function(grunt) {
   Platform = [].concat(
     WebComponents, 
     CustomElements,
+    MDV,
     Lib
   );
     
@@ -75,6 +76,7 @@ module.exports = function(grunt) {
     ShadowDOM,
     WebComponents, 
     CustomElements,
+    MDV,
     Lib
   );
 
