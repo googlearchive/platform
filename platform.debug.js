@@ -26,7 +26,7 @@ var ShadowDOM = [
 var WebElements = [
   'WebComponents/web-components.js',
   'CustomElements/custom-elements.js',
-  //'PointerGestures/src/pointergestures.js',
+  'PointerGestures/src/pointergestures.js',
   'lib/lang.js',
   'lib/dom_token_list.js'
 ];

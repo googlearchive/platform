@@ -4,16 +4,6 @@
  * license that can be found in the LICENSE file.
  */
 module.exports = function(grunt) {
-  WebComponents = [
-    'WebComponents/src/WebComponents.js'
-  ];
-  
-  CustomElements = [
-    'CustomElements/src/CustomElements.js',
-    'CustomElements/src/HTMLElementElement.js',
-    'CustomElements/src/Parser.js'
-  ];
-  
   ShadowDOM = [
     'sidetable.js',
     'wrappers.js',
@@ -37,6 +27,46 @@ module.exports = function(grunt) {
   ShadowDOM = ShadowDOM.map(function(p) {
     return 'ShadowDOM/src/' + p;
   });
+
+  PointerEvents = [
+    'touch-action.js',
+    'PointerEvent.js',
+    'pointermap.js',
+    'sidetable.js',
+    'dispatcher.js',
+    'installer.js',
+    'findTarget.js',
+    'platform-events.js',
+    'capture.js',
+  ];
+  PointerEvents = PointerEvents.map(function(p) {
+    return 'PointerGestures/src/PointerEvents/src/' + p;
+  });
+
+  PointerGestures = [
+    'PointerGestureEvent.js',
+    'initialize.js',
+    'sidetable.js',
+    'pointermap.js',
+    'dispatcher.js',
+    'hold.js',
+    'track.js',
+    'flick.js',
+    'tap.js'
+  ];
+  PointerGestures = PointerGestures.map(function(p) {
+    return 'PointerGestures/src' + p;
+  });
+
+  WebComponents = [
+    'WebComponents/src/WebComponents.js'
+  ];
+  
+  CustomElements = [
+    'CustomElements/src/CustomElements.js',
+    'CustomElements/src/HTMLElementElement.js',
+    'CustomElements/src/Parser.js'
+  ];
   
   var MDV = [
     '../third_party/ChangeSummary/planner.js',
@@ -66,6 +96,8 @@ module.exports = function(grunt) {
   ];
   
   Platform = [].concat(
+    PointerEvents,
+    PointerGestures,
     WebComponents, 
     CustomElements,
     MDV,
@@ -73,6 +105,8 @@ module.exports = function(grunt) {
   );
     
   PlatformPoly = [].concat(
+    PointerEvents,
+    PointerGestures,
     ShadowDOM,
     WebComponents, 
     CustomElements,
@@ -83,21 +117,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
     uglify: {
       Platform: {
-        /*
         options: {
-          sourceMap: 'platform.min.source-map.js'
+          //compress: false, mangle: false, beautify: true        
         },
-        */
         files: {
           'platform.min.js': Platform
         }
       },
       PlatformPoly: {
         options: {
-          compress: false,
-          mangle: false,
-          beautify: true,
-          Xreport: 'gzip'
         },
         files: {
           'platform.poly.min.js': PlatformPoly
