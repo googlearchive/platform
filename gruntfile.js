@@ -27,7 +27,26 @@ module.exports = function(grunt) {
   ShadowDOM = ShadowDOM.map(function(p) {
     return 'ShadowDOM/src/' + p;
   });
+  ShadowDOM.push(
+    'lib/querySelector.js'
+  );
 
+  var MDV = [
+    '../third_party/ChangeSummary/planner.js',
+    '../third_party/ChangeSummary/change_summary.js',
+    'compat.js',
+    'side_table.js',
+    'model.js',
+    'node_bindings.js',
+    'template_element.js'
+  ];
+  MDV = MDV.map(function(p) {
+    return 'MDV/src/' + p;
+  });
+  MDV.push(
+    'lib/dirty-check.js'
+  );
+    
   PointerEvents = [
     'touch-action.js',
     'PointerEvent.js',
@@ -67,51 +86,31 @@ module.exports = function(grunt) {
     'CustomElements/src/HTMLElementElement.js',
     'CustomElements/src/Parser.js'
   ];
-  
-  var MDV = [
-    '../third_party/ChangeSummary/planner.js',
-    '../third_party/ChangeSummary/change_summary.js',
-    'compat.js',
-    'side_table.js',
-    'model.js',
-    'script_value_binding.js',
-    'text_replacements_binding.js',
-    'element_attribute_bindings.js',
-    'element_bindings.js',
-    'input_bindings.js',
-    'template_element.js',
-    'delegates.js'
-  ];
-  MDV = MDV.map(function(p) {
-    return 'MDV/src/' + p;
-  });
-  MDV.push(
-    'lib/dirty-check.js'
-  );
-  
-  Lib = [
-    'lib/querySelector.js',
-    'lib/inspector.js',
-    'lib/patches.js'
+
+  Patches = [
+    'lib/lang.js',
+    'lib/dom_token_list.js',
+    'lib/patches.js',
+    'lib/inspector.js'
   ];
   
   Platform = [].concat(
-    PointerEvents,
-    PointerGestures,
+    Patches,
+    MDV,
     WebComponents, 
     CustomElements,
-    MDV,
-    Lib
+    PointerEvents,
+    PointerGestures
   );
     
   PlatformPoly = [].concat(
-    PointerEvents,
-    PointerGestures,
     ShadowDOM,
+    Patches,
+    MDV,
     WebComponents, 
     CustomElements,
-    MDV,
-    Lib
+    PointerEvents,
+    PointerGestures
   );
 
   grunt.initConfig({

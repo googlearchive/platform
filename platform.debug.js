@@ -13,25 +13,28 @@ var base = __platform__.base;
 
 // module dependencies
 
-var MDV = [
-  'MDV/src/mdv.js',   
-  'lib/dirty-check.js'
-];
-
 var ShadowDOM = [
   'ShadowDOM/shadowdom.js',
   'lib/querySelector.js'
 ];
 
+var MDV = [
+  'MDV/src/mdv.js',   
+  'lib/dirty-check.js'
+];
+
 var WebElements = [
   'WebComponents/web-components.js',
-  'CustomElements/custom-elements.js',
-  'PointerGestures/src/pointergestures.js',
-  'lib/lang.js',
-  'lib/dom_token_list.js'
+  'CustomElements/custom-elements.js'
+];
+
+var Pointer = [
+  'PointerGestures/src/pointergestures.js'
 ];
 
 var Patches = [
+  'lib/lang.js',
+  'lib/dom_token_list.js',
   'lib/patches.js',
   'lib/inspector.js'
 ];
@@ -43,7 +46,10 @@ if (flags.shadow === 'polyfill') {
   modules = modules.concat(ShadowDOM);
 }
 modules = modules.concat(
-  MDV, WebElements, Patches
+  Patches, 
+  MDV, 
+  WebElements, 
+  Pointer
 );
 
 // write script tags for dependencies
