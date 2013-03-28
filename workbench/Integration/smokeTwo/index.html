@@ -14,8 +14,7 @@ license that can be found in the LICENSE file.
     <x-foo>plain</x-foo>
     <button is="x-baz">plain</button>
     <script>
-      //(function(document) {
-      wrap(document).addEventListener('WebComponentsReady', function() {
+      document.addEventListener('WebComponentsReady', function() {
         var p = Object.create(HTMLElement.prototype);
         p.readyCallback = function() {
           this.textContent = 'custom!';
@@ -27,11 +26,9 @@ license that can be found in the LICENSE file.
           this.textContent = 'custom!';
         }
         document.register('x-baz', {prototype: p, extends: 'button'});
-        wrap(document).body.appendChild(document.createElement('x-baz'));
-        //
-        //document.upgradeElements();
+        ShadowDOMPolyfill.wrap(document).body.appendChild(
+            document.createElement('x-baz'));
       });
-    //})(wrap(document));
     </script>
   </body>
 </html>

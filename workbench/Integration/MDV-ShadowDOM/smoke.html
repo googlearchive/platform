@@ -8,7 +8,9 @@ license that can be found in the LICENSE file.
   <head>
     <title></title>
     <meta charset="UTF-8">
-    <!--<script src="../../../ShadowDOM/shadowdom.js"></script>-->
+    <script src="../../../ShadowDOM/shadowdom.js"></script>
+    <script src="../../../lib/patches.js"></script>
+    <script src="../../../lib/querySelector.js"></script>
     <script src="../../../MDV/src/mdv.js"></script>
   </head>
   <body>
@@ -23,24 +25,16 @@ license that can be found in the LICENSE file.
         source: 'MDV'
       };
       //
-      var doc = (window.wrap) ? wrap(document) : document;
-      HTMLTemplateElement.bindTree(doc.body, model);
+      var wrap = window.ShadowDOMPolyfill ? 
+        ShadowDOMPolyfill.wrap : function(n){return n;}
+      var doc = wrap(document);
       //
-      var t = doc.querySelector('template');
       var x = doc.querySelector('x-foo');
-      if (window.wrap) {
-        var i = wrap(t.impl.createInstance());
-      } else {
-        i = x.appendChild(t.createInstance());
-      }
+      var t = doc.querySelector('template');
+      var i = t.createInstance();
       //
-      //i.bind('', model, '');
-      //HTMLTemplateElement.bindTree(i, model);
-      //HTMLTemplateElement.bindTree(doc.body, model);
-      //
+      HTMLTemplateElement.bindTree(i, model);
       x.appendChild(i);
-      //HTMLTemplateElement.bindTree(i, model);
-      HTMLTemplateElement.bindTree(x, model);
     </script>
   </body>
 </html>

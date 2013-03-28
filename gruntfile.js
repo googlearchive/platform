@@ -7,22 +7,22 @@ module.exports = function(grunt) {
   ShadowDOM = [
     'sidetable.js',
     'wrappers.js',
-    'wrappers/node-interfaces.js',
     'wrappers/EventTarget.js',
-    'wrappers/MouseEvent.js',
-    'wrappers/Node.js',
-    'wrappers/CharacterData.js',
     'wrappers/NodeList.js',
+    'wrappers/Node.js',
+    'wrappers/node-interfaces.js',
+    'wrappers/CharacterData.js',
     'wrappers/Element.js',
     'wrappers/HTMLElement.js',
-    'wrappers/HTMLUnknownElement.js',
     'wrappers/HTMLContentElement.js',
     'wrappers/HTMLShadowElement.js',
     'wrappers/HTMLTemplateElement.js',
+    'wrappers/HTMLUnknownElement.js',
     'wrappers/generic.js',
     'wrappers/ShadowRoot.js',
     'ShadowRenderer.js',
-    'wrappers/Document.js'
+    'wrappers/Document.js',
+    'wrappers/override-constructors.js'
   ];
   ShadowDOM = ShadowDOM.map(function(p) {
     return 'ShadowDOM/src/' + p;
@@ -31,6 +31,13 @@ module.exports = function(grunt) {
     'lib/querySelector.js'
   );
 
+  Patches = [
+    'lib/lang.js',
+    'lib/dom_token_list.js',
+    'lib/patches.js',
+    'lib/inspector.js'
+  ];
+ 
   var MDV = [
     '../third_party/ChangeSummary/planner.js',
     '../third_party/ChangeSummary/change_summary.js',
@@ -87,13 +94,6 @@ module.exports = function(grunt) {
     'CustomElements/src/Parser.js'
   ];
 
-  Patches = [
-    'lib/lang.js',
-    'lib/dom_token_list.js',
-    'lib/patches.js',
-    'lib/inspector.js'
-  ];
-  
   Platform = [].concat(
     Patches,
     MDV,
@@ -125,6 +125,7 @@ module.exports = function(grunt) {
       },
       PlatformPoly: {
         options: {
+          compress: false, mangle: false, xbeautify: true        
         },
         files: {
           'platform.poly.min.js': PlatformPoly

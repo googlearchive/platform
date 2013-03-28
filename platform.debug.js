@@ -18,6 +18,13 @@ var ShadowDOM = [
   'lib/querySelector.js'
 ];
 
+var Patches = [
+  'lib/lang.js',
+  'lib/dom_token_list.js',
+  'lib/patches.js',
+  'lib/inspector.js'
+];
+
 var MDV = [
   'MDV/src/mdv.js',   
   'lib/dirty-check.js'
@@ -30,13 +37,6 @@ var WebElements = [
 
 var Pointer = [
   'PointerGestures/src/pointergestures.js'
-];
-
-var Patches = [
-  'lib/lang.js',
-  'lib/dom_token_list.js',
-  'lib/patches.js',
-  'lib/inspector.js'
 ];
 
 // construct active dependency list
