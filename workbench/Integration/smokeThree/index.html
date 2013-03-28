@@ -13,15 +13,14 @@ license that can be found in the LICENSE file.
   <body>
     <x-foo>plain</x-foo>
     <button is="x-baz">plain</button>
-    <template instantiate>
+    <template bind="{{}}">
       Hello from {{source}}
     </template>
     <script>
-      document.body.model = {
+      HTMLTemplateElement.bindTree(ShadowDOMPolyfill.wrap(document).body, {
         source: "MDV"
-      };
-      //(function(document) {
-      wrap(document).addEventListener('WebComponentsReady', function() {
+      });
+      document.addEventListener('WebComponentsReady', function() {
         var p = Object.create(HTMLElement.prototype);
         p.readyCallback = function() {
           this.textContent = 'custom!';
@@ -33,11 +32,9 @@ license that can be found in the LICENSE file.
           this.textContent = 'custom!';
         }
         document.register('x-baz', {prototype: p, extends: 'button'});
-        wrap(document).body.appendChild(document.createElement('x-baz'));
-        //
-        //document.upgradeElements();
+        ShadowDOMPolyfill.wrap(document).body.appendChild(
+          document.createElement('x-baz'));
       });
-    //})(wrap(document));
     </script>
   </body>
 </html>
