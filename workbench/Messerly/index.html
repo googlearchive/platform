@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <script src="../../platform.js"></script>
+  </head>
+  <body>
+    <template>
+       [template start]
+       <template instantiate>
+        [inner template: <content></content>]
+       </template>
+      [template end]
+    </template>
+    <script>
+      var t = document.querySelector('template');
+      var p = Object.create(HTMLElement.prototype);
+      p.readyCallback = function() {
+        var root = this.webkitCreateShadowRoot();
+        root.model = {};
+        root.appendChild(t.createInstance())
+      }
+      document.register('x-foo', {prototype: p});
+    </script>
+    <x-foo>x-foo's light dom</x-foo>
+  </body>
+</html>
