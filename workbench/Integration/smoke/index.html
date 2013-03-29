@@ -13,17 +13,17 @@ license that can be found in the LICENSE file.
   </head>
   <body>
     <script>
-      var sdocument = wrap(document);
-      sdocument.addEventListener('WebComponentsReady', function() {
+      var body = wrap(document.body);
+      document.addEventListener('WebComponentsReady', function() {
         first = document.createElement('x-first');
-        sdocument.body.appendChild(first).appendChild(
-            document.createElement('span')).textContent = '[x-first]';
+        body.appendChild(first).appendChild(document.createElement('span'))
+            .textContent = '[x-first]';
         //
         moar = document.createElement('x-moar');
-        sdocument.body.appendChild(moar).textContent = 'x-moar';
+        body.appendChild(moar).textContent = 'x-moar';
         //
         last = document.createElement('x-last');
-        sdocument.body.appendChild(last).textContent = '[x-last]';
+        body.appendChild(last).textContent = '[x-last]';
       });
     </script>
   </body>

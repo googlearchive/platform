@@ -26,7 +26,7 @@ license that can be found in the LICENSE file.
           this.textContent = 'custom!';
         }
         document.register('x-baz', {prototype: p, extends: 'button'});
-        ShadowDOMPolyfill.wrap(document).body.appendChild(
+        wrap(document).body.appendChild(
             document.createElement('x-baz'));
       });
     </script>
