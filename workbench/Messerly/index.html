@@ -13,8 +13,8 @@ license that can be found in the LICENSE file.
   <body>
     <template>
        [template start]
-       <template instantiate>
-        [inner template: <content></content>]
+       <template bind="{{}}">
+         [inner template: <content></content>]
        </template>
       [template end]
     </template>
@@ -22,9 +22,9 @@ license that can be found in the LICENSE file.
       var t = document.querySelector('template');
       var p = Object.create(HTMLElement.prototype);
       p.readyCallback = function() {
-        var root = this.webkitCreateShadowRoot();
-        root.model = {};
+        var root = this.createShadowRoot();
         root.appendChild(t.createInstance())
+        HTMLTemplateElement.bindTree(root, {});
       }
       document.register('x-foo', {prototype: p});
     </script>
