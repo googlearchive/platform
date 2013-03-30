@@ -125,7 +125,7 @@ module.exports = function(grunt) {
       },
       PlatformPoly: {
         options: {
-          compress: false, mangle: false, xbeautify: true        
+          //compress: false, mangle: false, beautify: true        
         },
         files: {
           'platform.poly.min.js': PlatformPoly
