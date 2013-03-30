@@ -19,14 +19,20 @@ license that can be found in the LICENSE file.
       [template end]
     </template>
     <script>
-      var t = document.querySelector('template');
-      var p = Object.create(HTMLElement.prototype);
-      p.readyCallback = function() {
-        var root = this.createShadowRoot();
-        root.appendChild(t.createInstance())
-        HTMLTemplateElement.bindTree(root, {});
-      }
-      document.register('x-foo', {prototype: p});
+      document.addEventListener('WebComponentsReady', function() {
+        var t = document.querySelector('template');
+        var p = Object.create(HTMLElement.prototype);
+        p.readyCallback = function() {
+          if (this.webkitCreateShadowRoot) {
+            this.createShadowRoot = this.webkitCreateShadowRoot;
+          }
+          var root = this.createShadowRoot();
+          root.appendChild(t.createInstance())
+          HTMLTemplateElement.bindTree(root, {});
+        }
+        document.register('x-foo', {prototype: p});
+        Model.notifyChanges();
+      });
     </script>
     <x-foo>x-foo's light dom</x-foo>
   </body>

@@ -17,10 +17,11 @@ license that can be found in the LICENSE file.
       Hello from {{source}}
     </template>
     <script>
-      HTMLTemplateElement.bindTree(ShadowDOMPolyfill.wrap(document).body, {
-        source: "MDV"
-      });
       document.addEventListener('WebComponentsReady', function() {
+        HTMLTemplateElement.bindTree(ShadowDOMPolyfill.wrap(document).body, {
+          source: "MDV"
+        });
+        //
         var p = Object.create(HTMLElement.prototype);
         p.readyCallback = function() {
           this.textContent = 'custom!';

@@ -18,26 +18,32 @@ license that can be found in the LICENSE file.
     </template>
     <!-- -->
     <script>
-      var model = {
-        source: 'MDV'
-      };
-      // does NOT make {{source}} go
-      //HTMLTemplateElement.bindTree(document.body, model);
-      //
-      var t = document.querySelector('template');
-      var i = t.createInstance();
-      //
-      // make {{source}} go
-      HTMLTemplateElement.bindTree(i, model);
-      // make {{source}} go
-      //HTMLTemplateElement.bindTree(document.body, model);
-      //
-      document.body.appendChild(i);
-      //
-      // make {{source}} go
-      //HTMLTemplateElement.bindTree(i, model);
-      // make {{source}} go
-      //HTMLTemplateElement.bindTree(document.body, model);
+      // wait for some platforms (IE) to bootstrap <template>
+      window.addEventListener('load', function() {
+        var model = {
+          source: 'MDV'
+        };
+        // does NOT make {{source}} go
+        //HTMLTemplateElement.bindTree(document.body, model);
+        //
+        var t = document.body.querySelector('template');
+        var i = t.createInstance();
+        //
+        // make {{source}} go
+        HTMLTemplateElement.bindTree(i, model);
+        // make {{source}} go
+        //HTMLTemplateElement.bindTree(document.body, model);
+        //
+        document.body.appendChild(i);
+        //
+        // make {{source}} go
+        //HTMLTemplateElement.bindTree(i, model);
+        // make {{source}} go
+        //HTMLTemplateElement.bindTree(document.body, model);
+        //
+        // needed for IE (why?)
+        Model.notifyChanges();
+      });
     </script>
   </body>
 </html>
