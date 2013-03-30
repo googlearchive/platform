@@ -17,8 +17,11 @@ license that can be found in the LICENSE file.
     Inside template: message is here: [{{message}}]
   </template>
   <script>
-    body = ShadowDOMPolyfill.wrap(document.body);
-    HTMLTemplateElement.bindTree(body, {message: 'Success!'});
+    window.onload = function() {
+      body = ShadowDOMPolyfill.wrap(document.body);
+      HTMLTemplateElement.bindTree(body, {message: 'Success!'});
+      Model.notifyChanges();
+    }
   </script>
 </body>
 </html>
