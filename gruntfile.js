@@ -125,7 +125,11 @@ module.exports = function(grunt) {
       },
       PlatformPoly: {
         options: {
-          //compress: false, mangle: false, beautify: true        
+          compress: {
+            // TODO(sjmiles): should be false by default (?)
+            unsafe: false
+          }
+          //compress: true, Xmangle: true, beautify: true, unsafe: false        
         },
         files: {
           'platform.poly.min.js': PlatformPoly
