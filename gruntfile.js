@@ -127,6 +127,7 @@ module.exports = function(grunt) {
         options: {
           compress: {
             // TODO(sjmiles): should be false by default (?)
+            // https://github.com/mishoo/UglifyJS2/issues/165
             unsafe: false
           }
           //compress: true, Xmangle: true, beautify: true, unsafe: false        
