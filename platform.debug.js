@@ -36,7 +36,7 @@ var WebElements = [
 ];
 
 var Pointer = [
-  //'PointerGestures/src/pointergestures.js'
+  'PointerGestures/src/pointergestures.js'
 ];
 
 // construct active dependency list
