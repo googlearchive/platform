@@ -20,7 +20,7 @@ var ShadowDOM = [
 
 var Patches = [
   'lib/lang.js',
-  'lib/dom_token_list.js',
+  'lib/dom.js',
   'lib/patches.js',
   'lib/inspector.js'
 ];
@@ -39,6 +39,10 @@ var Pointer = [
   'PointerGestures/src/pointergestures.js'
 ];
 
+var LoadedPatches = [
+  'lib/patches-loaded.js'
+];
+
 // construct active dependency list
 
 modules = [];
@@ -49,7 +53,8 @@ modules = modules.concat(
   Patches, 
   MDV, 
   WebElements, 
-  Pointer
+  Pointer,
+  LoadedPatches
 );
 
 // write script tags for dependencies

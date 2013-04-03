@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 
   Patches = [
     'lib/lang.js',
-    'lib/dom_token_list.js',
+    'lib/dom.js',
     'lib/patches.js',
     'lib/inspector.js'
   ];
@@ -93,6 +93,10 @@ module.exports = function(grunt) {
     'CustomElements/src/HTMLElementElement.js',
     'CustomElements/src/Parser.js'
   ];
+  
+  LoadedPatches = [
+    'lib/patches-loaded.js'
+  ];
 
   Platform = [].concat(
     Patches,
@@ -100,7 +104,8 @@ module.exports = function(grunt) {
     WebComponents, 
     CustomElements,
     PointerEvents,
-    PointerGestures
+    PointerGestures,
+    LoadedPatches
   );
     
   PlatformPoly = [].concat(
@@ -110,7 +115,8 @@ module.exports = function(grunt) {
     WebComponents, 
     CustomElements,
     PointerEvents,
-    PointerGestures
+    PointerGestures,
+    LoadedPatches
   );
 
   grunt.initConfig({
