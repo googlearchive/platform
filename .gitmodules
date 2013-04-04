@@ -13,6 +13,6 @@
 [submodule "WebAnimations"]
 	path = WebAnimations
 	url = https://github.com/web-animations/web-animations-js.git
-[submodule "WebComponents"]
-	path = WebComponents
-	url = https://github.com/toolkitchen/WebComponents.git
+[submodule "HTMLImports"]
+	path = HTMLImports
+	url = https://github.com/toolkitchen/HTMLImports.git
