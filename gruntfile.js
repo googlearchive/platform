@@ -4,7 +4,11 @@
  * license that can be found in the LICENSE file.
  */
 module.exports = function(grunt) {
-  ShadowDOM = [
+  ShadowDOMNative = [
+    'lib/patches-shadowdom-native.js'
+  ];
+
+  ShadowDOMPolyfill = [
     'sidetable.js',
     'wrappers.js',
     'wrappers/EventTarget.js',
@@ -22,19 +26,21 @@ module.exports = function(grunt) {
     'wrappers/ShadowRoot.js',
     'ShadowRenderer.js',
     'wrappers/Document.js',
+    'wrappers/Window.js',
     'wrappers/override-constructors.js'
   ];
-  ShadowDOM = ShadowDOM.map(function(p) {
+  ShadowDOMPolyfill = ShadowDOMPolyfill.map(function(p) {
     return 'ShadowDOM/src/' + p;
   });
-  ShadowDOM.push(
+  ShadowDOMPolyfill.push(
+    'lib/patches-shadowdom-polyfill.js',
     'lib/querySelector.js'
   );
 
-  Patches = [
+  Lib = [
     'lib/lang.js',
     'lib/dom.js',
-    'lib/patches.js',
+    'lib/template.js',
     'lib/inspector.js'
   ];
  
@@ -51,7 +57,7 @@ module.exports = function(grunt) {
     return 'MDV/src/' + p;
   });
   MDV.push(
-    'lib/dirty-check.js'
+    'lib/patches-mdv.js'
   );
     
   PointerEvents = [
@@ -94,29 +100,24 @@ module.exports = function(grunt) {
     'CustomElements/src/Parser.js'
   ];
   
-  LoadedPatches = [
-    'lib/patches-loaded.js'
-  ];
-
   Platform = [].concat(
+    ShadowDOMNative,
     Patches,
     MDV,
     WebComponents, 
     CustomElements,
     PointerEvents,
-    PointerGestures,
-    LoadedPatches
+    PointerGestures
   );
     
   PlatformPoly = [].concat(
-    ShadowDOM,
+    ShadowDOMPolyfill,
     Patches,
     MDV,
     WebComponents, 
     CustomElements,
     PointerEvents,
-    PointerGestures,
-    LoadedPatches
+    PointerGestures
   );
 
   grunt.initConfig({

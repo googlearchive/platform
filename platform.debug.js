@@ -13,21 +13,30 @@ var base = __platform__.base;
 
 // module dependencies
 
-var ShadowDOM = [
+var ShadowDOMNative = [
+  'lib/patches-shadowdom-native.js'
+];
+
+var ShadowDOMPolyfill = [
   'ShadowDOM/shadowdom.js',
+  'lib/patches-shadowdom-polyfill.js',
   'lib/querySelector.js'
 ];
 
-var Patches = [
+var Lib = [
   'lib/lang.js',
   'lib/dom.js',
-  'lib/patches.js',
-  'lib/inspector.js'
+  'lib/template.js',
+  'lib/inspector.js',
 ];
 
 var MDV = [
   'MDV/src/mdv.js',   
-  'lib/dirty-check.js'
+  'lib/patches-mdv.js'
+];
+
+var Pointer = [
+  'PointerGestures/src/pointergestures.js'
 ];
 
 var WebElements = [
@@ -35,26 +44,19 @@ var WebElements = [
   'CustomElements/custom-elements.js'
 ];
 
-var Pointer = [
-  'PointerGestures/src/pointergestures.js'
-];
+// select ShadowDOM impl
 
-var LoadedPatches = [
-  'lib/patches-loaded.js'
-];
+var ShadowDOM = (flags.shadow === 'polyfill') ?
+  ShadowDOMPolyfill : ShadowDOMNative;
 
 // construct active dependency list
 
-modules = [];
-if (flags.shadow === 'polyfill') {
-  modules = modules.concat(ShadowDOM);
-}
-modules = modules.concat(
-  Patches, 
+modules = [].concat(
+  Lib,
+  ShadowDOM,
   MDV, 
   WebElements, 
-  Pointer,
-  LoadedPatches
+  Pointer
 );
 
 // write script tags for dependencies
