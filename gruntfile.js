@@ -102,7 +102,7 @@ module.exports = function(grunt) {
   
   Platform = [].concat(
     ShadowDOMNative,
-    Patches,
+    Lib,
     MDV,
     WebComponents, 
     CustomElements,
@@ -112,7 +112,7 @@ module.exports = function(grunt) {
     
   PlatformPoly = [].concat(
     ShadowDOMPolyfill,
-    Patches,
+    Lib,
     MDV,
     WebComponents, 
     CustomElements,
