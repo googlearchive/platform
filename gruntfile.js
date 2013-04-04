@@ -43,7 +43,7 @@ module.exports = function(grunt) {
     'lib/template.js',
     'lib/inspector.js'
   ];
- 
+
   var MDV = [
     '../third_party/ChangeSummary/planner.js',
     '../third_party/ChangeSummary/change_summary.js',
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
   MDV.push(
     'lib/patches-mdv.js'
   );
-    
+
   PointerEvents = [
     'touch-action.js',
     'PointerEvent.js',
@@ -90,31 +90,31 @@ module.exports = function(grunt) {
     return 'PointerGestures/src' + p;
   });
 
-  WebComponents = [
-    'WebComponents/src/WebComponents.js'
+  HTMLImports = [
+    'HTMLImports/src/HTMLImports.js'
   ];
-  
+
   CustomElements = [
     'CustomElements/src/CustomElements.js',
     'CustomElements/src/HTMLElementElement.js',
     'CustomElements/src/Parser.js'
   ];
-  
+
   Platform = [].concat(
     ShadowDOMNative,
     Lib,
     MDV,
-    WebComponents, 
+    HTMLImports,
     CustomElements,
     PointerEvents,
     PointerGestures
   );
-    
+
   PlatformPoly = [].concat(
     ShadowDOMPolyfill,
     Lib,
     MDV,
-    WebComponents, 
+    HTMLImports,
     CustomElements,
     PointerEvents,
     PointerGestures
@@ -124,7 +124,7 @@ module.exports = function(grunt) {
     uglify: {
       Platform: {
         options: {
-          //compress: false, mangle: false, beautify: true        
+          //compress: false, mangle: false, beautify: true
         },
         files: {
           'platform.min.js': Platform
@@ -137,14 +137,14 @@ module.exports = function(grunt) {
             // https://github.com/mishoo/UglifyJS2/issues/165
             unsafe: false
           }
-          //compress: true, Xmangle: true, beautify: true, unsafe: false        
+          //compress: true, Xmangle: true, beautify: true, unsafe: false
         },
         files: {
           'platform.poly.min.js': PlatformPoly
         }
       }
     },
-    
+
     yuidoc: {
       compile: {
         name: '<%= pkg.name %>',

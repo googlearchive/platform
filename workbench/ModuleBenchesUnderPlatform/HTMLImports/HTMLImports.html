@@ -1,21 +1,21 @@
+<!DOCTYPE html>
 <!--
 Copyright 2013 The Toolkitchen Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
-<!DOCTYPE html>
 <html>
   <head>
     <title></title>
     <meta charset="UTF-8">
     <script src="../../../platform.js"></script>
-    <link rel="component" href="first-component.html">
+    <link rel="import" href="test-component.html">
   </head>
   <body>
     <script>
-      body = wrap(document.body);
-      window.addEventListener('WebComponentsReady', function() {
-        console.dir(WebComponents.cache);
+      window.addEventListener('HTMLImportsLoaded', function() {
+        console.dir(HTMLImports.cache);
+        console.log('done');
       });
     </script>
   </body>

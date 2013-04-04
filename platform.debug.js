@@ -31,7 +31,7 @@ var Lib = [
 ];
 
 var MDV = [
-  'MDV/src/mdv.js',   
+  'MDV/src/mdv.js',
   'lib/patches-mdv.js'
 ];
 
@@ -40,22 +40,22 @@ var Pointer = [
 ];
 
 var WebElements = [
-  'WebComponents/web-components.js',
+  'HTMLImports/html-imports.js',
   'CustomElements/custom-elements.js'
 ];
 
 // select ShadowDOM impl
 
-var ShadowDOM = (flags.shadow === 'polyfill') ?
-  ShadowDOMPolyfill : ShadowDOMNative;
+var ShadowDOM = (flags.shadow === 'polyfill') ? ShadowDOMPolyfill
+    : ShadowDOMNative;
 
 // construct active dependency list
 
 modules = [].concat(
   Lib,
   ShadowDOM,
-  MDV, 
-  WebElements, 
+  MDV,
+  WebElements,
   Pointer
 );
 

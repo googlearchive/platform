@@ -8,14 +8,14 @@ license that can be found in the LICENSE file.
   <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="../../../WebComponents/web-components.js"></script>
+    <script src="../../../HTMLImports/html-imports.js"></script>
     <script src="../../../CustomElements/custom-elements.js"></script>
   </head>
   <body>
     <script>
       window.addEventListener("DOMContentLoaded", function() {
         var link = document.createElement("link");
-        link.rel = "component";
+        link.rel = "import";
         link.href = "x-foo.html";
         document.head.appendChild(link);
       });
