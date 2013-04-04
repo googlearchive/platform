@@ -9,9 +9,10 @@ license that can be found in the LICENSE file.
     <title></title>
     <meta charset="UTF-8">
     <script src="../../../ShadowDOM/shadowdom.js"></script>
-    <script src="../../../lib/patches.js"></script>
-    <script src="../../../lib/querySelector.js"></script>
+    <script src="../../../lib/patches-shadowdom-polyfill.js"></script>
+    <script src="../../../lib/template.js"></script>
     <script src="../../../MDV/src/mdv.js"></script>
+    <script src="../../../lib/querySelector.js"></script>
   </head>
   <body>
     <x-foo></x-foo>
@@ -25,7 +26,7 @@ license that can be found in the LICENSE file.
         source: 'MDV'
       };
       //
-      var wrap = window.ShadowDOMPolyfill ? 
+      var wrap = window.ShadowDOMPolyfill ?
         ShadowDOMPolyfill.wrap : function(n){return n;}
       var doc = wrap(document);
       //
