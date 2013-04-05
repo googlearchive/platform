@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!--
+Copyright 2013 The Toolkitchen Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <script>
+      var done = function() {
+        top.postMessage('ok', '*');
+      }
+      window.onerror = function(x) {
+        top.postMessage(x, '*');
+      };
+      //
+      if (Math.random() <0.5) {
+        throw 'Failment';
+      }
+      done();
+    </script>
+  </body>
+</html>
