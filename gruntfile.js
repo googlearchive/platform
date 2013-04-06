@@ -87,7 +87,7 @@ module.exports = function(grunt) {
     'tap.js'
   ];
   PointerGestures = PointerGestures.map(function(p) {
-    return 'PointerGestures/src' + p;
+    return 'PointerGestures/src/' + p;
   });
 
   HTMLImports = [
