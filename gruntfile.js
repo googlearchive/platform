@@ -27,6 +27,7 @@ module.exports = function(grunt) {
     'ShadowRenderer.js',
     'wrappers/Document.js',
     'wrappers/Window.js',
+    'wrappers/MutationObserver.js',
     'wrappers/override-constructors.js'
   ];
   ShadowDOMPolyfill = ShadowDOMPolyfill.map(function(p) {
