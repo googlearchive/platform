@@ -125,6 +125,7 @@ module.exports = function(grunt) {
       Platform: {
         options: {
           //compress: false, mangle: false, beautify: true
+          sourceMap: 'platform.min.js.map'
         },
         files: {
           'platform.min.js': Platform
@@ -132,6 +133,7 @@ module.exports = function(grunt) {
       },
       PlatformPoly: {
         options: {
+          sourceMap: 'platform.poly.min.js.map',
           compress: {
             // TODO(sjmiles): should be false by default (?)
             // https://github.com/mishoo/UglifyJS2/issues/165
