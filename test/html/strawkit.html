@@ -38,7 +38,7 @@ license that can be found in the LICENSE file.
         assert.ok(elt, 'x-foo not found');
         assert.equal(elt.textContent, 'cordon bleu', 
             'x-foo has wrong textContent');
-        assert.match(elt.style.backgroundColor, /lightblue|rgb(173, 216, 230)/, 
+        assert.match(elt.style.backgroundColor, /lightblue|rgb\(173, 216, 230\)/, 
           'x-foo has wrong backgroundColor');
         done();
       });
