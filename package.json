@@ -2,10 +2,11 @@
   "name": "Platform",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt": "*",
-    "grunt-contrib-uglify": "*",
     "mocha": "*",
     "chai": "*",
-    "grunt-contrib-yuidoc": "~0.4.0"
+    "grunt": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-yuidoc": "*",
+    "grunt-karma": "*"
   }
 }

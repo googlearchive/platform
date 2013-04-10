@@ -121,7 +121,27 @@ module.exports = function(grunt) {
     PointerGestures
   );
 
+  // karma setup
+  var browsers;
+  (function() {
+    var os = require('os');
+    browsers = ['Chrome', 'Firefox'];
+    if (os.type() === 'Darwin') {
+      browsers.push('ChromeCanary');
+    }
+    if (os.type() === 'Windows_NT') {
+      browsers.push('IE');
+    }
+  })();
+
   grunt.initConfig({
+    karma: {
+      toolkit: {
+        configFile: 'conf/karma.conf.js',
+        browsers: browsers,
+        keepalive: true
+      }
+    },
     uglify: {
       Platform: {
         options: {
@@ -170,10 +190,12 @@ module.exports = function(grunt) {
   // plugins
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
-
+  grunt.loadNpmTasks('grunt-karma');
+  
   // tasks
   grunt.registerTask('default', ['uglify']);
   grunt.registerTask('minify', ['uglify']);
   grunt.registerTask('docs', ['yuidoc']);
+  grunt.registerTask('test', ['karma']);
 };
 
