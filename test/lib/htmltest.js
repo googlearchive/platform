@@ -11,20 +11,21 @@ if (window.top === window) {
     var d = document.createElement('pre');
     d.style.cssText = 'padding: 6px; background-color: lightgreen;';
     d.textContent = 'Passed';
-    document.body.insertBefore(d, document.body.firstChild);
-  }
+    document.body.appendChild(d);
+  };
   window.onerror = function(x) {
     var d = document.createElement('pre');
     d.style.cssText = 'padding: 6px; background-color: #FFE0E0;';
     d.textContent = 'FAILED: ' + x;
-    document.body.insertBefore(d, document.body.firstChild);
+    document.body.appendChild(d);
   };
 } else
 // if part of a test suite
 {
   window.done = function() {
     parent.postMessage('ok', '*');
-  }
+  };
+  
   window.onerror = function(x) {
     parent.postMessage({error: x}, '*');
   };
