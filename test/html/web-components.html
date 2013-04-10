@@ -16,10 +16,10 @@ license that can be found in the LICENSE file.
   </head>
   <body>
     <script>
-      addEventListener('HTMLImportsLoaded', function() {
+      window.addEventListener('HTMLImportsLoaded', function() {
         window.importsOk = true;
       });
-      addEventListener('WebComponentsReady', function() {
+      window.addEventListener('WebComponentsReady', function() {
         chai.assert.ok(window.importsOk, 'WebComponentsReady without HTMLImportsLoaded');
         chai.assert.ok(window.importTest, 'import failed to set global value');
         var elt = document.createElement('import-test');

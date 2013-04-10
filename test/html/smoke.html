@@ -17,7 +17,7 @@ license that can be found in the LICENSE file.
     <button is="x-baz">plain</button>
     <script>
       var assert = chai.assert;
-      addEventListener('WebComponentsReady', function() {
+      window.addEventListener('WebComponentsReady', function() {
         var p = Object.create(HTMLElement.prototype);
         p.readyCallback = function() {
           this.textContent = 'custom!';
