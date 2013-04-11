@@ -45,7 +45,9 @@
   function htmlTest(src) {
     test(src, function(done) {
       next = done;
-      iframe.src = base + src + "?" + Math.random();
+      var url = base + src;
+      var delimiter = url.indexOf('?') < 0 ? '?' : '&';
+      iframe.src = url + delimiter + Math.random();
     });
   };
 
