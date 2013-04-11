@@ -96,6 +96,7 @@ module.exports = function(grunt) {
   ];
 
   CustomElements = [
+    'CustomElements/MutationObservers/MutationObserver.js',
     'CustomElements/src/CustomElements.js',
     'CustomElements/src/HTMLElementElement.js',
     'CustomElements/src/Parser.js'
