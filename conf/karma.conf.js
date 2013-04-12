@@ -13,7 +13,7 @@ basePath = '../';
 files = [
   MOCHA,
   MOCHA_ADAPTER,
-  'lib/test/mocha-htmltest.js',
+  'tools/test/mocha-htmltest.js',
   'conf/mocha.conf.js',
   'node_modules/chai/chai.js',
   'test/js/*.js',
@@ -23,7 +23,7 @@ files = [
   // {pattern: 'PointerGestures/**/*', included: false},
   // {pattern: 'ShadowDOM/**/*', included: false},
   // {pattern: 'WebAnimations/**/*', included: false},
-  {pattern: 'lib/**/*.js', included: false},
+  {pattern: 'tools/**/*.js', included: false},
   {pattern: 'platform.*', included: false},
   {pattern: 'test/**/*.html', included: false},
   {pattern: 'test/**/*.js', included: false}
