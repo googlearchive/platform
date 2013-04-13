@@ -7,20 +7,29 @@
 (function() {
   
 var thisFile = 'platform.js';
-var scope = 'Platform';
+var scopeName = 'Platform';
 
-window[scope] = {
+function processFlags(flags) {
+  this.modules = [flags.debug ? 'platform.debug.js' : 'platform.min.js'];
+}
+
+// export 
+
+window[scopeName] = {
   entryPointName: thisFile,
-  processFlags: function(flags) {
-    this.modules = [flags.debug ? 'platform.debug.js' : 'platform.min.js'];
-  }
+  processFlags: processFlags
 };
+
+// bootstrap
 
 var script = document.querySelector('script[src*="' + thisFile + '"]');
 var src = script.attributes.src.value;
 var basePath = src.slice(0, src.indexOf(thisFile));
 
-document.write('<script src="' + basePath + '/tools/loader/loader.js" scope="' 
-  + scope + '"></script>');
+if (!window.Loader) {
+  var path = basePath + '/tools/loader/loader.js';
+  document.write('<script src="' + path + '"></script>');
+} 
+document.write('<script>Loader.load("' + scopeName + '")</script>');
   
 })();
