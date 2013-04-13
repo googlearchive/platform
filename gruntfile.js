@@ -163,7 +163,7 @@ module.exports = function(grunt) {
           sourceMap: 'platform.min.js.map',
           //mangle: false,
           //beautify: true,
-          report: 'gzip',
+          //report: 'gzip',
           compress: {
             // TODO(sjmiles): should be false by default (?)
             // https://github.com/mishoo/UglifyJS2/issues/165
@@ -179,7 +179,7 @@ module.exports = function(grunt) {
           sourceMap: 'platform.native.min.js.map',
           //mangle: false,
           //beautify: true,
-          report: 'gzip',
+          //report: 'gzip',
           compress: {
             // TODO(sjmiles): should be false by default (?)
             // https://github.com/mishoo/UglifyJS2/issues/165
