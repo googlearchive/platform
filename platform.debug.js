@@ -8,8 +8,8 @@
 
 // imports
 
-var flags = __platform__.flags;
-var base = __platform__.base;
+var flags = scope.flags;
+var base = scope.basePath;
 
 // module dependencies
 
@@ -44,19 +44,23 @@ var WebElements = [
   'CustomElements/custom-elements.js'
 ];
 
+// failure to detect native shadowDOM, or a 'truthy' value for any of these 
+// flags results in polyfill
+flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill || 
+    !HTMLElement.prototype.webkitCreateShadowRoot) && 'polyfill';
+
 // select ShadowDOM impl
 
-var ShadowDOM = (flags.shadow === 'polyfill') ? ShadowDOMPolyfill
-    : ShadowDOMNative;
+var ShadowDOM = flags.shadow ? ShadowDOMPolyfill : ShadowDOMNative;
 
 // construct active dependency list
 
 modules = [].concat(
   Lib,
   ShadowDOM,
-  MDV,
   WebElements,
-  Pointer
+  Pointer,
+  MDV
 );
 
 // write script tags for dependencies
@@ -65,4 +69,4 @@ modules.forEach(function(inSrc) {
   document.write('<script src="' + base + inSrc + '"></script>');
 });
 
-})(window.__exported_components_polyfill_scope__);
+})(Platform);
