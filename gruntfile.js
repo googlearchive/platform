@@ -102,26 +102,33 @@ module.exports = function(grunt) {
     'CustomElements/src/Parser.js'
   ];
 
-  Platform = [].concat(
+  Main = [].concat(
+    Lib,
+    MDV,
+    HTMLImports,
+    CustomElements,
+    PointerEvents,
+    PointerGestures
+  );
+    
+  PlatformNativeShadow = [].concat(
     ShadowDOMNative,
-    Lib,
-    MDV,
-    HTMLImports,
-    CustomElements,
-    PointerEvents,
-    PointerGestures
+    Main
   );
 
-  PlatformPoly = [].concat(
-    ShadowDOMPolyfill,
-    Lib,
-    MDV,
-    HTMLImports,
-    CustomElements,
-    PointerEvents,
-    PointerGestures
+  ConditionalShadowdom = [].concat(
+    'build/if-poly.js', 
+    ShadowDOMPolyfill, 
+    'build/else.js',
+    ShadowDOMNative,
+    'build/end-if.js'
   );
 
+  ConditionalPlatform = [].concat(
+    'build/shadowdom.conditional.js',
+    Main
+  );
+    
   // karma setup
   var browsers;
   (function() {
@@ -143,28 +150,44 @@ module.exports = function(grunt) {
         keepalive: true
       }
     },
+    concat: {
+      ShadowDom: {
+        files: {
+          'build/shadowdom.conditional.js': ConditionalShadowdom
+        }
+      }
+    },
     uglify: {
       Platform: {
         options: {
-          //compress: false, mangle: false, beautify: true
-          sourceMap: 'platform.min.js.map'
-        },
-        files: {
-          'platform.min.js': Platform
-        }
-      },
-      PlatformPoly: {
-        options: {
-          sourceMap: 'platform.poly.min.js.map',
+          sourceMap: 'platform.min.js.map',
+          //mangle: false,
+          //beautify: true,
+          report: 'gzip',
           compress: {
             // TODO(sjmiles): should be false by default (?)
             // https://github.com/mishoo/UglifyJS2/issues/165
             unsafe: false
           }
-          //compress: true, Xmangle: true, beautify: true, unsafe: false
         },
         files: {
-          'platform.poly.min.js': PlatformPoly
+          'platform.min.js': ConditionalPlatform
+        }
+      },
+      PlatformNative: {
+        options: {
+          sourceMap: 'platform.native.min.js.map',
+          //mangle: false,
+          //beautify: true,
+          report: 'gzip',
+          compress: {
+            // TODO(sjmiles): should be false by default (?)
+            // https://github.com/mishoo/UglifyJS2/issues/165
+            unsafe: false
+          }
+        },
+        files: {
+          'platform.native.min.js': PlatformNativeShadow
         }
       }
     },
@@ -189,13 +212,14 @@ module.exports = function(grunt) {
   });
 
   // plugins
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-karma');
   
   // tasks
-  grunt.registerTask('default', ['uglify']);
-  grunt.registerTask('minify', ['uglify']);
+  grunt.registerTask('default', ['concat', 'uglify']);
+  grunt.registerTask('minify', ['concat', 'uglify']);
   grunt.registerTask('docs', ['yuidoc']);
   grunt.registerTask('test', ['karma']);
 };

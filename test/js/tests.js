@@ -4,6 +4,13 @@
  * license that can be found in the LICENSE file.
  */
 
+htmlSuite('loader and build', function() {
+  htmlTest('html/dev-loader.html');
+  htmlTest('html/dev-loader-swizzled.html');
+  htmlTest('html/production-loader.html');
+  htmlTest('html/production-loader-forcepoly.html');
+});
+
 htmlSuite('integration', function() {
   htmlTest('html/web-components.html');
   htmlTest('html/smoke.html');
