@@ -15,9 +15,6 @@ license that can be found in the LICENSE file.
   <body>
     <script>
       chai.assert(window.Platform, 'Platform scope missing');
-      chai.assert.equal(Boolean(Platform.flags.shadow), 
-          !HTMLElement.prototype.webkitCreateShadowRoot, 
-              'impoper "shadow" flag');
       done();
     </script>
   </body>
