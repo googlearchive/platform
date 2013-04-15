@@ -5,6 +5,7 @@
     "mocha": "*",
     "chai": "*",
     "grunt": "*",
+    "grunt-contrib-concat": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-yuidoc": "*",
     "grunt-karma": "*"
