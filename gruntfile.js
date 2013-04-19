@@ -99,7 +99,8 @@ module.exports = function(grunt) {
     'CustomElements/MutationObservers/MutationObserver.js',
     'CustomElements/src/CustomElements.js',
     'CustomElements/src/HTMLElementElement.js',
-    'CustomElements/src/Parser.js'
+    'CustomElements/src/Parser.js',
+    'CustomElements/src/boot.js'
   ];
 
   Main = [].concat(
@@ -110,15 +111,15 @@ module.exports = function(grunt) {
     PointerEvents,
     PointerGestures
   );
-    
+
   PlatformNativeShadow = [].concat(
     ShadowDOMNative,
     Main
   );
 
   ConditionalShadowdom = [].concat(
-    'build/if-poly.js', 
-    ShadowDOMPolyfill, 
+    'build/if-poly.js',
+    ShadowDOMPolyfill,
     'build/else.js',
     ShadowDOMNative,
     'build/end-if.js'
@@ -128,7 +129,7 @@ module.exports = function(grunt) {
     'build/shadowdom.conditional.js',
     Main
   );
-    
+
   // karma setup
   var browsers;
   (function() {
@@ -216,7 +217,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-karma');
-  
+
   // tasks
   grunt.registerTask('default', ['concat', 'uglify']);
   grunt.registerTask('minify', ['concat', 'uglify']);
