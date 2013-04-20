@@ -11,7 +11,7 @@ license that can be found in the LICENSE file.
   <script src="../../../ShadowDOM/shadowdom.js"></script>
   <script src="../../../lib/patches-shadowdom-polyfill.js"></script>
   <script src="../../../lib/template.js"></script>
-  <script src="../../../MDV/src/mdv.js"></script>
+  <script src="../../../MDV/mdv.js"></script>
 </head>
 <body>
   <template bind="{{}}">
@@ -19,8 +19,7 @@ license that can be found in the LICENSE file.
   </template>
   <script>
     window.onload = function() {
-      body = ShadowDOMPolyfill.wrap(document.body);
-      HTMLTemplateElement.bindTree(body, {message: 'Success!'});
+      document.querySelector('template').model = {message: 'Success!'};
       Model.notifyChanges();
     }
   </script>

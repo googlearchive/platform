@@ -8,7 +8,7 @@ license that can be found in the LICENSE file.
   <head>
     <title></title>
     <meta charset="UTF-8">
-    <script src="../../MDV/src/mdv.js"></script>
+    <script src="../../MDV/mdv.js"></script>
   </head>
   <body>
     <template>
@@ -24,22 +24,22 @@ license that can be found in the LICENSE file.
           source: 'MDV'
         };
         // does NOT make {{source}} go
-        //HTMLTemplateElement.bindTree(document.body, model);
+        //HTMLTemplateElement.bindAllMustachesFrom_(document.body, model);
         //
         var t = document.body.querySelector('template');
         var i = t.createInstance();
         //
         // make {{source}} go
-        HTMLTemplateElement.bindTree(i, model);
+        HTMLTemplateElement.bindAllMustachesFrom_(i, model);
         // make {{source}} go
         //HTMLTemplateElement.bindTree(document.body, model);
         //
         document.body.appendChild(i);
         //
         // make {{source}} go
-        //HTMLTemplateElement.bindTree(i, model);
+        //HTMLTemplateElement.bindAllMustachesFrom_(i, model);
         // make {{source}} go
-        //HTMLTemplateElement.bindTree(document.body, model);
+        //HTMLTemplateElement.bindAllMustachesFrom_(document.body, model);
         //
         // needed for IE (why?)
         Model.notifyChanges();

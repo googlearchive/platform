@@ -18,9 +18,9 @@ license that can be found in the LICENSE file.
     </template>
     <script>
       document.addEventListener('WebComponentsReady', function() {
-        HTMLTemplateElement.bindTree(ShadowDOMPolyfill.wrap(document).body, {
+        document.querySelector('template').model = {
           source: "MDV"
-        });
+        };
         //
         var p = Object.create(HTMLElement.prototype);
         p.readyCallback = function() {
@@ -33,7 +33,7 @@ license that can be found in the LICENSE file.
           this.textContent = 'custom!';
         }
         document.register('x-baz', {prototype: p, extends: 'button'});
-        ShadowDOMPolyfill.wrap(document).body.appendChild(
+        document.body.appendChild(
           document.createElement('x-baz'));
       });
     </script>

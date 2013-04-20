@@ -11,7 +11,7 @@ license that can be found in the LICENSE file.
     <script src="../../../ShadowDOM/shadowdom.js"></script>
     <script src="../../../lib/patches-shadowdom-polyfill.js"></script>
     <script src="../../../lib/template.js"></script>
-    <script src="../../../MDV/src/mdv.js"></script>
+    <script src="../../../MDV/mdv.js"></script>
     <script src="../../../lib/querySelector.js"></script>
   </head>
   <body>
@@ -34,7 +34,7 @@ license that can be found in the LICENSE file.
       var t = doc.querySelector('template');
       var i = t.createInstance();
       //
-      HTMLTemplateElement.bindTree(i, model);
+      HTMLTemplateElement.bindAllMustachesFrom_(i, model);
       x.appendChild(i);
     </script>
   </body>

@@ -28,7 +28,7 @@ license that can be found in the LICENSE file.
           }
           var root = this.createShadowRoot();
           root.appendChild(t.createInstance())
-          HTMLTemplateElement.bindTree(root, {});
+          HTMLTemplateElement.bindAllMustachesFrom_(root, {});
         }
         document.register('x-foo', {prototype: p});
         Model.notifyChanges();
