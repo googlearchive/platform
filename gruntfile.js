@@ -46,7 +46,6 @@ module.exports = function(grunt) {
   ];
 
   var MDV = [
-    '../third_party/ChangeSummary/planner.js',
     '../third_party/ChangeSummary/change_summary.js',
     'compat.js',
     'side_table.js',
@@ -102,7 +101,8 @@ module.exports = function(grunt) {
     'CustomElements/src/Observer.js',
     'CustomElements/src/HTMLElementElement.js',
     'CustomElements/src/Parser.js',
-    'CustomElements/src/boot.js'
+    'CustomElements/src/boot.js',
+    'lib/patches-custom-elements.js'
   ];
 
   Main = [].concat(
