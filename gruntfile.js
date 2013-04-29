@@ -11,9 +11,10 @@ module.exports = function(grunt) {
   ShadowDOMPolyfill = [
     'sidetable.js',
     'wrappers.js',
-    'wrappers/EventTarget.js',
+    'wrappers/events.js',
     'wrappers/NodeList.js',
     'wrappers/Node.js',
+    'querySelector.js',
     'wrappers/node-interfaces.js',
     'wrappers/CharacterData.js',
     'wrappers/Element.js',
@@ -34,8 +35,7 @@ module.exports = function(grunt) {
     return 'ShadowDOM/src/' + p;
   });
   ShadowDOMPolyfill.push(
-    'lib/patches-shadowdom-polyfill.js',
-    'lib/querySelector.js'
+    'lib/patches-shadowdom-polyfill.js'
   );
 
   Lib = [
@@ -48,9 +48,8 @@ module.exports = function(grunt) {
   var MDV = [
     '../third_party/ChangeSummary/change_summary.js',
     'compat.js',
-    'side_table.js',
+    'sidetable.js',
     'model.js',
-    'node_bindings.js',
     'template_element.js'
   ];
   MDV = MDV.map(function(p) {
