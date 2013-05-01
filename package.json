@@ -7,7 +7,10 @@
     "grunt": "*",
     "grunt-contrib-concat": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-contrib-yuidoc": "*",
-    "grunt-karma": "*"
+    "grunt-contrib-yuidoc": "~0.4.0",
+    "grunt-karma-0.9.1": "~0.4.3",
+    "karma-mocha": "*",
+    "karma-script-launcher": "*",
+    "karma-crbot-reporter": "*"
   }
 }

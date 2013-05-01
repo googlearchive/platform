@@ -130,26 +130,39 @@ module.exports = function(grunt) {
     'build/shadowdom.conditional.js',
     Main
   );
-
   // karma setup
   var browsers;
   (function() {
-    var os = require('os');
-    browsers = ['Chrome', 'Firefox'];
-    if (os.type() === 'Darwin') {
-      browsers.push('ChromeCanary');
-    }
-    if (os.type() === 'Windows_NT') {
-      browsers.push('IE');
+    try {
+      var config = grunt.file.readJSON('local.json');
+      if (config.browsers) {
+        browsers = config.browsers;
+      }
+    } catch (e) {
+      var os = require('os');
+      browsers = ['Chrome', 'Firefox'];
+      if (os.type() === 'Darwin') {
+        browsers.push('ChromeCanary');
+      }
+      if (os.type() === 'Windows_NT') {
+        browsers.push('IE');
+      }
     }
   })();
-
   grunt.initConfig({
     karma: {
-      toolkit: {
+      options: {
         configFile: 'conf/karma.conf.js',
+        keepalive: true,
+        browsers: browsers
+      },
+      buildbot: {
         browsers: browsers,
-        keepalive: true
+        reporters: ['crbot'],
+        logLevel: 'OFF'
+      },
+      platform: {
+        browsers: browsers
       }
     },
     concat: {
@@ -217,12 +230,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
-  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-karma-0.9.1');
 
   // tasks
   grunt.registerTask('default', ['concat', 'uglify']);
   grunt.registerTask('minify', ['concat', 'uglify']);
   grunt.registerTask('docs', ['yuidoc']);
-  grunt.registerTask('test', ['karma']);
+  grunt.registerTask('test', ['karma:platform']);
+  grunt.registerTask('test-buildbot', ['karma:buildbot']);
 };
 
