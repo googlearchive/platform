@@ -5,6 +5,7 @@
  */
 module.exports = function(grunt) {
   ShadowDOMNative = [
+    'CustomElements/src/sidetable.js',
     'lib/patches-shadowdom-native.js'
   ];
 
@@ -46,15 +47,9 @@ module.exports = function(grunt) {
   ];
 
   var MDV = [
-    '../third_party/ChangeSummary/change_summary.js',
-    'compat.js',
-    'sidetable.js',
-    'model.js',
-    'template_element.js'
+    'MDV/third_party/ChangeSummary/change_summary.js',
+    'MDV/src/template_element.js'
   ];
-  MDV = MDV.map(function(p) {
-    return 'MDV/src/' + p;
-  });
   MDV.push(
     'lib/patches-mdv.js'
   );
@@ -113,11 +108,6 @@ module.exports = function(grunt) {
     PointerGestures
   );
 
-  PlatformNativeShadow = [].concat(
-    ShadowDOMNative,
-    Main
-  );
-
   ConditionalShadowdom = [].concat(
     'build/if-poly.js',
     ShadowDOMPolyfill,
@@ -130,6 +120,12 @@ module.exports = function(grunt) {
     'build/shadowdom.conditional.js',
     Main
   );
+  
+  NativeShadowPlatform = [].concat(
+    ShadowDOMNative,
+    Main
+  );
+  
   // karma setup
   var browsers;
   (function() {
@@ -167,9 +163,9 @@ module.exports = function(grunt) {
     },
     concat: {
       ShadowDom: {
-        files: {
-          'build/shadowdom.conditional.js': ConditionalShadowdom
-        }
+        src: ConditionalShadowdom,
+        dest: 'build/shadowdom.conditional.js',
+        nonull: true
       }
     },
     uglify: {
@@ -202,7 +198,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          'platform.native.min.js': PlatformNativeShadow
+          'platform.native.min.js': NativeShadowPlatform
         }
       }
     },
