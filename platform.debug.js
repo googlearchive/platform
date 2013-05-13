@@ -56,8 +56,8 @@ var ShadowDOM = flags.shadow ? ShadowDOMPolyfill : ShadowDOMNative;
 // construct active dependency list
 
 modules = [].concat(
-  Lib,
   ShadowDOM,
+  Lib,
   WebElements,
   Pointer,
   MDV

@@ -46,7 +46,7 @@ module.exports = function(grunt) {
     'lib/inspector.js'
   ];
 
-  var MDV = [
+  MDV = [
     'MDV/third_party/ChangeSummary/change_summary.js',
     'MDV/src/template_element.js'
   ];
