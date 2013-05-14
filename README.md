@@ -1,4 +1,4 @@
 Platform
 ========
 
-Integration tests and builds for Toolkit platform dependencies
+Integration tests and builds for Polymer platform dependencies

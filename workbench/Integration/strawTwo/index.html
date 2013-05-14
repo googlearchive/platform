@@ -32,7 +32,7 @@ license that can be found in the LICENSE file.
         If it's blue (<i><content></content></i>), then IT LIVES! 
       </template>
       <script>
-        Toolkit.register(this, {
+        Polymer.register(this, {
           created: function() {
             this.textContent = 'cordon bleu';
             this.blueate();
@@ -50,7 +50,7 @@ license that can be found in the LICENSE file.
         If it's blue (<i><content></content></i>), then IT LIVES! 
       </template>
       <script>
-        Toolkit.register(this, {
+        Polymer.register(this, {
           blueate: function() {
             this.style.backgroundColor = 'blue';
             this.style.color = 'white';
@@ -62,7 +62,7 @@ license that can be found in the LICENSE file.
     <!-- -->
     <element name="x-baz" extends="button">
       <script>
-        Toolkit.register(this, {
+        Polymer.register(this, {
           created: function() {
             this.style.color = 'lightblue';
             console.dir(this);
