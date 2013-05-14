@@ -1,24 +1,24 @@
 [submodule "ShadowDOM"]
 	path = ShadowDOM
-	url = https://github.com/toolkitchen/ShadowDOM.git
+	url = https://github.com/polymer-project/ShadowDOM.git
 [submodule "CustomElements"]
 	path = CustomElements
-	url = https://github.com/toolkitchen/CustomElements.git
+	url = https://github.com/polymer-project/CustomElements.git
 [submodule "PointerGestures"]
 	path = PointerGestures
-	url = https://github.com/toolkitchen/PointerGestures.git
+	url = https://github.com/polymer-project/PointerGestures.git
 [submodule "MDV"]
 	path = MDV
-	url = https://github.com/toolkitchen/mdv.git
+	url = https://github.com/polymer-project/mdv.git
 [submodule "WebAnimations"]
 	path = WebAnimations
 	url = https://github.com/web-animations/web-animations-js.git
 [submodule "HTMLImports"]
 	path = HTMLImports
-	url = https://github.com/toolkitchen/HTMLImports.git
+	url = https://github.com/polymer-project/HTMLImports.git
 [submodule "buildbot"]
 	path = buildbot
-	url = https://github.com/toolkitchen/buildbot.git
+	url = https://github.com/polymer-project/buildbot.git
 [submodule "tools"]
 	path = tools
-	url = https://github.com/toolkitchen/tools.git
+	url = https://github.com/polymer-project/tools.git
