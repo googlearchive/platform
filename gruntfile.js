@@ -66,7 +66,7 @@ module.exports = function(grunt) {
     'capture.js',
   ];
   PointerEvents = PointerEvents.map(function(p) {
-    return '../PointerGestures/src/PointerEvents/src/' + p;
+    return '../PointerEvents/src/' + p;
   });
 
   PointerGestures = [
