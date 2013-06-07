@@ -23,7 +23,7 @@ var ShadowDOMNative = [
 ];
 
 var ShadowDOMPolyfill = [
-  'ShadowDOM/shadowdom.js',
+  '../ShadowDOM/shadowdom.js',
   'lib/patches-shadowdom-polyfill.js'
 ];
 
@@ -35,17 +35,17 @@ var Lib = [
 ];
 
 var MDV = [
-  'MDV/mdv.js',
+  '../MDV/mdv.js',
   'lib/patches-mdv.js'
 ];
 
 var Pointer = [
-  'PointerGestures/src/pointergestures.js'
+  '../PointerGestures/src/pointergestures.js'
 ];
 
 var WebElements = [
-  'HTMLImports/html-imports.js',
-  'CustomElements/custom-elements.js',
+  '../HTMLImports/html-imports.js',
+  '../CustomElements/custom-elements.js',
   'lib/patches-custom-elements.js'
 ];
 
