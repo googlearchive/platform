@@ -62,6 +62,9 @@ module.exports = function(grunt) {
     'sidetable.js',
     'dispatcher.js',
     'installer.js',
+    'mouse.js',
+    'touch.js',
+    'ms.js',
     'platform-events.js',
     'capture.js',
   ];
