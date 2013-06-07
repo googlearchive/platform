@@ -40,7 +40,7 @@ var MDV = [
 ];
 
 var Pointer = [
-  '../PointerGestures/src/pointergestures.js'
+  '../PointerGestures/pointergestures.js'
 ];
 
 var WebElements = [
