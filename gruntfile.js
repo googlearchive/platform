@@ -47,9 +47,15 @@ module.exports = function(grunt) {
   ];
 
   MDV = [
-    '../MDV/third_party/ChangeSummary/change_summary.js',
-    '../MDV/src/template_element.js'
+    'third_party/ChangeSummary/change_summary.js',
+    'src/template_element.js',
+    'third_party/esprima.js',
+    'src/mdv_syntax.js'
   ];
+  MDV = MDV.map(function(p) {
+    return '../mdv/' + p;
+  });
+
   MDV.push(
     'lib/patches-mdv.js'
   );
