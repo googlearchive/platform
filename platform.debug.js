@@ -35,7 +35,7 @@ var Lib = [
 ];
 
 var MDV = [
-  '../MDV/mdv.js',
+  '../mdv/mdv.js',
   'lib/patches-mdv.js'
 ];
 
