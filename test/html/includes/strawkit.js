@@ -11,7 +11,7 @@ Polymer = {
     inPrototype.readyCallback = function() {
       var template = inElement.querySelector('template');
       if (template) {
-        var root = this.webkitCreateShadowRoot();
+        var root = this.createShadowRoot();
         root.appendChild(templateContent(template).cloneNode(true));
       }
       inPrototype.created.call(this);

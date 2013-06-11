@@ -24,7 +24,7 @@
     
     function createShadowRoot(node) {
       return window.ShadowDOMPolyfill ? node.createShadowRoot() :
-          node.webkitCreateShadowRoot();
+          node.createShadowRoot();
     }
     
     document.addEventListener('DOMContentLoaded', function() {

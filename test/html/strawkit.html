@@ -10,7 +10,7 @@ license that can be found in the LICENSE file.
     <script src="../../tools/test/htmltest.js"></script>
     <script src="../../node_modules/chai/chai.js"></script>
     <!-- -->
-    <script src="../../platform.js"></script>
+    <script src="../../platform.js" debug></script>
     <script src="includes/strawkit.js"></script>
   </head>
   <body>
@@ -40,6 +40,7 @@ license that can be found in the LICENSE file.
             'x-foo has wrong textContent');
         assert.match(elt.style.backgroundColor, /lightblue|rgb\(173, 216, 230\)/, 
           'x-foo has wrong backgroundColor');
+        assert.ok(elt.shadowRoot, 'shadowRoot not available as `.shadowRoot`');
         done();
       });
     </script>
