@@ -94,7 +94,9 @@ module.exports = function(grunt) {
   });
 
   HTMLImports = [
-    '../HTMLImports/src/HTMLImports.js'
+    '../HTMLImports/src/HTMLImports.js',
+    '../HTMLImports/src/Parser.js',
+    '../HTMLImports/src/boot.js'
   ];
 
   CustomElements = [
@@ -145,7 +147,6 @@ module.exports = function(grunt) {
     PointerEvents,
     PointerGestures
   );
-
   
   // karma setup
   var browsers;
