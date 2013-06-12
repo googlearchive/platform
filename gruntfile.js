@@ -49,7 +49,7 @@ module.exports = function(grunt) {
   MDV = [
     'third_party/ChangeSummary/change_summary.js',
     'src/template_element.js',
-    'third_party/esprima.js',
+    'third_party/esprima/esprima.js',
     'src/mdv_syntax.js'
   ];
   MDV = MDV.map(function(p) {
