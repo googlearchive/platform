@@ -50,7 +50,7 @@ module.exports = function(grunt) {
     'third_party/ChangeSummary/change_summary.js',
     'src/template_element.js',
     'third_party/esprima/esprima.js',
-    'src/mdv_syntax.js'
+    'util/expression_syntax.js'
   ];
   MDV = MDV.map(function(p) {
     return '../mdv/' + p;
