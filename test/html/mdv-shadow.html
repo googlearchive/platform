@@ -13,8 +13,8 @@ license that can be found in the LICENSE file.
   <script src="../../node_modules/mocha/mocha.js"></script>
   <script src="../../node_modules/chai/chai.js"></script>
   <script src="../../tools/test/htmltest.js"></script>
-  <script src="../../../mdv/tests/setup.js"></script>
   <script src="../../../mdv/mdv.js"></script>
+  <script src="../../../mdv/tests/setup.js"></script>
 </head>
 <body>
   <script>
@@ -29,14 +29,15 @@ license that can be found in the LICENSE file.
   </script>
   <!-- <script src="../../../mdv/tests/node_bindings.js"></script> -->
   <script src="../../../mdv/tests/template_element.js"></script>
-  <!-- <script src="../../../mdv/tests/mdv_syntax.js"></script> -->
+  <script src="../../../mdv/tests/expression_syntax.js"></script>
   <div id="mocha"></div>
   <script>
+    var unwrap = ShadowDOMPolyfill.unwrap;
     // mocha stomps window.onerror, save for failure case
     var htmlsuite_fail = window.onerror;
     var runner = mocha.run();
     runner.on('fail', function(test, err) {
-      htmlsuite_fail(err);
+      htmlsuite_fail(err.toString());
     });
     runner.on('end', function() {
       runner.failures || done();
