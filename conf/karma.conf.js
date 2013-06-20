@@ -1,18 +1,36 @@
 module.exports = function(karma) {
   karma.configure({
     // base path, that will be used to resolve files and exclude
-    basePath: '../',
+    basePath: '../../',
 
     // list of files / patterns to load in the browser
     files: [
-      'tools/test/mocha-htmltest.js',
-      'conf/mocha.conf.js',
-      'node_modules/chai/chai.js',
-      'test/js/*.js',
-      {pattern: 'tools/**/*.js', included: false},
-      {pattern: 'platform.*', included: false},
-      {pattern: 'test/**/*.html', included: false},
-      {pattern: 'test/**/*.js', included: false}
+      'platform/tools/test/mocha-htmltest.js',
+      'platform/conf/mocha.conf.js',
+      'platform/node_modules/chai/chai.js',
+      'platform/test/js/*.js',
+      {pattern: 'platform/node_modules/mocha/mocha.*', included: false},
+      {pattern: 'platform/tools/**/*.js', included: false},
+      {pattern: 'platform/platform.*', included: false},
+      {pattern: 'platform/test/**/*.html', included: false},
+      {pattern: 'platform/test/**/*.js', included: false},
+      {pattern: 'platform/lib/*.js', included: false},
+      {pattern: 'CustomElements/custom-elements.js', included: false},
+      {pattern: 'CustomElements/MutationObservers/*.js', included: false},
+      {pattern: 'CustomElements/src/*.js', included: false},
+      {pattern: 'HTMLImports/html-imports.js', included: false},
+      {pattern: 'HTMLImports/src/*', included: false},
+      {pattern: 'mdv/mdv.js', included: false},
+      {pattern: 'mdv/src/*', included: false},
+      {pattern: 'mdv/third_party/**/*.js', included: false},
+      {pattern: 'mdv/util/*.js', included: false},
+      {pattern: 'mdv/tests/*.js', included: false},
+      {pattern: 'ShadowDOM/shadowdom.js', included: false},
+      {pattern: 'ShadowDOM/src/**/*.js', included: false},
+      {pattern: 'PointerEvents/pointerevents.js', included: false},
+      {pattern: 'PointerEvents/src/*.js', included: false},
+      {pattern: 'PointerGestures/pointergestures.js', included: false},
+      {pattern: 'PointerGestures/src/*.js', included: false}
     ],
 
     // list of files to exclude
