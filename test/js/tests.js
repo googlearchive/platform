@@ -18,4 +18,5 @@ htmlSuite('integration', function() {
   htmlTest('html/strawkit.html');
   htmlTest('html/strawkit.html?shadow=polyfill');
   htmlTest('html/mdv-shadow.html');
+	htmlTest('html/html-import-sandbox.html');
 });
