@@ -9,8 +9,50 @@
 var thisFile = 'platform.js';
 var scopeName = 'Platform';
 
+// module dependencies
+
+var ShadowDOMNative = [
+  'lib/patches-shadowdom-native.js'
+];
+
+var ShadowDOMPolyfill = [
+  '../ShadowDOM/shadowdom.js',
+  'lib/patches-shadowdom-polyfill.js'
+];
+
+var Lib = [
+  'lib/lang.js',
+  'lib/dom.js',
+  'lib/template.js',
+  'lib/inspector.js',
+];
+
+var MDV = [
+  '../mdv/mdv.js',
+  'lib/patches-mdv.js'
+];
+
+var Pointer = [
+  '../PointerGestures/pointergestures.js'
+];
+
+var WebElements = [
+  '../HTMLImports/html-imports.js',
+  '../CustomElements/custom-elements.js',
+  'lib/patches-custom-elements.js'
+];
+
 function processFlags(flags) {
-  this.modules = [flags.debug ? 'platform.debug.js' : 'platform.min.js'];
+  flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill ||
+    !HTMLElement.prototype.webkitCreateShadowRoot) && 'polyfill';
+  var ShadowDOM = flags.shadow ? ShadowDOMPolyfill : ShadowDOMNative;
+  this.modules = [].concat(
+    ShadowDOM,
+    Lib,
+    WebElements,
+    Pointer,
+    MDV
+  );
 }
 
 // export 
