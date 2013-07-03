@@ -10,17 +10,13 @@ license that can be found in the LICENSE file.
     <meta charset="UTF-8">
     <script src="../../tools/test/htmltest.js"></script>
     <script src="../../node_modules/chai/chai.js"></script>
-    <script>
-      // force ShadowDOM polyfill
-      window.Platform = {flags: {shadow: 'polyfill'}};
-    </script>
-    <script src="../../platform.min.js"></script>
+    <!-- force ShadowDOM polyfill -->
+    <script src="../../platform.js" shadow></script>
   </head>
   <body>
     <script>
       chai.assert(window.Platform, 'Platform scope missing');
-      chai.assert.equal(Platform.flags.shadow, 'polyfill', 
-        'impoper "shadow" flag');
+      chai.assert.equal(Platform.flags.shadow, 'polyfill', 'improper "shadow" flag');
       chai.assert(window.ShadowDOMPolyfill, 'ShadowDOMPolyfill missing');
       done();
     </script>
