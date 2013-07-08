@@ -6,7 +6,7 @@
 module.exports = function(grunt) {
   ShadowDOMNative = [
     '../CustomElements/src/sidetable.js',
-    'lib/patches-shadowdom-native.js'
+    'src/patches-shadowdom-native.js'
   ];
 
   ShadowDOMPolyfill = [
@@ -36,14 +36,15 @@ module.exports = function(grunt) {
     return '../ShadowDOM/src/' + p;
   });
   ShadowDOMPolyfill.push(
-    'lib/patches-shadowdom-polyfill.js'
+    'src/patches-shadowdom-polyfill.js',
+    'src/ShadowCSS.js'
   );
 
   Lib = [
-    'lib/lang.js',
-    'lib/dom.js',
-    'lib/template.js',
-    'lib/inspector.js'
+    'src/lang.js',
+    'src/dom.js',
+    'src/template.js',
+    'src/inspector.js'
   ];
 
   MDV = [
@@ -57,7 +58,7 @@ module.exports = function(grunt) {
   });
 
   MDV.push(
-    'lib/patches-mdv.js'
+    'src/patches-mdv.js'
   );
 
   PointerEvents = [
@@ -107,7 +108,7 @@ module.exports = function(grunt) {
     '../CustomElements/src/HTMLElementElement.js',
     '../CustomElements/src/Parser.js',
     '../CustomElements/src/boot.js',
-    'lib/patches-custom-elements.js'
+    'src/patches-custom-elements.js'
   ];
 
   Main = [].concat(
@@ -141,7 +142,7 @@ module.exports = function(grunt) {
     'build/shadowdom.conditional.js',
     Lib,
     MDV,
-    'lib/patches-html-imports-csp.js',
+    'src/patches-html-imports-csp.js',
     HTMLImports,
     CustomElements,
     PointerEvents,
