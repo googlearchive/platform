@@ -135,7 +135,7 @@
 */
 (function(scope) {
 
-var ShadowCSSShim = {
+var ShadowCSS = {
   strictStyling: false,
   registry: {},
   // Shim styles for a given root associated with a name and extendsName
@@ -144,13 +144,12 @@ var ShadowCSSShim = {
   // 3. shim polyfill directives /* @polyfill */
   // 4. shim @host and scoping
   shimStyling: function(root, name, extendsName) {
-    if (window.ShadowDOMPolyfill && root) {
+    if (root) {
       // use caching to make working with styles nodes easier and to facilitate
       // lookup of extendee
       var def = this.registerDefinition(root, name, extendsName);
       // find styles and apply shimming...
       if (this.strictStyling) {
-        console.log('strict!');
         this.applyScopeToContent(root, name);
       }
       this.shimPolyfillDirectives(def.rootStyles, name);
@@ -161,10 +160,8 @@ var ShadowCSSShim = {
   // 1. shim polyfill directives /* @polyfill */
   // 2. shim @host and scoping
   shimShadowDOMStyling: function(styles, name) {
-    if (window.ShadowDOMPolyfill) {
-      this.shimPolyfillDirectives(styles, name);
-      this.applyShimming(styles, name);
-    }
+    this.shimPolyfillDirectives(styles, name);
+    this.applyShimming(styles, name);
   },
   registerDefinition: function(root, name, extendsName) {
     var def = this.registry[name] = {
@@ -212,7 +209,7 @@ var ShadowCSSShim = {
    *
   **/
   shimPolyfillDirectives: function(styles, name) {
-    if (window.ShadowDOMPolyfill && styles) {
+    if (styles) {
       Array.prototype.forEach.call(styles, function(s) {
         s.textContent = this.convertPolyfillDirectives(s.textContent, name);
       }, this);
@@ -450,6 +447,6 @@ if (window.ShadowDOMPolyfill) {
 }
 
 // exports
-scope.ShadowCSSShim = ShadowCSSShim;
+scope.ShadowCSS = ShadowCSS;
 
 })(window.Platform);
