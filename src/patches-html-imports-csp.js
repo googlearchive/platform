@@ -34,7 +34,6 @@ var xhr = {
     }
   }
 };
-xhr.loadDocument = xhr.load;
 
 xhr.loadDocument = xhr.load;
 
