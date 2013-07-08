@@ -14,7 +14,7 @@ module.exports = function(karma) {
       {pattern: 'platform/platform.*', included: false},
       {pattern: 'platform/test/**/*.html', included: false},
       {pattern: 'platform/test/**/*.js', included: false},
-      {pattern: 'platform/lib/*.js', included: false},
+      {pattern: 'platform/src/*.js', included: false},
       {pattern: 'CustomElements/custom-elements.js', included: false},
       {pattern: 'CustomElements/MutationObservers/*.js', included: false},
       {pattern: 'CustomElements/src/*.js', included: false},
