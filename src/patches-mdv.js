@@ -36,14 +36,13 @@ window.addEventListener('WebComponentsReady', function() {
   
   // dirty check periodically if platform does not have object observe.
   if (!Observer.hasObjectObserve) {
-    dirtyPoll = setInterval(check, dirtyCheckPollInterval);
+    scope.dirtyPoll = setInterval(check, dirtyCheckPollInterval);
   }
 });
 
 // exports
 
 scope.flush = dirtyCheck;
-scope.dirtyPoll = dirtyPoll;
 
 // deprecated
 
