@@ -57,7 +57,7 @@
   becomes:
 
 
-  Alternatively, if Polymer.strictPolyfillStyling is set to true then 
+  Alternatively, if Platform.ShadowCSS.strictStyling is set to true then 
   selectors are scoped by adding an attribute selector suffix to each
   simple selector that contains the host element tag name. Each element 
   in the element's ShadowDOM template is also given the scope attribute. 
