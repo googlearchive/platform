@@ -9,51 +9,8 @@
 var thisFile = 'platform.js';
 var scopeName = 'Platform';
 
-// module dependencies
-
-var ShadowDOMNative = [
-  'src/patches-shadowdom-native.js'
-];
-
-var ShadowDOMPolyfill = [
-  '../ShadowDOM/shadowdom.js',
-  'src/patches-shadowdom-polyfill.js',
-  'src/ShadowCSS.js'
-];
-
-var Lib = [
-  'src/lang.js',
-  'src/dom.js',
-  'src/template.js',
-  'src/inspector.js',
-];
-
-var MDV = [
-  '../mdv/mdv.js',
-  'src/patches-mdv.js'
-];
-
-var Pointer = [
-  '../PointerGestures/pointergestures.js'
-];
-
-var WebElements = [
-  '../HTMLImports/html-imports.js',
-  '../CustomElements/custom-elements.js',
-  'src/patches-custom-elements.js'
-];
-
 function processFlags(flags) {
-  flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill ||
-    !HTMLElement.prototype.webkitCreateShadowRoot) && 'polyfill';
-  var ShadowDOM = flags.shadow ? ShadowDOMPolyfill : ShadowDOMNative;
-  this.modules = [].concat(
-    ShadowDOM,
-    Lib,
-    WebElements,
-    Pointer,
-    MDV
-  );
+  this.modules = [flags.debug ? 'platform.debug.js' : 'platform.min.js'];
 }
 
 // export 
