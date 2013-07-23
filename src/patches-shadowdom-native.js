@@ -15,6 +15,16 @@
   window.wrap = window.unwrap = function(n){
     return n;
   }
+  
+  var originalCreateShadowRoot = HTMLElement.prototype.webkitCreateShadowRoot;
+  HTMLElement.prototype.webkitCreateShadowRoot = function() {
+    var elderRoot = this.webkitShadowRoot;
+    var root = originalCreateShadowRoot.call(this);
+    root.olderShadowRoot = elderRoot;
+    root.host = this;
+    CustomElements.watchShadow(this);
+    return root;
+  }
 
   Object.defineProperties(HTMLElement.prototype, {
     shadowRoot: {

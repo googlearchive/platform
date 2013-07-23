@@ -43,6 +43,14 @@
       }
     }
   });
+  
+  // include .host reference
+  var originalCreateShadowRoot = HTMLElement.prototype.createShadowRoot;
+  HTMLElement.prototype.createShadowRoot = function() {
+    var root = originalCreateShadowRoot.call(this);
+    root.host = this;
+    return root;
+  }
 
   //TODO(sjmiles): review method alias with Arv
   HTMLElement.prototype.webkitCreateShadowRoot =
