@@ -19,24 +19,24 @@ flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill ||
 // module dependencies
 
 var ShadowDOMNative = [
-  'lib/patches-shadowdom-native.js'
+  'src/patches-shadowdom-native.js'
 ];
 
 var ShadowDOMPolyfill = [
   '../ShadowDOM/shadowdom.js',
-  'lib/patches-shadowdom-polyfill.js'
+  'src/patches-shadowdom-polyfill.js'
 ];
 
 var Lib = [
-  'lib/lang.js',
-  'lib/dom.js',
-  'lib/template.js',
-  'lib/inspector.js',
+  'src/lang.js',
+  'src/dom.js',
+  'src/template.js',
+  'src/inspector.js',
 ];
 
 var MDV = [
   '../mdv/mdv.js',
-  'lib/patches-mdv.js'
+  'src/patches-mdv.js'
 ];
 
 var Pointer = [
@@ -46,7 +46,7 @@ var Pointer = [
 var WebElements = [
   '../HTMLImports/html-imports.js',
   '../CustomElements/custom-elements.js',
-  'lib/patches-custom-elements.js'
+  'src/patches-custom-elements.js'
 ];
 
 // select ShadowDOM impl
