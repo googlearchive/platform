@@ -24,7 +24,8 @@ var ShadowDOMNative = [
 
 var ShadowDOMPolyfill = [
   '../ShadowDOM/shadowdom.js',
-  'src/patches-shadowdom-polyfill.js'
+  'src/patches-shadowdom-polyfill.js',
+  'src/ShadowCSS.js'
 ];
 
 var Lib = [
