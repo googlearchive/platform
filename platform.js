@@ -10,54 +10,59 @@ var thisFile = 'platform.js';
 var scopeName = 'Platform';
 
 function processFlags(flags) {
-  // truthy value for any of these flags or failure to detect native
-  // shadowDOM results in polyfill
-  flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill ||
-                  !HTMLElement.prototype.webkitCreateShadowRoot) && 'polyfill';
+  if (flags.build) {
+    // use the minified build
+    this.modules = ['platform.min.js'];
+  } else {
+    // truthy value for any of these flags or failure to detect native
+    // shadowDOM results in polyfill
+    flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill ||
+                    !HTMLElement.prototype.webkitCreateShadowRoot) && 'polyfill';
 
-  var ShadowDOMNative = [
-    'src/patches-shadowdom-native.js'
-  ];
+    var ShadowDOMNative = [
+      'src/patches-shadowdom-native.js'
+    ];
 
-  var ShadowDOMPolyfill = [
-    '../ShadowDOM/shadowdom.js',
-    'src/patches-shadowdom-polyfill.js',
-    'src/ShadowCSS.js'
-  ];
+    var ShadowDOMPolyfill = [
+      '../ShadowDOM/shadowdom.js',
+      'src/patches-shadowdom-polyfill.js',
+      'src/ShadowCSS.js'
+    ];
 
-  var Lib = [
-    'src/lang.js',
-    'src/dom.js',
-    'src/template.js',
-    'src/inspector.js',
-  ];
+    var Lib = [
+      'src/lang.js',
+      'src/dom.js',
+      'src/template.js',
+      'src/inspector.js',
+    ];
 
-  var MDV = [
-    '../mdv/mdv.js',
-    'src/patches-mdv.js'
-  ];
+    var MDV = [
+      '../mdv/mdv.js',
+      'src/patches-mdv.js'
+    ];
 
-  var Pointer = [
-    '../PointerGestures/pointergestures.js'
-  ];
+    var Pointer = [
+      '../PointerGestures/pointergestures.js'
+    ];
 
-  var WebElements = [
-    '../HTMLImports/html-imports.js',
-    '../CustomElements/custom-elements.js',
-    'src/patches-custom-elements.js'
-  ];
+    var WebElements = [
+      '../HTMLImports/html-imports.js',
+      '../CustomElements/custom-elements.js',
+      'src/patches-custom-elements.js'
+    ];
 
-  // select ShadowDOM impl
-  var ShadowDOM = flags.shadow ? ShadowDOMPolyfill : ShadowDOMNative;
+    // select ShadowDOM impl
+    var ShadowDOM = flags.shadow ? ShadowDOMPolyfill : ShadowDOMNative;
 
-  // construct active dependency list
-  this.modules = [].concat(
-    ShadowDOM,
-    Lib,
-    WebElements,
-    Pointer,
-    MDV
-  );
+    // construct active dependency list
+    this.modules = [].concat(
+      ShadowDOM,
+      Lib,
+      WebElements,
+      Pointer,
+      MDV
+    );
+  }
 }
 
 // export
