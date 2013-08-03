@@ -168,6 +168,7 @@ module.exports = function(grunt) {
       }
     }
   })();
+
   grunt.initConfig({
     karma: {
       options: {
