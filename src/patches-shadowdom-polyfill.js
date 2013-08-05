@@ -55,4 +55,11 @@
   //TODO(sjmiles): review method alias with Arv
   HTMLElement.prototype.webkitCreateShadowRoot =
       HTMLElement.prototype.createShadowRoot;
+    
+  // wrap document.contains
+  // TODO(sorvell): pending https://github.com/Polymer/ShadowDOM/issues/194
+  var originalDocumentContains = document.contains;
+  document.contains = function(node) {
+    return originalDocumentContains.call(document, unwrap(node));
+  }
 })();
