@@ -37,7 +37,11 @@ function processFlags(flags) {
     ];
 
     var MDV = [
-      '../mdv/mdv.js',
+      '../ObserveJS/src/observe.js',
+      '../Node-bind/src/node-bind.js',
+      '../Template-instantiation/src/template-instantiation.js',
+      '../PolymerExpressions/third_party/esprima/esprima.js',
+      '../PolymerExpressions/src/polymer-expressions.js',
       'src/patches-mdv.js'
     ];
 

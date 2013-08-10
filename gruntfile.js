@@ -48,18 +48,13 @@ module.exports = function(grunt) {
   ];
 
   MDV = [
-    'third_party/ChangeSummary/change_summary.js',
-    'src/template_element.js',
-    'third_party/esprima/esprima.js',
-    'util/expression_syntax.js'
-  ];
-  MDV = MDV.map(function(p) {
-    return '../mdv/' + p;
-  });
-
-  MDV.push(
+    '../ObserveJS/src/observe.js',
+    '../Node-bind/src/node-bind.js',
+    '../Template-instantiation/src/template-instantiation.js',
+    '../PolymerExpressions/third_party/esprima/esprima.js',
+    '../PolymerExpressions/src/polymer-expressions.js',
     'src/patches-mdv.js'
-  );
+  ];
 
   PointerEvents = [
     'boot.js',
