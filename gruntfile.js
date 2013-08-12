@@ -44,6 +44,7 @@ module.exports = function(grunt) {
     'src/lang.js',
     'src/dom.js',
     'src/template.js',
+    'src/eomt.js'
     'src/inspector.js'
   ];
 

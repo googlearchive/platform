@@ -40,23 +40,7 @@ window.addEventListener('WebComponentsReady', function() {
   }
 });
 
-
-// endOfMicrotask
-function eomt(callback) {
-  eomt.twiddle.textContent = eomt.iterations++;
-  eomt.callbacks.push(callback);
-}
-eomt.iterations = 0;
-eomt.callbacks = [];
-eomt.twiddle = document.createTextNode();
-new MutationObserver(function() {
-  while (eomt.callbacks.length) {
-    eomt.callbacks.shift()();
-  }
-}).observe(eomt.twiddle, {characterData: true});
-
 // exports
-scope.endOfMicrotask = eomt;
 scope.flush = dirtyCheck;
 
 // deprecated
