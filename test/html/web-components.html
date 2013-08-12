@@ -21,8 +21,6 @@ license that can be found in the LICENSE file.
       window.addEventListener('WebComponentsReady', function() {
         chai.assert.ok(window.importsOk, 'WebComponentsReady without HTMLImportsLoaded');
         chai.assert.ok(window.importTest, 'import failed to set global value');
-        var elt = document.createElement('import-test');
-        chai.assert.ok(elt.ready, 'import failed to register custom element');
         done();
       });
     </script>

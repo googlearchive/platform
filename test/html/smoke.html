@@ -19,17 +19,17 @@ license that can be found in the LICENSE file.
       var assert = chai.assert;
       window.addEventListener('WebComponentsReady', function() {
         var p = Object.create(HTMLElement.prototype);
-        p.readyCallback = function() {
+        p.createdCallback = function() {
           this.textContent = 'custom!';
         }
         document.register('x-foo', {prototype: p});
         //
         var p = Object.create(HTMLButtonElement.prototype);
-        p.readyCallback = function() {
+        p.createdCallback = function() {
           this.textContent = 'custom!';
         }
         document.register('x-baz', {prototype: p, extends: 'button'});
-        document.body.appendChild(document.createElement('x-baz')).id = 'baz2';
+        document.body.appendChild(document.createElement('button', 'x-baz')).id = 'baz2';
         //
         assert.equal(document.querySelector('x-foo').textContent, 'custom!',
           'x-foo must have custom text');
@@ -37,7 +37,7 @@ license that can be found in the LICENSE file.
         assert.equal(document.querySelector('[is=x-baz]').textContent,
           'custom!', 'button is="x-baz" must have custom text');
         assert.equal(document.querySelector('#baz2').textContent, 'custom!',
-          'x-baz must have custom text');
+          '#x-baz2 must have custom text');
         //
         done();
       });

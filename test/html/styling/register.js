@@ -6,7 +6,7 @@
     }
     var ctor = document.register(name, {
       prototype: Object.create(proto, {
-        readyCallback: {
+        createdCallback: {
           value: function() {
             if (templates) {
               templates.forEach(function(t) {
