@@ -10,11 +10,24 @@ license that can be found in the LICENSE file.
   <title>MDV + ShadowDOM Polyfill Integration Tests</title>
   <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
   <script src="../../../ShadowDOM/shadowdom.js"></script>
+  <script>
+    var parserHasNativeTemplate = function() {
+      var div = document.createElement('div');
+      div.innerHTML = '<table><template>';
+      return div.firstChild.firstChild &&
+             div.firstChild.firstChild.tagName == 'TEMPLATE';
+    }();
+
+    var forceCollectObservers = true;
+  </script>
   <script src="../../node_modules/mocha/mocha.js"></script>
   <script src="../../node_modules/chai/chai.js"></script>
   <script src="../../tools/test/htmltest.js"></script>
-  <script src="../../../mdv/tests/setup.js"></script>
-  <script src="../../../mdv/mdv.js"></script>
+  <script src="../../../ObserveJS/src/observe.js"></script>
+  <script src="../../../Node-bind/src/node-bind.js"></script>
+  <script src="../../../PolymerExpressions/src/polymer-expressions.js"></script>
+  <script src="../../../PolymerExpressions/third_party/esprima/esprima.js"></script>
+  <script src="../../../Template-instantiation/src/template-instantiation.js"></script>
 </head>
 <body>
   <script>
@@ -27,9 +40,8 @@ license that can be found in the LICENSE file.
     var assert = chai.assert;
 
   </script>
-  <!-- <script src="../../../mdv/tests/node_bindings.js"></script> -->
-  <script src="../../../mdv/tests/template_element.js"></script>
-  <script src="../../../mdv/tests/expression_syntax.js"></script>
+  <script src="../../../PolymerExpressions/tests/polymer-expressions-tests.js"></script>
+  <script src="../../../Template-instantiation/tests/template-instantiation-tests.js"></script>
   <div id="mocha"></div>
   <script>
     var unwrap = ShadowDOMPolyfill.unwrap;
