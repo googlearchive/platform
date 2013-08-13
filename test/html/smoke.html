@@ -37,7 +37,7 @@ license that can be found in the LICENSE file.
         assert.equal(document.querySelector('[is=x-baz]').textContent,
           'custom!', 'button is="x-baz" must have custom text');
         assert.equal(document.querySelector('#baz2').textContent, 'custom!',
-          '#x-baz2 must have custom text');
+          'button is=x-baz can be created via document.createElement(button, x-baz)');
         //
         done();
       });
