@@ -20,7 +20,7 @@ function dirtyCheck() {
 
 // call notifyChanges in Model scope
 function check() {
-  Platform.performMicrotaskCheckpoint();
+  scope.endOfMicrotask(Platform.performMicrotaskCheckpoint);
 };
 
 var dirtyCheckPollInterval = 125;
@@ -41,7 +41,6 @@ window.addEventListener('WebComponentsReady', function() {
 });
 
 // exports
-
 scope.flush = dirtyCheck;
 
 // deprecated

@@ -33,6 +33,7 @@ function processFlags(flags) {
       'src/lang.js',
       'src/dom.js',
       'src/template.js',
+      'src/microtask.js',
       'src/inspector.js',
     ];
 
