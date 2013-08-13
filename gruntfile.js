@@ -44,7 +44,6 @@ module.exports = function(grunt) {
     'src/lang.js',
     'src/dom.js',
     'src/template.js',
-    'src/microtask.js'
     'src/inspector.js'
   ];
 
@@ -104,7 +103,8 @@ module.exports = function(grunt) {
     '../CustomElements/src/HTMLElementElement.js',
     '../CustomElements/src/Parser.js',
     '../CustomElements/src/boot.js',
-    'src/patches-custom-elements.js'
+    'src/patches-custom-elements.js',
+    'src/microtask.js'
   ];
 
   Main = [].concat(
