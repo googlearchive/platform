@@ -33,8 +33,7 @@ function processFlags(flags) {
       'src/lang.js',
       'src/dom.js',
       'src/template.js',
-      'src/microtask.js',
-      'src/inspector.js',
+      'src/inspector.js'
     ];
 
     var MDV = [
@@ -53,7 +52,8 @@ function processFlags(flags) {
     var WebElements = [
       '../HTMLImports/html-imports.js',
       '../CustomElements/custom-elements.js',
-      'src/patches-custom-elements.js'
+      'src/patches-custom-elements.js',
+      'src/microtask.js'
     ];
 
     // select ShadowDOM impl

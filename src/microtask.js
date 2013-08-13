@@ -12,7 +12,8 @@ function eomt(callback) {
   twiddle.textContent = iterations++;
   callbacks.push(callback);
 }
-new MutationObserver(function() {
+var MO = window.MutationObserver || window.JsMutationObserver;
+new MO(function() {
   while (callbacks.length) {
     callbacks.shift()();
   }
