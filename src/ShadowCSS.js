@@ -174,7 +174,7 @@ var ShadowCSS = {
     def.rootStyles = styles;
     def.scopeStyles = def.rootStyles;
     var extendee = this.registry[def.extendsName];
-    if (extendee) {
+    if (extendee && root.querySelector('shadow')) {
       def.scopeStyles = def.scopeStyles.concat(extendee.scopeStyles);
     }
     return def;

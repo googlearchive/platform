@@ -95,12 +95,23 @@ license that can be found in the LICENSE file.
     <div>padding: 20px</div>
   </template>
 
+  <template id="x-zim2">
+    <style>
+      @host {
+        * {
+          padding: 20px;
+        }
+      }
+    </style>
+    <div>padding: 20px</div>
+  </template>
   
   <script>
     XFoo = register('x-foo', '', HTMLElement.prototype, ['x-foo']);
     XBar = register('x-bar', 'x-foo', XFoo.prototype, ['x-foo', 'x-bar']);
     XZot = register('x-zot', 'x-bar', XBar.prototype, ['x-foo', 'x-bar', 'x-zot']);
     XZim = register('x-zim', 'x-zot', XZot.prototype, ['x-foo', 'x-bar', 'x-zot', 'x-zim']);
+    XZim2 = register('x-zim2', 'x-zot', XZot.prototype, ['x-foo', 'x-bar', 'x-zot', 'x-zim2']);
     register('x-scope', '', HTMLElement.prototype, ['x-scope']);
     register('x-button', '', HTMLButtonElement.prototype, ['x-button']);
   </script>
@@ -128,6 +139,9 @@ license that can be found in the LICENSE file.
   
   <h4>Expected: red background with black text and orange border and 20px padding</h4>
   <x-zim></x-zim>
+
+  <h4>Expected: 20px padding</h4>
+  <x-zim2></x-zim2>
   
   <script>
     document.addEventListener('WebComponentsReady', function() {
@@ -176,10 +190,24 @@ license that can be found in the LICENSE file.
         '@host styles are applied to given selector (color)');
       chai.assert.equal(zimStyle.paddingTop, '20px',
         '@host styles are loaded via external sheet in import (paddingTop)');
-        chai.assert.equal(zimStyle.paddingLeft, '20px',
+      chai.assert.equal(zimStyle.paddingLeft, '20px',
         '@host styles are loaded via external sheet in import (paddingLeft)');
       zim.offsetHeight;
+
+      var zim2 = document.querySelector('x-zim2');
+      var zimStyle2 = getComputedStyle(zim2);
+      chai.assert.equal(zimStyle2.borderTopColor, 'rgb(0, 0, 0)', 
+        '@host styles are not combined without <shadow> (borderTopColor)');
+      chai.assert.equal(zimStyle2.borderBottomColor, 'rgb(0, 0, 0)', 
+        '@host styles are not combined without <shadow> (borderBottomColor)');
+      chai.assert.equal(zimStyle2.paddingTop, '20px',
+        '@host styles are loaded via external sheet in import (paddingTop)');
+      chai.assert.equal(zimStyle2.paddingLeft, '20px',
+        '@host styles are loaded via external sheet in import (paddingLeft)');
+
       done();
+
+
     });
   </script>
 </body>
