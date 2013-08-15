@@ -4,6 +4,23 @@
  * license that can be found in the LICENSE file.
  */
 module.exports = function(grunt) {
+  var path = require('path');
+  function readManifest(filename, modules) {
+    modules = modules || [];
+    grunt.log.writeln('filename: ' + filename);
+    var lines = grunt.file.readJSON(filename);
+    var dir = path.dirname(filename);
+    lines.forEach(function(line) {
+      if (line.slice(-1) == '/') {
+        // recurse
+        readManifest(path.join(dir, line, 'build.json'), modules);
+      } else {
+        modules.push(path.join(dir, line));
+      }
+    });
+    return modules;
+  }
+
   ShadowDOMNative = [
     '../CustomElements/src/sidetable.js',
     'src/patches-shadowdom-native.js'
