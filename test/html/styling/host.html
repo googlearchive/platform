@@ -88,6 +88,7 @@ license that can be found in the LICENSE file.
       @host {
         * {
           padding: 20px;
+          border-top-color: brown;
         }
       }
     </style>
@@ -182,7 +183,7 @@ license that can be found in the LICENSE file.
       chai.assert.equal(zimStyle.backgroundColor, 'rgb(255, 0, 0)', 
         '@host styles are inherited (backgroundColor)');
       
-      chai.assert.equal(zimStyle.borderTopColor, 'rgb(255, 165, 0)', 
+      chai.assert.equal(zimStyle.borderTopColor, 'rgb(165, 42, 42)', 
         '@host styles are combined with inherited @host styles (borderTopColor)');
       chai.assert.equal(zimStyle.borderBottomColor, 'rgb(255, 165, 0)', 
         '@host styles are combined with inherited @host styles (borderBottomColor)');
