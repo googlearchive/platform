@@ -17,7 +17,7 @@ function processFlags(flags) {
     // truthy value for any of these flags, or failure to detect native
     // ShadowDOM, results in polyfill
     flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill ||
-      !HTMLElement.prototype.webkitCreateShadowRoot) && 'polyfill';
+      !HTMLElement.prototype.createShadowRoot) && 'polyfill';
 
     var ShadowDOMNative = [
       'src/patches-shadowdom-native.js'
