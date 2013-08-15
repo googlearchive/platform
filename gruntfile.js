@@ -52,7 +52,7 @@ module.exports = function(grunt) {
   MDV = [
     '../observe-js/src/observe.js',
     '../NodeBind/src/NodeBind.js',
-    '../TemplateInstances/src/TemplateInstances.js',
+    '../TemplateBinding/src/TemplateBinding.js',
     '../polymer-expressions/third_party/esprima/esprima.js',
     '../polymer-expressions/src/polymer-expressions.js',
     'src/patches-mdv.js'
