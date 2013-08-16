@@ -16,7 +16,7 @@ license that can be found in the LICENSE file.
   <body>
     <script>
       chai.assert(window.Platform, 'Platform scope missing');
-      chai.assert.equal(Platform.flags.shadow, 'polyfill', 'improper "shadow" flag');
+      chai.assert.equal(Platform.flags.shadow, true, 'improper "shadow" flag');
       chai.assert(window.ShadowDOMPolyfill, 'ShadowDOMPolyfill missing');
       done();
     </script>
