@@ -18,7 +18,7 @@ htmlSuite('integration', function() {
   //htmlTest('html/strawkit.html');
   //htmlTest('html/strawkit.html?shadow=polyfill');
   htmlTest('html/mdv-shadow.html');
-	//htmlTest('html/html-import-sandbox.html');
+  //htmlTest('html/html-import-sandbox.html');
 });
 
 htmlSuite('styling', function() {
@@ -29,4 +29,8 @@ htmlSuite('styling', function() {
   htmlTest('html/styling/pseudos.html');
   htmlTest('html/styling/pseudos.html?shadow');
   htmlTest('html/styling/polyfill-directive.html');
+});
+
+htmlSuite('Library Cooperation', function() {
+  htmlTest('html/jquery-shadowdom-polyfill.html');
 });
