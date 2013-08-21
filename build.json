@@ -1,6 +1,6 @@
 [
   "build/if-poly.js",
-  "../ShadowDOM/",
+  "../ShadowDOM/build.json",
   "build/else.js",
   "../CustomElements/src/sidetable.js",
   "src/patches-shadowdom-native.js",
@@ -11,13 +11,13 @@
   "src/inspector.js",
   "../observe-js/src/observe.js",
   "../NodeBind/src/NodeBind.js",
-  "../TemplateInstances/src/TemplateInstances.js",
-  "../polymer-expressions/",
+  "../TemplateBinding/src/TemplateBinding.js",
+  "../polymer-expressions/build.json",
   "src/patches-mdv.js",
-  "../HTMLImports/",
-  "../CustomElements/",
+  "../HTMLImports/build.json",
+  "../CustomElements/build.json",
   "src/patches-custom-elements.js",
   "src/microtask.js",
-  "../PointerEvents/",
-  "../PointerGestures/"
+  "../PointerEvents/build.json",
+  "../PointerGestures/build.json"
 ]
