@@ -1,0 +1,23 @@
+[
+  "build/if-poly.js",
+  "../ShadowDOM/build.json",
+  "build/else.js",
+  "../CustomElements/src/sidetable.js",
+  "src/patches-shadowdom-native.js",
+  "build/end-if.js",
+  "src/lang.js",
+  "src/dom.js",
+  "src/template.js",
+  "src/inspector.js",
+  "../observe-js/src/observe.js",
+  "../NodeBind/src/NodeBind.js",
+  "../TemplateBinding/src/TemplateBinding.js",
+  "../polymer-expressions/build.json",
+  "src/patches-mdv.js",
+  "../HTMLImports/build.json",
+  "../CustomElements/build.json",
+  "src/patches-custom-elements.js",
+  "src/microtask.js",
+  "../PointerEvents/build.json",
+  "../PointerGestures/build.json"
+]

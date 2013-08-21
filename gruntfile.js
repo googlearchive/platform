@@ -4,149 +4,25 @@
  * license that can be found in the LICENSE file.
  */
 module.exports = function(grunt) {
-  ShadowDOMNative = [
-    '../CustomElements/src/sidetable.js',
-    'src/patches-shadowdom-native.js'
-  ];
 
-  ShadowDOMPolyfill = [
-    'sidetable.js',
-    'wrappers.js',
-    'wrappers/events.js',
-    'wrappers/NodeList.js',
-    'wrappers/Node.js',
-    'querySelector.js',
-    'wrappers/node-interfaces.js',
-    'wrappers/CharacterData.js',
-    'wrappers/Element.js',
-    'wrappers/HTMLElement.js',
-    'wrappers/HTMLContentElement.js',
-    'wrappers/HTMLShadowElement.js',
-    'wrappers/HTMLTemplateElement.js',
-    'wrappers/HTMLUnknownElement.js',
-    'wrappers/generic.js',
-    'wrappers/ShadowRoot.js',
-    'ShadowRenderer.js',
-    'wrappers/elements-with-form-property.js',
-    'wrappers/Document.js',
-    'wrappers/Window.js',
-    'wrappers/MutationObserver.js',
-    'wrappers/Range.js',
-    'wrappers/override-constructors.js'
-  ];
-  ShadowDOMPolyfill = ShadowDOMPolyfill.map(function(p) {
-    return '../ShadowDOM/src/' + p;
-  });
-  ShadowDOMPolyfill.push(
-    'src/patches-shadowdom-polyfill.js',
-    'src/ShadowCSS.js'
-  );
+  // recursive module builder
+  var path = require('path');
+  function readManifest(filename, modules) {
+    modules = modules || [];
+    var lines = grunt.file.readJSON(filename);
+    var dir = path.dirname(filename);
+    lines.forEach(function(line) {
+      var fullpath = path.join(dir, line);
+      if (line.slice(-5) == '.json') {
+        // recurse
+        readManifest(fullpath, modules);
+      } else {
+        modules.push(fullpath);
+      }
+    });
+    return modules;
+  }
 
-  Lib = [
-    'src/lang.js',
-    'src/dom.js',
-    'src/template.js',
-    'src/inspector.js'
-  ];
-
-  MDV = [
-    '../observe-js/src/observe.js',
-    '../NodeBind/src/NodeBind.js',
-    '../TemplateBinding/src/TemplateBinding.js',
-    '../polymer-expressions/third_party/esprima/esprima.js',
-    '../polymer-expressions/src/polymer-expressions.js',
-    'src/patches-mdv.js'
-  ];
-
-  PointerEvents = [
-    'boot.js',
-    'touch-action.js',
-    'PointerEvent.js',
-    'pointermap.js',
-    'sidetable.js',
-    'dispatcher.js',
-    'installer.js',
-    'mouse.js',
-    'touch.js',
-    'ms.js',
-    'platform-events.js',
-    'capture.js',
-  ];
-  PointerEvents = PointerEvents.map(function(p) {
-    return '../PointerEvents/src/' + p;
-  });
-
-  PointerGestures = [
-    'PointerGestureEvent.js',
-    'initialize.js',
-    'sidetable.js',
-    'pointermap.js',
-    'dispatcher.js',
-    'hold.js',
-    'track.js',
-    'flick.js',
-    'tap.js'
-  ];
-  PointerGestures = PointerGestures.map(function(p) {
-    return '../PointerGestures/src/' + p;
-  });
-
-  HTMLImports = [
-    '../HTMLImports/src/HTMLImports.js',
-    '../HTMLImports/src/Parser.js',
-    '../HTMLImports/src/boot.js'
-  ];
-
-  CustomElements = [
-    '../CustomElements/MutationObservers/MutationObserver.js',
-    '../CustomElements/src/MutationObserver.js',
-    '../CustomElements/src/CustomElements.js',
-    '../CustomElements/src/Observer.js',
-    '../CustomElements/src/HTMLElementElement.js',
-    '../CustomElements/src/Parser.js',
-    '../CustomElements/src/boot.js',
-    'src/patches-custom-elements.js',
-    'src/microtask.js'
-  ];
-
-  Main = [].concat(
-    Lib,
-    MDV,
-    HTMLImports,
-    CustomElements,
-    PointerEvents,
-    PointerGestures
-  );
-
-  ConditionalShadowdom = [].concat(
-    'build/if-poly.js',
-    ShadowDOMPolyfill,
-    'build/else.js',
-    ShadowDOMNative,
-    'build/end-if.js'
-  );
-
-  ConditionalPlatform = [].concat(
-    'build/shadowdom.conditional.js',
-    Main
-  );
-  
-  NativeShadowPlatform = [].concat(
-    ShadowDOMNative,
-    Main
-  );
-
-  SandboxedChromeAppsPlatform = [].concat(
-    'build/shadowdom.conditional.js',
-    Lib,
-    MDV,
-    'src/patches-html-imports-csp.js',
-    HTMLImports,
-    CustomElements,
-    PointerEvents,
-    PointerGestures
-  );
-  
   // karma setup
   var browsers;
   (function() {
@@ -183,61 +59,31 @@ module.exports = function(grunt) {
         browsers: browsers
       }
     },
-    concat: {
-      ShadowDom: {
-        src: ConditionalShadowdom,
-        dest: 'build/shadowdom.conditional.js',
-        nonull: true
+    concat_sourcemap: {
+      Platform: {
+        options: {
+          sourcesContent: true
+        },
+        files: {
+          'platform.concat.js': readManifest('build.json')
+        }
       }
     },
     uglify: {
       options: {
         banner: grunt.file.read('LICENSE'),
-        nonull: true
+        nonull: true,
+        compress: {
+          unsafe: false
+        }
       },
       Platform: {
         options: {
           sourceMap: 'platform.min.js.map',
-          //mangle: false,
-          //beautify: true,
-          //report: 'gzip',
-          compress: {
-            // TODO(sjmiles): should be false by default (?)
-            // https://github.com/mishoo/UglifyJS2/issues/165
-            unsafe: false
-          }
+          sourceMapIn: 'platform.concat.js.map'
         },
         files: {
-          'platform.min.js': ConditionalPlatform
-        }
-      },
-      PlatformNative: {
-        options: {
-          sourceMap: 'platform.native.min.js.map',
-          //mangle: false,
-          //beautify: true,
-          //report: 'gzip',
-          compress: {
-            // TODO(sjmiles): should be false by default (?)
-            // https://github.com/mishoo/UglifyJS2/issues/165
-            unsafe: false
-          }
-        },
-        files: {
-          'platform.native.min.js': NativeShadowPlatform
-        }
-      },
-      PlatformSandboxedChromeApps: {
-        options: {
-          sourceMap: 'platform.sandbox.min.js.map',
-          compress: {
-            // TODO(sjmiles): should be false by default (?)
-            // https://github.com/mishoo/UglifyJS2/issues/165
-            unsafe: false
-          }
-        },
-        files: {
-          'platform.sandbox.min.js': SandboxedChromeAppsPlatform
+          'platform.min.js': 'platform.concat.js'
         }
       }
     },
@@ -266,10 +112,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-yuidoc');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-concat-sourcemap');
 
   // tasks
-  grunt.registerTask('default', ['concat', 'uglify']);
-  grunt.registerTask('minify', ['concat', 'uglify']);
+  grunt.registerTask('sourcemap_copy', 'Copy sourcesContent between sourcemaps', function(source, dest) {
+    var sourceMap = grunt.file.readJSON(source);
+    var destMap = grunt.file.readJSON(dest);
+    destMap.sourcesContent = sourceMap.sourcesContent;
+    grunt.file.write(dest, JSON.stringify(destMap));
+  });
+
+  grunt.registerTask('default', ['concat_sourcemap', 'uglify', 'sourcemap_copy:platform.concat.js.map:platform.min.js.map']);
   grunt.registerTask('docs', ['yuidoc']);
   grunt.registerTask('test', ['karma:platform']);
   grunt.registerTask('test-buildbot', ['karma:buildbot']);
