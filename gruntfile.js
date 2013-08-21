@@ -60,7 +60,7 @@ module.exports = function(grunt) {
       }
     },
     concat_sourcemap: {
-      recursive: {
+      Platform: {
         options: {
           sourcesContent: true
         },
@@ -72,12 +72,12 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: grunt.file.read('LICENSE'),
-        nonull: true
+        nonull: true,
         compress: {
           unsafe: false
         }
       },
-      recursive: {
+      Platform: {
         options: {
           sourceMap: 'platform.min.js.map',
           sourceMapIn: 'platform.concat.js.map'
