@@ -9,7 +9,10 @@ license that can be found in the LICENSE file.
   <meta charset="UTF-8">
   <title>MDV + ShadowDOM Polyfill Integration Tests</title>
   <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
-  <script src="../../../ShadowDOM/shadowdom.js"></script>
+  <script src="../../platform.js" shadow="polyfill"></script>
+  <script src="../../node_modules/mocha/mocha.js"></script>
+  <script src="../../node_modules/chai/chai.js"></script>
+  <script src="../../tools/test/htmltest.js"></script>
   <script>
     var parserHasNativeTemplate = function() {
       var div = document.createElement('div');
@@ -20,14 +23,6 @@ license that can be found in the LICENSE file.
 
     var forceCollectObservers = true;
   </script>
-  <script src="../../node_modules/mocha/mocha.js"></script>
-  <script src="../../node_modules/chai/chai.js"></script>
-  <script src="../../tools/test/htmltest.js"></script>
-  <script src="../../../observe-js/src/observe.js"></script>
-  <script src="../../../NodeBind/src/NodeBind.js"></script>
-  <script src="../../../polymer-expressions/src/polymer-expressions.js"></script>
-  <script src="../../../polymer-expressions/third_party/esprima/esprima.js"></script>
-  <script src="../../../TemplateBinding/src/TemplateBinding.js"></script>
 </head>
 <body>
   <script>
@@ -44,7 +39,6 @@ license that can be found in the LICENSE file.
   <script src="../../../TemplateBinding/tests/tests.js"></script>
   <div id="mocha"></div>
   <script>
-    var unwrap = ShadowDOMPolyfill.unwrap;
     // mocha stomps window.onerror, save for failure case
     var htmlsuite_fail = window.onerror;
     var runner = mocha.run();
