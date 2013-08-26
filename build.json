@@ -1,6 +1,8 @@
 [
   "build/if-poly.js",
   "../ShadowDOM/build.json",
+  "src/patches-shadowdom-polyfill.js",
+  "src/ShadowCSS.js",
   "build/else.js",
   "../CustomElements/src/sidetable.js",
   "src/patches-shadowdom-native.js",
