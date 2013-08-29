@@ -11,10 +11,19 @@ window.logFlags = window.logFlags || {};
     o = o.split('=');
     o[0] && (flags[o[0]] = o[1] || true);
   });
-  // failure to detect native shadowDOM, or a 'truthy' value for any of these 
-  // flags results in polyfill
-  flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill || 
-      !HTMLElement.prototype.webkitCreateShadowRoot) && 'polyfill';
+  // If any of these flags match 'native', then force native ShadowDOM; any
+  // other truthy value, or failure to detect native
+  // ShadowDOM, results in polyfill 
+  flags.shadow = (flags.shadow || flags.shadowdom || flags.polyfill);
+  if (flags.shadow === 'native') {
+    flags.shadow = false;
+  } else {
+    flags.shadow = flags.shadow || !HTMLElement.prototype.createShadowRoot
+        && 'polyfill';
+  }
+
+
+
   // export
   scope.flags = flags;
 })(Platform);

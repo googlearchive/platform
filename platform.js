@@ -14,11 +14,6 @@ function processFlags(flags) {
     // use the minified build
     this.modules = ['platform.min.js'];
   } else {
-    // truthy value for any of these flags, or failure to detect native
-    // ShadowDOM, results in polyfill
-    //flags.shadow = (flags.shadowdom || flags.shadow || flags.polyfill ||
-    // !HTMLElement.prototype.createShadowRoot) && 'polyfill';
-
     // If any of these flags match 'native', then force native ShadowDOM; any
     // other truthy value, or failure to detect native
     // ShadowDOM, results in polyfill 
