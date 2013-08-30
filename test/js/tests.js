@@ -29,6 +29,7 @@ htmlSuite('styling', function() {
   htmlTest('html/styling/pseudos.html');
   htmlTest('html/styling/pseudos.html?shadow');
   htmlTest('html/styling/polyfill-directive.html');
+  htmlTest('html/styling/polyfill-rule.html');
 });
 
 htmlSuite('Library Cooperation', function() {
