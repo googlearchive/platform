@@ -11,41 +11,26 @@ style.textContent = 'template {display: none !important;} /* injected by platfor
 var head = document.querySelector('head');
 head.insertBefore(style, head.firstChild);
 
-// dirtyCheck (with logging)
-function dirtyCheck() {
-  logFlags.data && console.group("Platform.performMicrotaskCheckpoint()");
-  check();
+// flush (with logging)
+function flush() {
+  logFlags.data && console.group("Platform.flush()");
+  scope.endOfMicrotask(Platform.performMicrotaskCheckpoint);
   logFlags.data && console.groupEnd();
 };
 
-// call notifyChanges in Model scope
-function check() {
-  scope.endOfMicrotask(Platform.performMicrotaskCheckpoint);
-};
-
-var dirtyCheckPollInterval = 125;
 
 // polling dirty checker
+var FLUSH_POLL_INTERVAL = 125;
 window.addEventListener('WebComponentsReady', function() {
-  // timeout keeps the profile clean
-  //setTimeout(function() {
-    //console.profile('initial model dirty check');
-    dirtyCheck();
-    //console.profileEnd();
-  //}, 0);
-  
-  // dirty check periodically if platform does not have object observe.
+  flush();
+  // flush periodically if platform does not have object observe.
   if (!Observer.hasObjectObserve) {
-    scope.dirtyPoll = setInterval(check, dirtyCheckPollInterval);
+    scope.flushPoll = setInterval(flush, FLUSH_POLL_INTERVAL);
   }
 });
 
 // exports
-scope.flush = dirtyCheck;
-
-// deprecated
-
-window.dirtyCheck = dirtyCheck;
+scope.flush = flush;
 
 })(window.Platform);
 
