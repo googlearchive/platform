@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<script src="../../node_modules/chai/chai.js"></script>
+<script src="../../tools/test/htmltest.js"></script>
+<script src="../../platform.js"></script>
+
+<template id="template">
+  <div id="list">
+    <template id="t" repeat>
+      <div>{{label}}</div>
+    </template>
+  </div>
+</template>
+
+<div id="foo"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var assert = chai.assert;
+    var wrap = ShadowDOMPolyfill.wrap;
+
+    var host = document.querySelector('#foo');
+    var root = host.createShadowRoot();
+    var template = document.querySelector('#template');
+    root.appendChild(template.content);
+
+    var m = [
+      {label: 'item1'},
+      {label: 'item2'}
+    ];
+
+    host.offsetHeight;
+
+    host.shadowRoot.querySelector('#t').model = m;
+    Platform.performMicrotaskCheckpoint();
+
+    setTimeout(function() {
+      assert.equal(host.shadowRoot.querySelector('#list').children.length, 3, 'list.children.length (should be 3 but returns 1 in ShadowDOM polyfill)');
+      done();
+    }, 1);
+  });
+</script>

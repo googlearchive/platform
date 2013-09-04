@@ -19,6 +19,7 @@ htmlSuite('integration', function() {
   //htmlTest('html/strawkit.html?shadow=polyfill');
   htmlTest('html/mdv-shadow.html');
   //htmlTest('html/html-import-sandbox.html');
+  htmlTest('html/template-repeat-wrappers.html');
 });
 
 htmlSuite('styling', function() {
