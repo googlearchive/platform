@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <script src="../../node_modules/chai/chai.js"></script>
 <script src="../../tools/test/htmltest.js"></script>
 <script src="../../platform.js"></script>
@@ -15,12 +15,10 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var assert = chai.assert;
-    var wrap = ShadowDOMPolyfill.wrap;
+    var template = document.querySelector('#template');
 
     var host = document.querySelector('#foo');
     var root = host.createShadowRoot();
-    var template = document.querySelector('#template');
     root.appendChild(template.content);
 
     var m = [
@@ -28,14 +26,18 @@
       {label: 'item2'}
     ];
 
+    host.shadowRoot.querySelector('#t').model = m;
+
+    // TODO(sjmiles): forcing SD to render at this point is not necessary, 
+    // except to understand why it causes a failure at the assertion
     host.offsetHeight;
 
-    host.shadowRoot.querySelector('#t').model = m;
+    // make template repeat synchronously
     Platform.performMicrotaskCheckpoint();
 
-    setTimeout(function() {
-      assert.equal(host.shadowRoot.querySelector('#list').children.length, 3, 'list.children.length (should be 3 but returns 1 in ShadowDOM polyfill)');
-      done();
-    }, 1);
+    var list = host.shadowRoot.querySelector('#list');
+    chai.assert.equal(list.children.length, 3, 'list.children.length (should be 3 but returns 1)');
+
+    done();
   });
 </script>
