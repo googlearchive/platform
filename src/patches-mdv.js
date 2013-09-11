@@ -18,7 +18,6 @@ function flush() {
   logFlags.data && console.groupEnd();
 };
 
-
 // polling dirty checker
 var FLUSH_POLL_INTERVAL = 125;
 window.addEventListener('WebComponentsReady', function() {
