@@ -1,5 +1,6 @@
 [
   "../CustomElements/src/sidetable.js",
+  "../observe-js/src/observe.js",
   "build/if-poly.js",
   "../ShadowDOM/build.json",
   "src/patches-shadowdom-polyfill.js",
@@ -11,7 +12,6 @@
   "src/dom.js",
   "src/template.js",
   "src/inspector.js",
-  "../observe-js/src/observe.js",
   "../NodeBind/src/NodeBind.js",
   "../TemplateBinding/src/TemplateBinding.js",
   "../polymer-expressions/build.json",
