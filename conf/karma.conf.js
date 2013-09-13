@@ -1,12 +1,12 @@
 module.exports = function(karma) {
-  var common = require('../tools/test/karma-common.conf.js');
+  var common = require('../../tools/test/karma-common.conf.js');
   karma.set(common.mixin_common_opts(karma, {
     // base path, that will be used to resolve files and exclude
     basePath: '../../',
 
     // list of files / patterns to load in the browser
     files: [
-      'platform/tools/test/mocha-htmltest.js',
+      'tools/test/mocha-htmltest.js',
       'platform/conf/mocha.conf.js',
       'platform/node_modules/chai/chai.js',
       'platform/test/js/*.js',
@@ -34,10 +34,10 @@ module.exports = function(karma) {
       {pattern: 'platform/src/*.js', included: false},
       {pattern: 'platform/test/**/*.html', included: false},
       {pattern: 'platform/test/**/*.js', included: false},
-      {pattern: 'platform/tools/**/*.js', included: false},
       {pattern: 'polymer-expressions/src/*.js', included: false},
       {pattern: 'polymer-expressions/tests/*.js', included: false},
-      {pattern: 'polymer-expressions/third_party/**/*.js', included: false}
+      {pattern: 'polymer-expressions/third_party/**/*.js', included: false},
+      {pattern: 'tools/**/*.js', included: false}
     ]
   }));
 };
