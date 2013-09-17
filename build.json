@@ -1,5 +1,5 @@
 [
-  "../CustomElements/src/sidetable.js",
+  "../WeakMap/WeakMap.js",
   "../observe-js/src/observe.js",
   "build/if-poly.js",
   "../ShadowDOM/build.json",
