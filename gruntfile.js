@@ -39,7 +39,8 @@ module.exports = function(grunt) {
     concat_sourcemap: {
       Platform: {
         options: {
-          sourcesContent: true
+          sourcesContent: true,
+          nonull: true
         },
         files: {
           'platform.concat.js': readManifest('build.json')

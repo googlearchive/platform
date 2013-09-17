@@ -1,5 +1,5 @@
 [
-  "../WeakMap/WeakMap.js",
+  "../WeakMap/weakmap.js",
   "../observe-js/src/observe.js",
   "build/if-poly.js",
   "../ShadowDOM/build.json",
