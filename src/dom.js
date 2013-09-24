@@ -43,26 +43,18 @@
     oldName && this.remove(oldName);
     newName && this.add(newName);
   };
-  
-  // add array() and forEach() to NodeList, NamedNodeMap, HTMLCollection
+
+  // add array() to NodeList, NamedNodeMap, HTMLCollection
 
   var ArraySlice = function() {
     return Array.prototype.slice.call(this);
   };
 
   var namedNodeMap = (window.NamedNodeMap || window.MozNamedAttrMap || {});
-  
+
   NodeList.prototype.array = ArraySlice;
   namedNodeMap.prototype.array = ArraySlice;
   HTMLCollection.prototype.array = ArraySlice;
-
-  var ArrayForEach = function(cb, context) {
-    ArraySlice.call(this).forEach(cb, context);
-  };
-
-  NodeList.prototype.forEach = ArrayForEach;
-  namedNodeMap.prototype.forEach = ArrayForEach;
-  HTMLCollection.prototype.forEach = ArrayForEach;
 
   // polyfill performance.now
 
@@ -104,7 +96,7 @@
   // utility
 
   function createDOM(inTagOrNode, inHTML, inAttrs) {
-    var dom = typeof inTagOrNode == 'string' ? 
+    var dom = typeof inTagOrNode == 'string' ?
         document.createElement(inTagOrNode) : inTagOrNode.cloneNode(true);
     dom.innerHTML = inHTML;
     if (inAttrs) {
