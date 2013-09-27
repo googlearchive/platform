@@ -14,21 +14,18 @@ htmlSuite('loader and build', function() {
 htmlSuite('integration', function() {
   htmlTest('html/web-components.html');
   htmlTest('html/smoke.html');
-  htmlTest('html/smoke.html?shadow=polyfill');
-  //htmlTest('html/strawkit.html');
-  //htmlTest('html/strawkit.html?shadow=polyfill');
+  htmlTest('html/smoke.html?shadow&register');
   htmlTest('html/mdv-shadow.html');
-  //htmlTest('html/html-import-sandbox.html');
   htmlTest('html/template-repeat-wrappers.html');
 });
 
 htmlSuite('styling', function() {
   htmlTest('html/styling/host.html');
-  htmlTest('html/styling/host.html?shadow');
+  htmlTest('html/styling/host.html?shadow&register');
   htmlTest('html/styling/pseudo-scoping.html');
-  htmlTest('html/styling/pseudo-scoping.html?shadow');
+  htmlTest('html/styling/pseudo-scoping.html?shadow&register');
   htmlTest('html/styling/pseudos.html');
-  htmlTest('html/styling/pseudos.html?shadow');
+  htmlTest('html/styling/pseudos.html?shadow&register');
   htmlTest('html/styling/polyfill-directive.html');
   htmlTest('html/styling/polyfill-rule.html');
 });
