@@ -154,7 +154,6 @@ var ShadowCSS = {
       }
       this.shimPolyfillDirectives(def.rootStyles, name);
       this.applyShimming(def.scopeStyles, name);
-      this.applyPolyfillRules(def.rootStyles, name);
     }
   },
   // Shim styles to be placed inside a shadowRoot.
@@ -163,7 +162,6 @@ var ShadowCSS = {
   shimShadowDOMStyling: function(styles, name) {
     this.shimPolyfillDirectives(styles, name);
     this.applyShimming(styles, name);
-    this.applyPolyfillRules(styles, name);
   },
   registerDefinition: function(root, name, extendsName) {
     var def = this.registry[name] = {
@@ -213,7 +211,8 @@ var ShadowCSS = {
   shimPolyfillDirectives: function(styles, name) {
     if (styles) {
       Array.prototype.forEach.call(styles, function(s) {
-        s.textContent = this.convertPolyfillDirectives(s.textContent, name);
+        s.textContent = this.convertPolyfillDirectives(s.textContent, name) +
+            this.extractPolyfillRules(s.textContent, name) + '\n\n';
       }, this);
     }
   },
@@ -227,6 +226,14 @@ var ShadowCSS = {
       l = cssPolyfillCommentRe.lastIndex;
     }
     r += cssText.substring(l, cssText.length);
+    return r;
+  },
+  extractPolyfillRules: function(cssText, name) {
+    var r = '', l = 0, matches, selector;
+    while (matches = cssPolyfillRuleCommentRe.exec(cssText)) {
+      rule = matches[1].slice(0, -1).replace(hostRe, name);
+      r += rule + '\n\n';
+    }
     return r;
   },
   // apply @host and scope shimming
@@ -385,23 +392,6 @@ var ShadowCSS = {
         rule.style.cssText.replace(/content:[^;]*;/g, '');
     }
     return properties;
-  },
-  applyPolyfillRules: function(styles, name) {
-    if (styles) {
-      var cssText = '';
-      Array.prototype.forEach.call(styles, function(s) {
-        cssText += this.extractPolyfillRules(s.textContent, name) + '\n\n';
-      }, this);
-    }
-    addCssToDocument(cssText);
-  },
-  extractPolyfillRules: function(cssText, name) {
-    var r = '', l = 0, matches, selector;
-    while (matches = cssPolyfillRuleCommentRe.exec(cssText)) {
-      rule = matches[1].slice(0, -1).replace(hostRe, name);
-      r += rule + '\n\n';
-    }
-    return r;
   }
 };
 
