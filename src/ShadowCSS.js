@@ -153,15 +153,19 @@ var ShadowCSS = {
         this.applyScopeToContent(root, name);
       }
       this.shimPolyfillDirectives(def.rootStyles, name);
-      this.applyShimming(def.scopeStyles, name);
+      var cssText = this.stylesToShimmedCssText(def.scopeStyles, name);
+      // note: it's critical that polyfill-rules are not shimmed.
+      cssText += '\n\n' + this.extractPolyfillRules(def.scopeStyles, name);
+      // provide shimmedStyle for user extensibility
+      root.shimmedStyle = def.shimmedStyle = cssTextToStyle(cssText);
+      // remove existing style elements
+      for (var i=0, l=def.rootStyles.length, s; (i<l) && (s=def.rootStyles[i]); 
+          i++) {
+        s.parentNode.removeChild(s);
+      }
+      // add style to document
+      addCssToDocument(cssText);
     }
-  },
-  // Shim styles to be placed inside a shadowRoot.
-  // 1. shim polyfill directives /* @polyfill */
-  // 2. shim @host and scoping
-  shimShadowDOMStyling: function(styles, name) {
-    this.shimPolyfillDirectives(styles, name);
-    this.applyShimming(styles, name);
   },
   registerDefinition: function(root, name, extendsName) {
     var def = this.registry[name] = {
@@ -211,8 +215,7 @@ var ShadowCSS = {
   shimPolyfillDirectives: function(styles, name) {
     if (styles) {
       Array.prototype.forEach.call(styles, function(s) {
-        s.textContent = this.convertPolyfillDirectives(s.textContent, name) +
-            this.extractPolyfillRules(s.textContent, name) + '\n\n';
+        s.textContent = this.convertPolyfillDirectives(s.textContent, name);
       }, this);
     }
   },
@@ -228,7 +231,17 @@ var ShadowCSS = {
     r += cssText.substring(l, cssText.length);
     return r;
   },
-  extractPolyfillRules: function(cssText, name) {
+  extractPolyfillRules: function(styles, name) {
+    if (styles) {
+      var cssText = '';
+      Array.prototype.forEach.call(styles, function(s) {
+        cssText += this.extractPolyfillRulesFromCssText(s.textContent, name) +
+            '\n\n';
+      }, this);
+    }
+    return cssText;
+  },
+  extractPolyfillRulesFromCssText: function(cssText, name) {
     var r = '', l = 0, matches, selector;
     while (matches = cssPolyfillRuleCommentRe.exec(cssText)) {
       rule = matches[1].slice(0, -1).replace(hostRe, name);
@@ -237,10 +250,8 @@ var ShadowCSS = {
     return r;
   },
   // apply @host and scope shimming
-  applyShimming: function(styles, name) {
-    var cssText = this.shimAtHost(styles, name);
-    cssText += this.shimScoping(styles, name);
-    addCssToDocument(cssText);
+  stylesToShimmedCssText: function(styles, name) {
+    return this.shimAtHost(styles, name) + this.shimScoping(styles, name);
   },
   // form: @host { .foo { declarations } }
   // becomes: scopeName.foo { declarations }
@@ -312,11 +323,6 @@ var ShadowCSS = {
     }
   },
   convertScopedStyles: function(styles, name) {
-    Array.prototype.forEach.call(styles, function(s) {
-      if (s.parentNode) {
-        s.parentNode.removeChild(s);
-      }
-    });
     var cssText = stylesToCssText(styles).replace(hostRuleRe, '');
     cssText = this.convertPseudos(cssText);
     var rules = cssToRules(cssText);
@@ -418,9 +424,14 @@ function stylesToCssText(styles, preserveComments) {
   return cssText;
 }
 
-function cssToRules(cssText) {
+function cssTextToStyle(cssText) {
   var style = document.createElement('style');
   style.textContent = cssText;
+  return style;
+}
+
+function cssToRules(cssText) {
+  var style = cssTextToStyle(cssText);
   document.head.appendChild(style);
   var rules = style.sheet.cssRules;
   style.parentNode.removeChild(style);
