@@ -1,6 +1,5 @@
 [
   "../WeakMap/weakmap.js",
-  "../observe-js/src/observe.js",
   "build/if-poly.js",
   "../ShadowDOM/build.json",
   "src/patches-shadowdom-polyfill.js",
@@ -12,8 +11,6 @@
   "src/dom.js",
   "src/template.js",
   "src/inspector.js",
-  "../NodeBind/src/NodeBind.js",
-  "../TemplateBinding/src/TemplateBinding.js",
   "../polymer-expressions/build.json",
   "src/patches-mdv.js",
   "../HTMLImports/build.json",
