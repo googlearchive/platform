@@ -12,10 +12,17 @@ var head = document.querySelector('head');
 head.insertBefore(style, head.firstChild);
 
 // flush (with logging)
+var flushing;
 function flush() {
-  logFlags.data && console.group("Platform.flush()");
-  scope.endOfMicrotask(Platform.performMicrotaskCheckpoint);
-  logFlags.data && console.groupEnd();
+  if (!flushing) {
+    flushing = true;
+    scope.endOfMicrotask(function() {
+      flushing = false;
+      logFlags.data && console.group('Platform.flush()');
+      scope.performMicrotaskCheckpoint();
+      logFlags.data && console.groupEnd();
+    });
+  }
 };
 
 // polling dirty checker
