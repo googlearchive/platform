@@ -85,6 +85,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json')
   });
 
+  grunt.loadTasks('../tools/tasks');
   // plugins
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -108,7 +109,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['concat_sourcemap', 'uglify', 'sourcemap_copy:platform.concat.js.map:platform.min.js.map']);
   grunt.registerTask('docs', ['yuidoc']);
-  grunt.registerTask('test', ['karma:platform']);
-  grunt.registerTask('test-buildbot', ['karma:buildbot']);
+  grunt.registerTask('test', ['override-chrome-launcher', 'karma:platform']);
+  grunt.registerTask('test-buildbot', ['override-chrome-launcher', 'karma:buildbot']);
 };
 
