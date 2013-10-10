@@ -31,13 +31,11 @@
     // TODO(sjmiles): forcing SD to render at this point is not necessary, 
     // except to understand why it causes a failure at the assertion
     host.offsetHeight;
-
-    // make template repeat synchronously
-    Platform.performMicrotaskCheckpoint();
-
     var list = host.shadowRoot.querySelector('#list');
-    chai.assert.equal(list.children.length, 3, 'list.children.length (should be 3 but returns 1)');
 
-    done();
+    new MutationObserver(function() {
+      chai.assert.equal(list.children.length, 3, 'list.children.length (should be 3 but returns 1)');  
+      done();
+    }).observe(list, {childList: true});
   });
 </script>
