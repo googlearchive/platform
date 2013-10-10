@@ -4,6 +4,8 @@
  * license that can be found in the LICENSE file.
  */
 module.exports = function(grunt) {
+  var temporary = require('temporary');
+  var tmp = new temporary.File();
 
   // recursive module builder
   var path = require('path');
@@ -43,7 +45,7 @@ module.exports = function(grunt) {
           nonull: true
         },
         files: {
-          'platform.concat.js': readManifest('build.json')
+          'platform.concat.js': readManifest('build.json', [tmp.path])
         }
       }
     },
@@ -107,7 +109,21 @@ module.exports = function(grunt) {
     grunt.file.write(dest, JSON.stringify(destMap));
   });
 
-  grunt.registerTask('default', ['concat_sourcemap', 'uglify', 'sourcemap_copy:platform.concat.js.map:platform.min.js.map']);
+  // Workaround for banner + sourceMap + uglify: https://github.com/gruntjs/grunt-contrib-uglify/issues/22
+  grunt.registerTask('gen_license', function() {
+    var banner = [
+      '/* @license',
+      grunt.file.read('LICENSE'),
+      '*/'
+    ].join(grunt.util.linefeed);
+    grunt.file.write(tmp.path, banner);
+  });
+
+  grunt.registerTask('clean_license', function() {
+    tmp.unlinkSync();
+  });
+
+  grunt.registerTask('default', ['gen_license', 'concat_sourcemap', 'uglify', 'sourcemap_copy:platform.concat.js.map:platform.min.js.map', 'clean_license']);
   grunt.registerTask('docs', ['yuidoc']);
   grunt.registerTask('test', ['override-chrome-launcher', 'karma:platform']);
   grunt.registerTask('test-buildbot', ['override-chrome-launcher', 'karma:buildbot']);
