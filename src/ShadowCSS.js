@@ -144,28 +144,29 @@ var ShadowCSS = {
   // 3. shim polyfill directives /* @polyfill */
   // 4. shim @host and scoping
   shimStyling: function(root, name, extendsName) {
-    if (root) {
-      // use caching to make working with styles nodes easier and to facilitate
-      // lookup of extendee
-      var def = this.registerDefinition(root, name, extendsName);
-      // find styles and apply shimming...
-      if (this.strictStyling) {
-        this.applyScopeToContent(root, name);
-      }
-      this.shimPolyfillDirectives(def.rootStyles, name);
-      var cssText = this.stylesToShimmedCssText(def.scopeStyles, name);
-      // note: it's critical that polyfill-rules are not shimmed.
-      cssText += '\n\n' + this.extractPolyfillRules(def.scopeStyles, name);
-      // provide shimmedStyle for user extensibility
-      root.shimmedStyle = def.shimmedStyle = cssTextToStyle(cssText);
-      // remove existing style elements
-      for (var i=0, l=def.rootStyles.length, s; (i<l) && (s=def.rootStyles[i]); 
-          i++) {
-        s.parentNode.removeChild(s);
-      }
-      // add style to document
-      addCssToDocument(cssText);
+    // use caching to make working with styles nodes easier and to facilitate
+    // lookup of extendee
+    var def = this.registerDefinition(root, name, extendsName);
+    // find styles and apply shimming...
+    if (this.strictStyling) {
+      this.applyScopeToContent(root, name);
     }
+    this.shimPolyfillDirectives(def.rootStyles, name);
+    var cssText = this.stylesToShimmedCssText(def.scopeStyles, name);
+    // note: it's critical that polyfill-rules are not shimmed.
+    cssText += '\n\n' + this.extractPolyfillRules(def.scopeStyles, name);
+    // provide shimmedStyle for user extensibility
+    def.shimmedStyle = cssTextToStyle(cssText);
+    if (root) {
+      root.shimmedStyle = def.shimmedStyle;
+    }
+    // remove existing style elements
+    for (var i=0, l=def.rootStyles.length, s; (i<l) && (s=def.rootStyles[i]); 
+        i++) {
+      s.parentNode.removeChild(s);
+    }
+    // add style to document
+    addCssToDocument(cssText);
   },
   registerDefinition: function(root, name, extendsName) {
     var def = this.registry[name] = {
@@ -173,12 +174,12 @@ var ShadowCSS = {
       name: name,
       extendsName: extendsName
     }
-    var styles = root.querySelectorAll('style');
+    var styles = root ? root.querySelectorAll('style') : [];
     styles = styles ? Array.prototype.slice.call(styles, 0) : [];
     def.rootStyles = styles;
     def.scopeStyles = def.rootStyles;
     var extendee = this.registry[def.extendsName];
-    if (extendee && root.querySelector('shadow')) {
+    if (extendee && (!root || root.querySelector('shadow'))) {
       def.scopeStyles = extendee.scopeStyles.concat(def.scopeStyles);
     }
     return def;

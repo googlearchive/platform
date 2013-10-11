@@ -54,8 +54,8 @@ license that can be found in the LICENSE file.
     <x-inner></x-inner>
   </template>
   <script>
-    register('x-inner', '', HTMLElement.prototype, ['x-inner']);
-    register('x-foo', '', HTMLElement.prototype, ['x-foo']);
+    register('x-inner', '', HTMLElement.prototype);
+    register('x-foo', '', HTMLElement.prototype);
     
     document.addEventListener('WebComponentsReady', function() {
       setTimeout(function() {

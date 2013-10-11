@@ -34,8 +34,8 @@ license that can be found in the LICENSE file.
   </template>
 
   <script>
-    register('x-inner', '', HTMLElement.prototype, ['x-inner']);
-    register('x-test', '', HTMLElement.prototype, ['x-test']);
+    register('x-inner', '', HTMLElement.prototype);
+    register('x-test', '', HTMLElement.prototype);
     
     document.addEventListener('WebComponentsReady', function() {
       var test = document.querySelector('x-test');
