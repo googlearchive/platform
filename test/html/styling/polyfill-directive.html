@@ -6,7 +6,7 @@ license that can be found in the LICENSE file.
 -->
 <html>
 <head>
-  <title>Psuedo scoped styling</title>
+  <title>polyfill directive</title>
   <script src="../../../platform.js" shadow></script>
   <script src="register.js"></script>
   <script src="../../../../tools/test/htmltest.js"></script>
@@ -16,8 +16,12 @@ license that can be found in the LICENSE file.
   <x-foo>
     <div>Green?</div>
   </x-foo>
+
+  <x-bar>
+    <div>Green?</div>
+  </x-bar>
  
-  <template id="x-foo"">
+  <template id="x-foo">
     <style>
       @host {
         * {
@@ -26,12 +30,12 @@ license that can be found in the LICENSE file.
         }
       }
 
-      /*@polyfill @host > div */
+      /*@polyfill :host > div */
       ::-webkit-distributed(*) {
         background: green;
       }
 
-      /*@polyfill @host > div */
+      /*@polyfill :host > div */
       ::-webkit-distributed(*) {
         color: red;
       }
@@ -39,18 +43,26 @@ license that can be found in the LICENSE file.
     </style>
     <content></content>
   </template>
+
+
   
   <script>
     XFoo = register('x-foo', '', HTMLElement.prototype);
+    XBar = register('x-bar', 'x-foo', HTMLElement.prototype);
     
+    function test(selector) {
+      var n = document.querySelector(selector);
+      nDiv = n.firstElementChild;
+      chai.assert.equal(getComputedStyle(nDiv).backgroundColor, 
+        'rgb(0, 128, 0)', '@polyfill styles are applied');
+      chai.assert.equal(getComputedStyle(nDiv).color, 
+        'rgb(255, 0, 0)', '@polyfill styles are applied');
+    }
+
     document.addEventListener('WebComponentsReady', function() {
       setTimeout(function() {
-        var foo = document.querySelector('x-foo');
-        fooDiv = foo.firstElementChild;
-        chai.assert.equal(getComputedStyle(fooDiv).backgroundColor, 
-          'rgb(0, 128, 0)', '@polyfill styles are applied');
-        chai.assert.equal(getComputedStyle(fooDiv).color, 
-          'rgb(255, 0, 0)', '@polyfill styles are applied');
+        test('x-foo');
+        test('x-bar');
         done();
       });
     });

@@ -141,7 +141,7 @@ var ShadowCSS = {
   // Shim styles for a given root associated with a name and extendsName
   // 1. cache root styles by name
   // 2. optionally tag root nodes with scope name
-  // 3. shim polyfill directives /* @polyfill */
+  // 3. shim polyfill directives /* @polyfill */ and /* @polyfill-rule */
   // 4. shim @host and scoping
   shimStyling: function(root, name, extendsName) {
     // use caching to make working with styles nodes easier and to facilitate
@@ -151,10 +151,11 @@ var ShadowCSS = {
     if (this.strictStyling) {
       this.applyScopeToContent(root, name);
     }
-    this.shimPolyfillDirectives(def.rootStyles, name);
+    // insert @polyfill and @polyfill-rule rules into style elements
+    // scoping process takes care of shimming these
+    this.insertPolyfillDirectives(def.rootStyles);
+    this.insertPolyfillRules(def.rootStyles);
     var cssText = this.stylesToShimmedCssText(def.scopeStyles, name);
-    // note: it's critical that polyfill-rules are not shimmed.
-    cssText += '\n\n' + this.extractPolyfillRules(def.scopeStyles, name);
     // provide shimmedStyle for user extensibility
     def.shimmedStyle = cssTextToStyle(cssText);
     if (root) {
@@ -205,49 +206,61 @@ var ShadowCSS = {
    * 
    * For example, we convert this rule:
    * 
-   * (comment start) @polyfill @host g-menu-item (comment end)
-   * shadow::-webkit-distributed(g-menu-item) {
+   * (comment start) @polyfill :host menu-item (comment end)
+   * shadow::-webkit-distributed(menu-item) {
    * 
    * to this:
    * 
-   * scopeName g-menu-item {
+   * scopeName menu-item {
    *
   **/
-  shimPolyfillDirectives: function(styles, name) {
+  insertPolyfillDirectives: function(styles, name) {
     if (styles) {
       Array.prototype.forEach.call(styles, function(s) {
-        s.textContent = this.convertPolyfillDirectives(s.textContent, name);
+        s.textContent = this.insertPolyfillDirectivesInCssText(s.textContent);
       }, this);
     }
   },
-  convertPolyfillDirectives: function(cssText, name) {
-    var r = '', l = 0, matches, selector;
+  insertPolyfillDirectivesInCssText: function(cssText, name) {
+    var r = '', l = 0, matches;
     while (matches = cssPolyfillCommentRe.exec(cssText)) {
       r += cssText.substring(l, matches.index);
       // remove end comment delimiter (*/)
-      selector = matches[1].slice(0, -2).replace(hostRe, name);
-      r += this.scopeSelector(selector, name) + '{';
+      r += matches[1].slice(0, -2) + '{';
       l = cssPolyfillCommentRe.lastIndex;
     }
     r += cssText.substring(l, cssText.length);
     return r;
   },
-  extractPolyfillRules: function(styles, name) {
+  /*
+   * Process styles to add rules which will only apply under the polyfill
+   * 
+   * For example, we convert this rule:
+   * 
+   * (comment start) @polyfill-rule :host menu-item { 
+   * ... } (comment end)
+   * 
+   * to this:
+   * 
+   * scopeName menu-item {...}
+   *
+  **/
+  insertPolyfillRules: function(styles, name) {
     if (styles) {
-      var cssText = '';
       Array.prototype.forEach.call(styles, function(s) {
-        cssText += this.extractPolyfillRulesFromCssText(s.textContent, name) +
-            '\n\n';
+        s.textContent = this.insertPolyfillRulesInCssText(s.textContent);
       }, this);
     }
-    return cssText;
   },
-  extractPolyfillRulesFromCssText: function(cssText, name) {
-    var r = '', l = 0, matches, selector;
+  insertPolyfillRulesInCssText: function(cssText, name) {
+    var r = '', l = 0, matches;
     while (matches = cssPolyfillRuleCommentRe.exec(cssText)) {
-      rule = matches[1].slice(0, -1).replace(hostRe, name);
-      r += rule + '\n\n';
+      r += cssText.substring(l, matches.index);
+      // remove end comment delimiter (*/)
+      r += matches[1].slice(0, -1);
+      l = cssPolyfillCommentRe.lastIndex;
     }
+    r += cssText.substring(l, cssText.length);
     return r;
   },
   // apply @host and scope shimming
@@ -325,6 +338,7 @@ var ShadowCSS = {
   },
   convertScopedStyles: function(styles, name) {
     var cssText = stylesToCssText(styles).replace(hostRuleRe, '');
+    cssText = this.insertPolyfillHostInCssText(cssText);
     cssText = this.convertPseudos(cssText);
     var rules = cssToRules(cssText);
     cssText = this.scopeRules(rules, name);
@@ -368,9 +382,19 @@ var ShadowCSS = {
     var re = new RegExp('^' + matchScope + selectorReSuffix, 'm');
     return !selector.match(re);
   },
+  insertPolyfillHostInCssText: function(selector) {
+    return selector.replace(hostRe, polyfillHost).replace(colonHostRe,
+        polyfillHost);
+  },
   // scope via name and [is=name]
   applySimpleSelectorScope: function(selector, name) {
-    return name + ' ' + selector + ', ' + '[is=' + name + '] ' + selector;
+    var ancestor = name + ' ', is = '[is=' + name + '] ';
+    if (selector.match(polyfillHostRe)) {
+      return selector.replace(polyfillHostRe, ancestor) + ', ' +
+          selector.replace(polyfillHostRe, is);
+    } else {
+      return ancestor + selector + ', ' + is + selector;
+    }
   },
   // return a selector with [name] suffix on each simple selector
   // e.g. .foo.bar > .zot becomes .foo[name].bar[name] > .zot[name]
@@ -381,7 +405,8 @@ var ShadowCSS = {
     splits.forEach(function(sep) {
       var parts = scoped.split(sep);
       scoped = parts.map(function(p) {
-        var t = p.trim();
+        // remove :host since it should be unnecessary
+        var t = p.trim().replace(polyfillHostRe, '');
         if (t && (splits.indexOf(t) < 0) && (t.indexOf(attrName) < 0)) {
           p = t.replace(/([^:]*)(:*)(.*)/, '$1' + attrName + '$2$3')
         }
@@ -411,7 +436,10 @@ var hostRuleRe = /@host[^{]*{(([^}]*?{[^{]*?}[\s\S]*?)+)}/gim,
     cssPolyfillRuleCommentRe = /\/\*\s@polyfill-rule([^*]*\*+([^/*][^*]*\*+)*)\//gim,
     cssPseudoRe = /::(x-[^\s{,(]*)/gim,
     selectorReSuffix = '([>\\s~+\[.,{:][\\s\\S]*)?$',
-    hostRe = /@host/gim;
+    hostRe = /@host/gim,
+    colonHostRe = /\:host/gim,
+    polyfillHost = '-host',
+    polyfillHostRe = /-host/gim;
 
 function stylesToCssText(styles, preserveComments) {
   var cssText = '';
