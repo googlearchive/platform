@@ -16,11 +16,16 @@ license that can be found in the LICENSE file.
   <x-foo>
     <div class="zonk">red?</div>
   </x-foo>
- 
+  <div class="unscoped">unscoped</div>
   <template id="x-foo">
     <style>
       /* @polyfill-rule :host > .zonk {
         background: red;
+      } */
+
+      /* @polyfill-unscoped-rule .unscoped {
+        background: black;
+        color: white;
       } */
     </style>
     <content></content>
@@ -30,13 +35,16 @@ license that can be found in the LICENSE file.
     XFoo = register('x-foo', '', HTMLElement.prototype);
     
     document.addEventListener('WebComponentsReady', function() {
-      setTimeout(function() {
+      //setTimeout(function() {
         var foo = document.querySelector('x-foo');
         fooDiv = foo.firstElementChild;
         chai.assert.equal(getComputedStyle(fooDiv).backgroundColor, 
           'rgb(255, 0, 0)', '@polyfill styles are applied');
+        var unscoped = document.querySelector('.unscoped');
+        chai.assert.equal(getComputedStyle(unscoped).backgroundColor, 
+          'rgb(0, 0, 0)', '@polyfill-unscoped-rule styles are applied');
         done();
-      });
+      //});
     });
   </script>
   

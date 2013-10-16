@@ -156,6 +156,8 @@ var ShadowCSS = {
     this.insertPolyfillDirectives(def.rootStyles);
     this.insertPolyfillRules(def.rootStyles);
     var cssText = this.stylesToShimmedCssText(def.scopeStyles, name);
+    // note: we only need to do rootStyles since these are unscoped.
+    cssText += this.extractPolyfillUnscopedRules(def.rootStyles);
     // provide shimmedStyle for user extensibility
     def.shimmedStyle = cssTextToStyle(cssText);
     if (root) {
@@ -261,6 +263,37 @@ var ShadowCSS = {
       l = cssPolyfillCommentRe.lastIndex;
     }
     r += cssText.substring(l, cssText.length);
+    return r;
+  },
+  /*
+   * Process styles to add rules which will only apply under the polyfill
+   * and do not process via CSSOM. (CSSOM is destructive to rules on rare 
+   * occasions, e.g. -webkit-calc on Safari.)
+   * For example, we convert this rule:
+   * 
+   * (comment start) @polyfill-unscoped-rule menu-item { 
+   * ... } (comment end)
+   * 
+   * to this:
+   * 
+   * menu-item {...}
+   *
+  **/
+  extractPolyfillUnscopedRules: function(styles) {
+    var cssText = '';
+    if (styles) {
+      Array.prototype.forEach.call(styles, function(s) {
+        cssText += this.extractPolyfillUnscopedRulesFromCssText(
+            s.textContent) + '\n\n';
+      }, this);
+    }
+    return cssText;
+  },
+  extractPolyfillUnscopedRulesFromCssText: function(cssText) {
+    var r = '', l = 0, matches;
+    while (matches = cssPolyfillUnscopedRuleCommentRe.exec(cssText)) {
+      r += matches[1].slice(0, -1) + '\n\n';
+    }
     return r;
   },
   // apply @host and scope shimming
@@ -434,6 +467,7 @@ var hostRuleRe = /@host[^{]*{(([^}]*?{[^{]*?}[\s\S]*?)+)}/gim,
     cssCommentRe = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//gim,
     cssPolyfillCommentRe = /\/\*\s*@polyfill ([^*]*\*+([^/*][^*]*\*+)*\/)([^{]*?){/gim,
     cssPolyfillRuleCommentRe = /\/\*\s@polyfill-rule([^*]*\*+([^/*][^*]*\*+)*)\//gim,
+    cssPolyfillUnscopedRuleCommentRe = /\/\*\s@polyfill-unscoped-rule([^*]*\*+([^/*][^*]*\*+)*)\//gim,
     cssPseudoRe = /::(x-[^\s{,(]*)/gim,
     selectorReSuffix = '([>\\s~+\[.,{:][\\s\\S]*)?$',
     hostRe = /@host/gim,
