@@ -4,9 +4,10 @@
 
   function register(name, extnds, proto, templates) {
     extendsRegistry[name] = extnds;
+    var typeExtension = extnds && extnds.indexOf('-') < 0;
     var names = calcExtendsNames(name);
     if (window.ShadowDOMPolyfill) {
-      shim(templates, names);
+      shim(templates, names, typeExtension);
     }
 
     var config = {
@@ -24,7 +25,7 @@
         }
       })
     };
-    if (extnds && extnds.indexOf('-') < 0) {
+    if (typeExtension) {
       config.extends = extnds;
     }
     var ctor = document.register(name, config);
@@ -44,10 +45,10 @@
     return document.querySelector('#' + name);
   }
   
-  function shim(templates, names) {
+  function shim(templates, names, typeExtension) {
     var n = names[names.length-1];
     var template = templateForName(n);
-    Platform.ShadowCSS.shimStyling(template ? template.content : null, n, extendsRegistry[n]);
+    Platform.ShadowCSS.shimStyling(template ? template.content : null, n, extendsRegistry[n], typeExtension);
   }
   
   scope.register = register;

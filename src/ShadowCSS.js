@@ -156,7 +156,7 @@ var ShadowCSS = {
   // 2. optionally tag root nodes with scope name
   // 3. shim polyfill directives /* @polyfill */ and /* @polyfill-rule */
   // 4. shim @host and scoping
-  shimStyling: function(root, name, extendsName) {
+  shimStyling: function(root, name, extendsName, typeExtension) {
     // use caching to make working with styles nodes easier and to facilitate
     // lookup of extendee
     var def = this.registerDefinition(root, name, extendsName);
@@ -168,7 +168,8 @@ var ShadowCSS = {
     // scoping process takes care of shimming these
     this.insertPolyfillDirectives(def.rootStyles);
     this.insertPolyfillRules(def.rootStyles);
-    var cssText = this.stylesToShimmedCssText(def.scopeStyles, name);
+    var cssText = this.stylesToShimmedCssText(def.scopeStyles, name,
+        typeExtension);
     // note: we only need to do rootStyles since these are unscoped.
     cssText += this.extractPolyfillUnscopedRules(def.rootStyles);
     // provide shimmedStyle for user extensibility
@@ -229,14 +230,14 @@ var ShadowCSS = {
    * scopeName menu-item {
    *
   **/
-  insertPolyfillDirectives: function(styles, name) {
+  insertPolyfillDirectives: function(styles) {
     if (styles) {
       Array.prototype.forEach.call(styles, function(s) {
         s.textContent = this.insertPolyfillDirectivesInCssText(s.textContent);
       }, this);
     }
   },
-  insertPolyfillDirectivesInCssText: function(cssText, name) {
+  insertPolyfillDirectivesInCssText: function(cssText) {
     return cssText.replace(cssPolyfillCommentRe, function(match, p1) {
       // remove end comment delimiter and add block start
       return p1.slice(0, -2) + '{';
@@ -255,14 +256,14 @@ var ShadowCSS = {
    * scopeName menu-item {...}
    *
   **/
-  insertPolyfillRules: function(styles, name) {
+  insertPolyfillRules: function(styles) {
     if (styles) {
       Array.prototype.forEach.call(styles, function(s) {
         s.textContent = this.insertPolyfillRulesInCssText(s.textContent);
       }, this);
     }
   },
-  insertPolyfillRulesInCssText: function(cssText, name) {
+  insertPolyfillRulesInCssText: function(cssText) {
     return cssText.replace(cssPolyfillRuleCommentRe, function(match, p1) {
       // remove end comment delimiter
       return p1.slice(0, -1);
@@ -300,42 +301,44 @@ var ShadowCSS = {
     return r;
   },
   // apply @host and scope shimming
-  stylesToShimmedCssText: function(styles, name) {
-    return this.shimAtHost(styles, name) + this.shimScoping(styles, name);
+  stylesToShimmedCssText: function(styles, name, typeExtension) {
+    return this.shimAtHost(styles, name, typeExtension) +
+        this.shimScoping(styles, name, typeExtension);
   },
   // form: @host { .foo { declarations } }
   // becomes: scopeName.foo { declarations }
-  shimAtHost: function(styles, name) {
+  shimAtHost: function(styles, name, typeExtension) {
     if (styles) {
-      return this.convertAtHostStyles(styles, name);
+      return this.convertAtHostStyles(styles, name, typeExtension);
     }
   },
-  convertAtHostStyles: function(styles, name) {
+  convertAtHostStyles: function(styles, name, typeExtension) {
     var cssText = stylesToCssText(styles), self = this;
     cssText = cssText.replace(hostRuleRe, function(m, p1) {
-      return self.scopeHostCss(p1, name);
+      return self.scopeHostCss(p1, name, typeExtension);
     });
     cssText = rulesToCss(this.findAtHostRules(cssToRules(cssText),
       new RegExp('^' + name + selectorReSuffix, 'm')));
     return cssText;
   },
-  scopeHostCss: function(cssText, name) {
+  scopeHostCss: function(cssText, name, typeExtension) {
     var self = this;
     return cssText.replace(selectorRe, function(m, p1, p2) {
-      return self.scopeHostSelector(p1, name) + ' ' + p2 + '\n\t';
+      return self.scopeHostSelector(p1, name, typeExtension) + ' ' + p2 + '\n\t';
     });
   },
   // supports scopig by name and  [is=name] syntax
-  scopeHostSelector: function(selector, name) {
+  scopeHostSelector: function(selector, name, typeExtension) {
     var r = [], parts = selector.split(','), is = '[is=' + name + ']';
     parts.forEach(function(p) {
       p = p.trim();
       // selector: *|:scope -> name
       if (p.match(hostElementRe)) {
-        p = p.replace(hostElementRe, name + '$1$3, ' + is + '$1$3');
-      // selector: .foo -> name.foo, [bar] -> name[bar]
+        p = p.replace(hostElementRe, typeExtension ? is + '$1$3' :
+            name + '$1$3');
+      // selector: .foo -> name.foo (OR) [bar] -> name[bar]
       } else if (p.match(hostFixableRe)) {
-        p = name + p + ', ' + is + p;
+        p = typeExtension ? is + p : name + p;
       }
       r.push(p);
     }, this);
@@ -361,19 +364,20 @@ var ShadowCSS = {
    *  
    *  scopeName .foo { ... }
   */
-  shimScoping: function(styles, name) {
+  shimScoping: function(styles, name, typeExtension) {
     if (styles) {
-      return this.convertScopedStyles(styles, name);
+      return this.convertScopedStyles(styles, name, typeExtension);
     }
   },
-  convertScopedStyles: function(styles, name) {
+  convertScopedStyles: function(styles, name, typeExtension) {
     var cssText = stylesToCssText(styles).replace(hostRuleRe, '');
     cssText = this.insertPolyfillHostInCssText(cssText);
     cssText = this.convertColonHost(cssText);
     cssText = this.convertPseudos(cssText);
     cssText = this.convertParts(cssText);
+    cssText = this.convertCombinators(cssText);
     var rules = cssToRules(cssText);
-    cssText = this.scopeRules(rules, name);
+    cssText = this.scopeRules(rules, name, typeExtension);
     return cssText;
   },
   convertPseudos: function(cssText) {
@@ -399,12 +403,18 @@ var ShadowCSS = {
           p1 + p3;
     });
   },
+  /*
+   * Convert ^ and ^^ combinators by replacing with space.
+  */
+  convertCombinators: function(cssText) {
+    return cssText.replace('^^', ' ').replace('^', ' ');
+  },
   // change a selector like 'div' to 'name div'
-  scopeRules: function(cssRules, name) {
+  scopeRules: function(cssRules, name, typeExtension) {
     var cssText = '';
     Array.prototype.forEach.call(cssRules, function(rule) {
       if (rule.selectorText && (rule.style && rule.style.cssText)) {
-        cssText += this.scopeSelector(rule.selectorText, name, 
+        cssText += this.scopeSelector(rule.selectorText, name, typeExtension, 
           this.strictStyling) + ' {\n\t';
         cssText += this.propertiesFromRule(rule) + '\n}\n\n';
       } else if (rule.media) {
@@ -417,37 +427,31 @@ var ShadowCSS = {
     }, this);
     return cssText;
   },
-  scopeSelector: function(selector, name, strict) {
+  scopeSelector: function(selector, name, typeExtension, strict) {
     var r = [], parts = selector.split(',');
     parts.forEach(function(p) {
       p = p.trim();
-      if (this.selectorNeedsScoping(p, name)) {
+      if (this.selectorNeedsScoping(p, name, typeExtension)) {
         p = strict ? this.applyStrictSelectorScope(p, name) :
-          this.applySimpleSelectorScope(p, name);
+          this.applySimpleSelectorScope(p, name, typeExtension);
       }
       r.push(p);
     }, this);
     return r.join(', ');
   },
-  selectorNeedsScoping: function(selector, name) {
-    var matchScope = '(' + name + '|\\[is=' + name + '\\])';
-    var re = new RegExp('^' + matchScope + selectorReSuffix, 'm');
+  selectorNeedsScoping: function(selector, name, typeExtension) {
+    var matchScope = typeExtension ? name : '\\[is=' + name + '\\]';
+    var re = new RegExp('^(' + matchScope + ')' + selectorReSuffix, 'm');
     return !selector.match(re);
   },
-  insertPolyfillHostInCssText: function(selector) {
-    return selector.replace(hostRe, polyfillHost).replace(colonHostRe,
-        polyfillHost);
-  },
   // scope via name and [is=name]
-  applySimpleSelectorScope: function(selector, name) {
-    var is = '[is=' + name + ']';
+  applySimpleSelectorScope: function(selector, name, typeExtension) {
+    var scoper = typeExtension ? '[is=' + name + ']' : name;
     if (selector.match(polyfillHostRe)) {
-      selector = selector.replace(polyfillHostNoCombinator, name) + ', ' +
-          selector.replace(polyfillHostNoCombinator, is);
-      return selector.replace(polyfillHostRe, name + ' ') + ', ' +
-          selector.replace(polyfillHostRe, is + ' ');
+      selector = selector.replace(polyfillHostNoCombinator, scoper);
+      return selector.replace(polyfillHostRe, scoper + ' ');
     } else {
-      return name + ' ' + selector + ', ' + is + ' ' + selector;
+      return scoper + ' ' + selector;
     }
   },
   // return a selector with [name] suffix on each simple selector
@@ -468,6 +472,10 @@ var ShadowCSS = {
       }).join(sep);
     });
     return scoped;
+  },
+  insertPolyfillHostInCssText: function(selector) {
+    return selector.replace(hostRe, polyfillHost).replace(colonHostRe,
+        polyfillHost);
   },
   propertiesFromRule: function(rule) {
     var properties = rule.style.cssText;

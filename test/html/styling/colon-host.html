@@ -202,6 +202,11 @@ license that can be found in the LICENSE file.
       chai.assert.equal(zimStyle2.paddingLeft, '20px',
         ':host styles are loaded via external sheet in import (paddingLeft)');
 
+      var btn = document.querySelector('[is=x-button]');
+      var btnStyle = getComputedStyle(btn);
+      chai.assert.equal(btnStyle.backgroundColor, 'rgb(0, 128, 0)', 
+        ':host styles are shimmed for type extension (backgroundColor)');
+
       done();
 
 
