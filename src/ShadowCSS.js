@@ -89,6 +89,19 @@
   becomes:
 
     x-foo [pseudo=x-special] { ... }
+
+  * ::part(): These rules are converted to rules that take advantage of the
+  part attribute. For example, a shadowRoot like this inside an x-foo
+
+    <div part="special">Special</div>
+
+  with a rule like this:
+
+    x-foo::part(special) { ... }
+
+  becomes:
+
+    x-foo [part=special] { ... }    
   
   Unaddressed ShadowDOM styling features:
   
@@ -372,13 +385,27 @@ var ShadowCSS = {
   convertScopedStyles: function(styles, name) {
     var cssText = stylesToCssText(styles).replace(hostRuleRe, '');
     cssText = this.insertPolyfillHostInCssText(cssText);
+    cssText = this.convertColonHost(cssText);
     cssText = this.convertPseudos(cssText);
+    cssText = this.convertParts(cssText);
     var rules = cssToRules(cssText);
     cssText = this.scopeRules(rules, name);
     return cssText;
   },
   convertPseudos: function(cssText) {
     return cssText.replace(cssPseudoRe, ' [pseudo=$1]');
+  },
+  convertParts: function(cssText) {
+    return cssText.replace(cssPartRe, ' [part=$1]');
+  },
+  convertColonHost: function(cssText) {
+    /*
+    var is = '[is=' + name + ']';
+    var r = name + '$1$2, $1 ' + name + '$2, ' +
+      is + '$1$2, $1' + is + '$2 ';
+    */
+    var r = '$1$2$3, $2 $1$3';
+    return cssText.replace(cssColonHostRe, r);
   },
   // change a selector like 'div' to 'name div'
   scopeRules: function(cssRules, name) {
@@ -469,6 +496,9 @@ var hostRuleRe = /@host[^{]*{(([^}]*?{[^{]*?}[\s\S]*?)+)}/gim,
     cssPolyfillRuleCommentRe = /\/\*\s@polyfill-rule([^*]*\*+([^/*][^*]*\*+)*)\//gim,
     cssPolyfillUnscopedRuleCommentRe = /\/\*\s@polyfill-unscoped-rule([^*]*\*+([^/*][^*]*\*+)*)\//gim,
     cssPseudoRe = /::(x-[^\s{,(]*)/gim,
+    cssPartRe = /::part\(([^)]*)\)/gim,
+    // note: :host pre-processed to -host.
+    cssColonHostRe = /(-host)(?:\(([^)]*)\))?([^,{]*)/gim,
     selectorReSuffix = '([>\\s~+\[.,{:][\\s\\S]*)?$',
     hostRe = /@host/gim,
     colonHostRe = /\:host/gim,
