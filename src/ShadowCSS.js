@@ -156,7 +156,8 @@ var ShadowCSS = {
   // 2. optionally tag root nodes with scope name
   // 3. shim polyfill directives /* @polyfill */ and /* @polyfill-rule */
   // 4. shim @host and scoping
-  shimStyling: function(root, name, extendsName, typeExtension) {
+  shimStyling: function(root, name, extendsName) {
+    var typeExtension = this.isTypeExtension(extendsName);
     // use caching to make working with styles nodes easier and to facilitate
     // lookup of extendee
     var def = this.registerDefinition(root, name, extendsName);
@@ -200,6 +201,9 @@ var ShadowCSS = {
       def.scopeStyles = extendee.scopeStyles.concat(def.scopeStyles);
     }
     return def;
+  },
+  isTypeExtension: function(extendsName) {
+    return extendsName && extendsName.indexOf('-') < 0;
   },
   applyScopeToContent: function(root, name) {
     if (root) {

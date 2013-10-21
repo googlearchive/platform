@@ -7,7 +7,7 @@
     var typeExtension = extnds && extnds.indexOf('-') < 0;
     var names = calcExtendsNames(name);
     if (window.ShadowDOMPolyfill) {
-      shim(templates, names, typeExtension);
+      shim(templates, names);
     }
 
     var config = {
@@ -45,10 +45,10 @@
     return document.querySelector('#' + name);
   }
   
-  function shim(templates, names, typeExtension) {
+  function shim(templates, names) {
     var n = names[names.length-1];
     var template = templateForName(n);
-    Platform.ShadowCSS.shimStyling(template ? template.content : null, n, extendsRegistry[n], typeExtension);
+    Platform.ShadowCSS.shimStyling(template ? template.content : null, n, extendsRegistry[n]);
   }
   
   scope.register = register;
