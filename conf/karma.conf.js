@@ -8,7 +8,7 @@ module.exports = function(karma) {
     files: [
       'tools/test/mocha-htmltest.js',
       'platform/conf/mocha.conf.js',
-      'platform/node_modules/chai/chai.js',
+      'platform/../tools/test/chai/chai.js',
       'platform/test/js/*.js',
       {pattern: 'CustomElements/custom-elements.js', included: false},
       {pattern: 'CustomElements/src/*.js', included: false},
@@ -29,7 +29,7 @@ module.exports = function(karma) {
       {pattern: 'WeakMap/weakmap.js', included: false},
       {pattern: 'observe-js/src/*.js', included: false},
       {pattern: 'observe-js/util/*.js', included: false},
-      {pattern: 'platform/node_modules/mocha/mocha.*', included: false},
+      {pattern: 'platform/../tools/test/mocha/mocha.*', included: false},
       {pattern: 'platform/platform.*', included: false},
       {pattern: 'platform/src/*.js', included: false},
       {pattern: 'platform/test/**/*.html', included: false},
