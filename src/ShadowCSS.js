@@ -237,15 +237,10 @@ var ShadowCSS = {
     }
   },
   insertPolyfillDirectivesInCssText: function(cssText, name) {
-    var r = '', l = 0, matches;
-    while (matches = cssPolyfillCommentRe.exec(cssText)) {
-      r += cssText.substring(l, matches.index);
-      // remove end comment delimiter (*/)
-      r += matches[1].slice(0, -2) + '{';
-      l = cssPolyfillCommentRe.lastIndex;
-    }
-    r += cssText.substring(l, cssText.length);
-    return r;
+    return cssText.replace(cssPolyfillCommentRe, function(match, p1) {
+      // remove end comment delimiter and add block start
+      return p1.slice(0, -2) + '{';
+    });
   },
   /*
    * Process styles to add rules which will only apply under the polyfill
@@ -268,15 +263,10 @@ var ShadowCSS = {
     }
   },
   insertPolyfillRulesInCssText: function(cssText, name) {
-    var r = '', l = 0, matches;
-    while (matches = cssPolyfillRuleCommentRe.exec(cssText)) {
-      r += cssText.substring(l, matches.index);
-      // remove end comment delimiter (*/)
-      r += matches[1].slice(0, -1);
-      l = cssPolyfillCommentRe.lastIndex;
-    }
-    r += cssText.substring(l, cssText.length);
-    return r;
+    return cssText.replace(cssPolyfillRuleCommentRe, function(match, p1) {
+      // remove end comment delimiter
+      return p1.slice(0, -1);
+    });
   },
   /*
    * Process styles to add rules which will only apply under the polyfill
@@ -303,7 +293,7 @@ var ShadowCSS = {
     return cssText;
   },
   extractPolyfillUnscopedRulesFromCssText: function(cssText) {
-    var r = '', l = 0, matches;
+    var r = '', matches;
     while (matches = cssPolyfillUnscopedRuleCommentRe.exec(cssText)) {
       r += matches[1].slice(0, -1) + '\n\n';
     }
@@ -321,25 +311,19 @@ var ShadowCSS = {
     }
   },
   convertAtHostStyles: function(styles, name) {
-    var cssText = stylesToCssText(styles);
-    var r = '', l=0, matches;
-    while (matches = hostRuleRe.exec(cssText)) {
-      r += cssText.substring(l, matches.index);
-      r += this.scopeHostCss(matches[1], name);
-      l = hostRuleRe.lastIndex;
-    }
-    r += cssText.substring(l, cssText.length);
-    var re = new RegExp('^' + name + selectorReSuffix, 'm');
-    var cssText = rulesToCss(this.findAtHostRules(cssToRules(r),
-      re));
+    var cssText = stylesToCssText(styles), self = this;
+    cssText = cssText.replace(hostRuleRe, function(m, p1) {
+      return self.scopeHostCss(p1, name);
+    });
+    cssText = rulesToCss(this.findAtHostRules(cssToRules(cssText),
+      new RegExp('^' + name + selectorReSuffix, 'm')));
     return cssText;
   },
   scopeHostCss: function(cssText, name) {
-    var r = '', matches;
-    while (matches = selectorRe.exec(cssText)) {
-      r += this.scopeHostSelector(matches[1], name) +' ' + matches[2] + '\n\t';
-    }
-    return r;
+    var self = this;
+    return cssText.replace(selectorRe, function(m, p1, p2) {
+      return self.scopeHostSelector(p1, name) + ' ' + p2 + '\n\t';
+    });
   },
   // supports scopig by name and  [is=name] syntax
   scopeHostSelector: function(selector, name) {
@@ -398,14 +382,22 @@ var ShadowCSS = {
   convertParts: function(cssText) {
     return cssText.replace(cssPartRe, ' [part=$1]');
   },
+  /*
+   * convert a rule like :host(.foo) > .bar { }
+   *
+   * to
+   *
+   * scopeName.foo > .bar, .foo scopeName > .bar { }
+   * TODO(sorvell): file bug since native impl does not do the former yet.
+   * http://jsbin.com/OganOCI/2/edit
+  */
   convertColonHost: function(cssText) {
-    /*
-    var is = '[is=' + name + ']';
-    var r = name + '$1$2, $1 ' + name + '$2, ' +
-      is + '$1$2, $1' + is + '$2 ';
-    */
-    var r = '$1$2$3, $2 $1$3';
-    return cssText.replace(cssColonHostRe, r);
+    // p1 = :host, p2 = contents of (), p3 rest of rule
+    return cssText.replace(cssColonHostRe, function(m, p1, p2, p3) {
+      return p2 ? polyfillHostNoCombinator + p2 + p3 + ', ' 
+          + p2 + ' ' + p1 + p3 :
+          p1 + p3;
+    });
   },
   // change a selector like 'div' to 'name div'
   scopeRules: function(cssRules, name) {
@@ -448,12 +440,14 @@ var ShadowCSS = {
   },
   // scope via name and [is=name]
   applySimpleSelectorScope: function(selector, name) {
-    var ancestor = name + ' ', is = '[is=' + name + '] ';
+    var is = '[is=' + name + ']';
     if (selector.match(polyfillHostRe)) {
-      return selector.replace(polyfillHostRe, ancestor) + ', ' +
-          selector.replace(polyfillHostRe, is);
+      selector = selector.replace(polyfillHostNoCombinator, name) + ', ' +
+          selector.replace(polyfillHostNoCombinator, is);
+      return selector.replace(polyfillHostRe, name + ' ') + ', ' +
+          selector.replace(polyfillHostRe, is + ' ');
     } else {
-      return ancestor + selector + ', ' + is + selector;
+      return name + ' ' + selector + ', ' + is + ' ' + selector;
     }
   },
   // return a selector with [name] suffix on each simple selector
@@ -503,6 +497,8 @@ var hostRuleRe = /@host[^{]*{(([^}]*?{[^{]*?}[\s\S]*?)+)}/gim,
     hostRe = /@host/gim,
     colonHostRe = /\:host/gim,
     polyfillHost = '-host',
+    /* host name without combinator */
+    polyfillHostNoCombinator = '-host-no-combinator',
     polyfillHostRe = /-host/gim;
 
 function stylesToCssText(styles, preserveComments) {

@@ -142,16 +142,16 @@ license that can be found in the LICENSE file.
         ':host styles matching * are applied (backgroundColor)');
       
       var foo2 = document.querySelector('x-foo.foo');
-      //chai.assert.equal(getComputedStyle(foo2).backgroundColor, 'rgb(0, 0, 0)',
-      //  ':host styles are conditionally applied (backgroundColor)');  
+      chai.assert.equal(getComputedStyle(foo2).backgroundColor, 'rgb(0, 0, 0)',
+        ':host styles are conditionally applied (backgroundColor)');  
 
       var scope = document.querySelector('x-scope');
       chai.assert.equal(getComputedStyle(scope).backgroundColor, 'rgb(255, 0, 0)',
         ':host styles matching :scope  are applied (backgroundColor)');
         
       var scope2 = document.querySelector('x-scope.foo');
-      //chai.assert.equal(getComputedStyle(scope2).backgroundColor, 'rgb(0, 0, 0)',
-      //  ':host styles matching :scope are conditionally applied (backgroundColor)');  
+      chai.assert.equal(getComputedStyle(scope2).backgroundColor, 'rgb(0, 0, 0)',
+        ':host styles matching :scope are conditionally applied (backgroundColor)');  
       
       var bar = document.querySelector('x-bar');
       var barStyle = getComputedStyle(bar);
