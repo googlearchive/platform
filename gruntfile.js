@@ -32,6 +32,13 @@ module.exports = function(grunt) {
         }
       }
     },
+    concat: {
+      lite: {
+        files: {
+          'platform-lite.concat.js': readManifest('build-lite.json', [tmp.path])
+        }
+      }
+    },
     uglify: {
       options: {
         banner: grunt.file.read('LICENSE'),
@@ -96,5 +103,6 @@ module.exports = function(grunt) {
   grunt.registerTask('docs', ['yuidoc']);
   grunt.registerTask('test', ['override-chrome-launcher', 'karma:platform']);
   grunt.registerTask('test-buildbot', ['override-chrome-launcher', 'karma:buildbot']);
+  grunt.registerTask('build-lite', ['gen_license', 'concat', 'clean_license']);
 };
 

@@ -4,8 +4,6 @@
 /test.bat
 
 /build/shadowdom.conditional.js
-platform.min*
-platform.native*
-platform.sandbox*
-platform.concat*
+*.min.js*
+*.concat.js*
 build.bat
