@@ -322,7 +322,7 @@ var ShadowCSS = {
       return self.scopeHostCss(p1, name, typeExtension);
     });
     cssText = rulesToCss(this.findAtHostRules(cssToRules(cssText),
-      new RegExp('^' + name + selectorReSuffix, 'm')));
+        this.makeScopeMatcher(name, typeExtension)));
     return cssText;
   },
   scopeHostCss: function(cssText, name, typeExtension) {
@@ -444,9 +444,12 @@ var ShadowCSS = {
     return r.join(', ');
   },
   selectorNeedsScoping: function(selector, name, typeExtension) {
-    var matchScope = typeExtension ? name : '\\[is=' + name + '\\]';
-    var re = new RegExp('^(' + matchScope + ')' + selectorReSuffix, 'm');
+    var re = this.makeScopeMatcher(name, typeExtension);
     return !selector.match(re);
+  },
+  makeScopeMatcher: function(name, typeExtension) {
+    var matchScope = typeExtension ? '\\[is=[\'"]?' + name + '[\'"]?\\]' : name;
+    return new RegExp('^(' + matchScope + ')' + selectorReSuffix, 'm');
   },
   // scope via name and [is=name]
   applySimpleSelectorScope: function(selector, name, typeExtension) {
