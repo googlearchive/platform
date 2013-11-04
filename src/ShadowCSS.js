@@ -396,15 +396,28 @@ var ShadowCSS = {
    * to
    *
    * scopeName.foo > .bar, .foo scopeName > .bar { }
-   * TODO(sorvell): file bug since native impl does not do the former yet.
-   * http://jsbin.com/OganOCI/2/edit
+   * 
+   * and
+   *
+   * :host(.foo:host) .bar { ... }
+   * 
+   * to
+   * 
+   * scopeName.foo .bar { ... }
   */
   convertColonHost: function(cssText) {
     // p1 = :host, p2 = contents of (), p3 rest of rule
     return cssText.replace(cssColonHostRe, function(m, p1, p2, p3) {
-      return p2 ? polyfillHostNoCombinator + p2 + p3 + ', ' 
-          + p2 + ' ' + p1 + p3 :
-          p1 + p3;
+      p1 = polyfillHostNoCombinator;
+      if (p2) {
+        if (p2.match(polyfillHost)) {
+          return p1 + p2.replace(polyfillHost, '') + p3;
+        } else {
+          return p1 + p2 + p3 + ', ' + p2 + ' ' + p1 + p3;
+        }
+      } else {
+        return p1 + p3;
+      }
     });
   },
   /*

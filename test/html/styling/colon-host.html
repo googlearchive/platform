@@ -11,7 +11,7 @@ license that can be found in the LICENSE file.
   <script src="../../../platform.js"></script>
   <script src="register.js"></script>
   <script src="../../../../tools/test/htmltest.js"></script>
-  <script src="../../../tools/test/chai/chai.js"></script>
+  <script src="../../../../tools/test/chai/chai.js"></script>
 </head>
 <body>
   <script>
@@ -70,6 +70,10 @@ license that can be found in the LICENSE file.
       :host {
         background: green;
       }
+
+      :host:focus {
+        background: yellow;
+      };
     </style>
     <content></content>
   </template>
@@ -89,6 +93,11 @@ license that can be found in the LICENSE file.
     <style>
       :host {
         padding: 20px;
+      }
+
+      :host(.foo:host) {
+        background: green;
+        display: block;
       }
     </style>
     <div>padding: 20px</div>
@@ -132,8 +141,12 @@ license that can be found in the LICENSE file.
   <h4>Expected: red background with black text and orange border and 20px padding</h4>
   <x-zim></x-zim>
 
+  <h4>Expected: 20px padding, background green</h4>
+  <x-zim2 class="foo"></x-zim2>
   <h4>Expected: 20px padding</h4>
-  <x-zim2></x-zim2>
+  <div class="foo">
+    <x-zim2></x-zim2>
+  </div>
   
   <script>
     document.addEventListener('WebComponentsReady', function() {
@@ -202,10 +215,21 @@ license that can be found in the LICENSE file.
       chai.assert.equal(zimStyle2.paddingLeft, '20px',
         ':host styles are loaded via external sheet in import (paddingLeft)');
 
+      chai.assert.equal(zimStyle2.backgroundColor, 'rgb(0, 128, 0)', 
+        ':host(.foo:host) styles are applied (backgroundColor)');
+
+      var zim2_2 = document.querySelector('.foo x-zim2');
+      var zimStyle2_2 = getComputedStyle(zim2_2);
+      chai.assert.equal(zimStyle2.backgroundColor, 'rgb(0, 128, 0)', 
+        ':host(.foo:host) styles are applied (backgroundColor)');
+
       var btn = document.querySelector('[is=x-button]');
       var btnStyle = getComputedStyle(btn);
       chai.assert.equal(btnStyle.backgroundColor, 'rgb(0, 128, 0)', 
         ':host styles are shimmed for type extension (backgroundColor)');
+      btn.focus();
+      chai.assert.equal(btnStyle.backgroundColor, 'rgb(255, 255, 0)', 
+        ':host:active styles are shimmed (backgroundColor)');
 
       done();
 
