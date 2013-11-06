@@ -424,7 +424,7 @@ var ShadowCSS = {
    * Convert ^ and ^^ combinators by replacing with space.
   */
   convertCombinators: function(cssText) {
-    return cssText.replace('^^', ' ').replace('^', ' ');
+    return cssText.replace(/\^\^/g, ' ').replace(/\^/g, ' ');
   },
   // change a selector like 'div' to 'name div'
   scopeRules: function(cssRules, name, typeExtension) {

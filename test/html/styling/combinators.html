@@ -21,6 +21,10 @@ license that can be found in the LICENSE file.
         background: red;
       }
 
+      x-bar ^ .noogy {
+        background: blue;
+      }
+
       x-bar ^^ .zot {
         color: white;
       }
@@ -34,6 +38,7 @@ license that can be found in the LICENSE file.
       }
     </style>
     <div class="bar">Bar</div>
+    <div class="noogy">Noogy</div>
     <x-zot></x-zot>
   </template>
 
@@ -53,10 +58,13 @@ license that can be found in the LICENSE file.
   <script>
     document.addEventListener('WebComponentsReady', function() {
       var foo = document.querySelector('x-foo');
-      var bar = foo.shadowRoot.querySelector('x-bar').shadowRoot
-          .querySelector('.bar');
-
+      var xBarRoot = foo.shadowRoot.querySelector('x-bar').shadowRoot;
+      var bar = xBarRoot.querySelector('.bar');
       chai.assert.equal(getComputedStyle(bar).backgroundColor, 'rgb(255, 0, 0)',
+        '^ styles are applied (backgroundColor)');
+
+      var noogy = xBarRoot.querySelector('.noogy');
+      chai.assert.equal(getComputedStyle(noogy).backgroundColor, 'rgb(0, 0, 255)',
         '^ styles are applied (backgroundColor)');
 
       var zot = foo.shadowRoot.querySelector('x-bar').shadowRoot
