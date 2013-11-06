@@ -107,6 +107,11 @@
     return dom;
   }
 
+  window.Polymer = function(name, dictionary) {
+    window.addEventListener('WebComponentsReady', function() {
+      Polymer(name, dictionary);
+    });
+  }
   // exports
 
   scope.createDOM = createDOM;
