@@ -25,7 +25,6 @@ function processFlags(flags) {
           && 'polyfill';
     }
 
-
     var ShadowDOMNative = [
       'src/patches-shadowdom-native.js'
     ];
