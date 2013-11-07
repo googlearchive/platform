@@ -13,12 +13,6 @@ head.insertBefore(style, head.firstChild);
 
 if (window.ShadowDOMPolyfill) {
 
-  function nop() {};
-
-  // disable shadow dom watching
-  CustomElements.watchShadow = nop;
-  CustomElements.watchAllShadows = nop;
-
   // ensure wrapped inputs for these functions
   var fns = ['upgradeAll', 'upgradeSubtree', 'observeDocument',
       'upgradeDocument'];
