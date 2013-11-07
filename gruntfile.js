@@ -41,8 +41,8 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: grunt.file.read('LICENSE'),
         nonull: true,
+        preserveComments: 'some',
         compress: {
           unsafe: false
         }
