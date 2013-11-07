@@ -99,10 +99,23 @@ module.exports = function(grunt) {
     tmp.unlinkSync();
   });
 
+  grunt.registerTask('stash', 'prepare for testing build', function() {
+    grunt.option('force', true);
+    grunt.task.run('move:platform.js:platform.js.bak');
+    grunt.task.run('move:platform.min.js:platform.js');
+  });
+  grunt.registerTask('restore', function() {
+    grunt.task.run('move:platform.js:platform.min.js');
+    grunt.task.run('move:platform.js.bak:platform.js');
+    grunt.option('force', false);
+  });
+
+  grunt.registerTask('test-build', ['default', 'stash', 'test', 'restore']);
+
   grunt.registerTask('default', ['gen_license', 'concat_sourcemap', 'uglify', 'sourcemap_copy:platform.concat.js.map:platform.min.js.map', 'clean_license']);
   grunt.registerTask('docs', ['yuidoc']);
   grunt.registerTask('test', ['override-chrome-launcher', 'karma:platform']);
-  grunt.registerTask('test-buildbot', ['override-chrome-launcher', 'karma:buildbot']);
+  grunt.registerTask('test-buildbot', ['override-chrome-launcher', 'karma:buildbot', 'test-build']);
   grunt.registerTask('build-lite', ['gen_license', 'concat', 'clean_license']);
 };
 
