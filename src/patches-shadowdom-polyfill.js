@@ -48,7 +48,7 @@
   var originalCreateShadowRoot = HTMLElement.prototype.createShadowRoot;
   HTMLElement.prototype.createShadowRoot = function() {
     var root = originalCreateShadowRoot.call(this);
-    root.host = this;
+    CustomElements.watchShadow(this);
     return root;
   }
 
