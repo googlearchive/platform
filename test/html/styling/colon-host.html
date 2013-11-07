@@ -70,12 +70,17 @@ license that can be found in the LICENSE file.
       :host {
         background: green;
       }
-
-      :host:focus {
-        background: yellow;
-      };
     </style>
     <content></content>
+  </template>
+
+  <template id="x-anchor">
+    <style>
+      :host:link {
+        font-style: italic;
+      }
+    </style>
+    Hello
   </template>
 
   <template id="x-zim">
@@ -112,6 +117,7 @@ license that can be found in the LICENSE file.
     XZim2 = register('x-zim2', 'x-zot', XZot.prototype, ['x-foo', 'x-bar', 'x-zot', 'x-zim2']);
     register('x-scope', '', HTMLElement.prototype, ['x-scope']);
     register('x-button', 'button', HTMLButtonElement.prototype, ['x-button']);
+    register('x-anchor', 'a', HTMLAnchorElement.prototype, ['x-anchor']);
   </script>
   
   <h4>Expected: red background</h4>
@@ -146,6 +152,10 @@ license that can be found in the LICENSE file.
   <h4>Expected: 20px padding</h4>
   <div class="foo">
     <x-zim2></x-zim2>
+  </div>
+
+  <h4>Expected: blue background</h4>
+     <a href="#" is="x-anchor">Test Link</a>
   </div>
   
   <script>
@@ -227,13 +237,18 @@ license that can be found in the LICENSE file.
       var btnStyle = getComputedStyle(btn);
       chai.assert.equal(btnStyle.backgroundColor, 'rgb(0, 128, 0)', 
         ':host styles are shimmed for type extension (backgroundColor)');
-      btn.focus();
-      chai.assert.equal(btnStyle.backgroundColor, 'rgb(255, 255, 0)', 
-        ':host:active styles are shimmed (backgroundColor)');
+
+      var a = document.querySelector('[is=x-anchor]');
+      a.dispatchEvent(new MouseEvent('click', {
+        'view': window,
+        'bubbles': true,
+        'cancelable': true
+      }));
+      var aStyle = getComputedStyle(a);
+      chai.assert.equal(aStyle.fontStyle, 'italic', 
+        ':host:pseudoclass styles are shimmed (font-style)');
 
       done();
-
-
     });
   </script>
 </body>
