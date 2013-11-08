@@ -17,8 +17,6 @@
     "HTMLImports": "Polymer/HTMLImports#master",
     "PointerGestures":"Polymer/PointerGestures#master",
     "ShadowDOM": "Polymer/ShadowDOM#master",
-    "WeakMap": "Polymer/WeakMap",
-    "observe-js": "Polymer/observe-js#master",
     "polymer-expressions": "Polymer/polymer-expressions#master"
   },
   "license": "BSD",
