@@ -93,6 +93,17 @@
     })();
   }
 
+  // TODO(sorvell): workaround for bug:
+  // https://code.google.com/p/chromium/issues/detail?id=229142
+  // remove when this bug is addressed
+  // give main document templates a base that allows them to fetch eagerly
+  // resolved paths relative to the main document
+  var template = document.createElement('template');
+  var base = document.createElement('base');
+  base.href = document.baseURI;
+  template.content.ownerDocument.appendChild(base);
+  
+
   // utility
 
   function createDOM(inTagOrNode, inHTML, inAttrs) {
