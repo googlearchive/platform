@@ -5,8 +5,6 @@
  */
 module.exports = function(grunt) {
   var readManifest = require('../tools/loader/readManifest.js');
-  var temporary = require('temporary');
-  var tmp = new temporary.File();
 
   grunt.initConfig({
     karma: {
@@ -28,21 +26,20 @@ module.exports = function(grunt) {
           nonull: true
         },
         files: {
-          'platform.concat.js': readManifest('build.json', [tmp.path])
+          'platform.concat.js': readManifest('build.json')
         }
       }
     },
     concat: {
       lite: {
         files: {
-          'platform-lite.concat.js': readManifest('build-lite.json', [tmp.path])
+          'platform-lite.concat.js': readManifest('build-lite.json')
         }
       }
     },
     uglify: {
       options: {
         nonull: true,
-        preserveComments: 'some',
         compress: {
           unsafe: false
         }
@@ -50,7 +47,8 @@ module.exports = function(grunt) {
       Platform: {
         options: {
           sourceMap: 'platform.min.js.map',
-          sourceMapIn: 'platform.concat.js.map'
+          sourceMapIn: 'platform.concat.js.map',
+          banner: grunt.file.read('LICENSE')
         },
         files: {
           'platform.min.js': 'platform.concat.js'
@@ -85,20 +83,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-concat-sourcemap');
 
-  // Workaround for banner + sourceMap + uglify: https://github.com/gruntjs/grunt-contrib-uglify/issues/22
-  grunt.registerTask('gen_license', function() {
-    var banner = [
-      '/* @license',
-      grunt.file.read('LICENSE'),
-      '*/'
-    ].join(grunt.util.linefeed);
-    grunt.file.write(tmp.path, banner);
-  });
-
-  grunt.registerTask('clean_license', function() {
-    tmp.unlinkSync();
-  });
-
   grunt.registerTask('stash', 'prepare for testing build', function() {
     grunt.option('force', true);
     grunt.task.run('move:platform.js:platform.js.bak');
@@ -112,10 +96,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test-build', ['default', 'stash', 'test', 'restore']);
 
-  grunt.registerTask('default', ['gen_license', 'concat_sourcemap', 'uglify', 'sourcemap_copy:platform.concat.js.map:platform.min.js.map', 'clean_license']);
+  grunt.registerTask('default', ['concat_sourcemap', 'uglify', 'sourcemap_copy:platform.concat.js.map:platform.min.js.map']);
   grunt.registerTask('docs', ['yuidoc']);
   grunt.registerTask('test', ['override-chrome-launcher', 'karma:platform']);
   grunt.registerTask('test-buildbot', ['override-chrome-launcher', 'karma:buildbot', 'test-build']);
-  grunt.registerTask('build-lite', ['gen_license', 'concat', 'clean_license']);
+  grunt.registerTask('build-lite', ['concat']);
 };
 
