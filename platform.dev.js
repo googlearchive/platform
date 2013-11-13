@@ -6,7 +6,7 @@
 
 (function() {
 
-var thisFile = 'platform.js';
+var thisFile = 'platform.dev.js';
 var scopeName = 'Platform';
 
 function processFlags(flags) {
@@ -85,7 +85,12 @@ window[scopeName] = {
 
 // bootstrap
 
-var script = document.querySelector('script[src*="' + thisFile + '"]');
+var script;
+if (document.currentScript) {
+  script = document.currentScript;
+} else {
+  script = document.querySelector('script[src*="' + thisFile + '"]');
+}
 var src = script.attributes.src.value;
 var basePath = src.slice(0, src.indexOf(thisFile));
 
