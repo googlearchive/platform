@@ -12,6 +12,7 @@
   "src/dom.js",
   "src/template.js",
   "src/inspector.js",
+  "src/unresolved.js",
   "../polymer-expressions/build.json",
   "src/patches-mdv.js",
   "../HTMLImports/build.json",

@@ -39,7 +39,8 @@ function processFlags(flags) {
       'src/lang.js',
       'src/dom.js',
       'src/template.js',
-      'src/inspector.js'
+      'src/inspector.js',
+      'src/unresolved.js'
     ];
 
     var MDV = [
