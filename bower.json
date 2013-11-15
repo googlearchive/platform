@@ -13,11 +13,11 @@
     "components"
   ],
   "dependencies": {
-    "CustomElements": "Polymer/CustomElements#master",
-    "HTMLImports": "Polymer/HTMLImports#master",
-    "PointerGestures":"Polymer/PointerGestures#master",
-    "ShadowDOM": "Polymer/ShadowDOM#master",
-    "polymer-expressions": "Polymer/polymer-expressions#master"
+    "CustomElements": "polymer/CustomElements#master",
+    "HTMLImports": "polymer/HTMLImports#master",
+    "PointerGestures":"polymer/PointerGestures#master",
+    "ShadowDOM": "polymer/ShadowDOM#master",
+    "polymer-expressions": "polymer/polymer-expressions#master"
   },
   "license": "BSD",
   "private": true,
