@@ -1,9 +1,0 @@
-/node_modules
-/docs
-
-/test.bat
-
-/build/shadowdom.conditional.js
-*.min.js*
-*.concat.js*
-build.bat
