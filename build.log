@@ -1,10 +1,10 @@
 BUILD LOG
 ---------
-Build Time: 2013-12-18T16:38:51
+Build Time: 2014-01-09T16:42:26
 
 NODEJS INFORMATION
 ==================
-nodejs: v0.10.23
+nodejs: v0.10.24
 chai: 1.8.1
 grunt: 0.4.1
 grunt-audit: 0.0.2
@@ -30,18 +30,18 @@ mocha: 1.14.0
 
 REPO REVISIONS
 ==============
-CustomElements: 9e99fcfaa573e625d36a7fe2366dd4e8de0d7bf4
+CustomElements: 75798bf6ecf397ac25029974a96af68618baafa0
 HTMLImports: 7dc0c50f38fd89411b01f6fdd98f008d276e022a
-NodeBind: b9266f77bd3689a4da65f19482ee95e14b972e7f
-PointerEvents: 932a9b8492b8145cf87795b14c065c8b789b4afe
-PointerGestures: 81a379e76c605fce5844399a1137e1525bf19ef5
-ShadowDOM: 496f0a76a786beca7c66c84c018ae2316e0b6b8c
-TemplateBinding: 4386f602661207dbc5bfb4ed3504271ff5691314
+NodeBind: f7cc76749e509e06fa7cbc9ba970f87f5fe33b5c
+PointerEvents: 80457624cc756cc042c076dc4e508201d99ced2d
+PointerGestures: 90e93f777b60d817a072da3f482dd1f9bb625c73
+ShadowDOM: de3c0614ddb8201f54b173e297bccc98fab2ac6b
+TemplateBinding: bec956e7420da8940165923807e6e86aafd2aa89
 WeakMap: fc7c7925546282881c6ff4d58103d6355659f56f
-observe-js: eab1b5cf3490f70a1054cad2e21f9603c409d0a8
-platform: d8a9ff891ea3d2caa24897cbb90c5c180aaa6022
-polymer-expressions: d7c089e4f81f8aeb1ae5ec7254e7d6d58bfe33b6
+observe-js: 920a6d6ee3160830ff8f807f9e85461c2b852c6b
+platform: e3b798b57065bfb38a7ee5b69176dffb57cfbe3a
+polymer-expressions: 47c7bbf65d4420a0763e0768deaccf96226d02b6
 
 BUILD HASHES
 ============
-build/platform.js: 6ff632ceb9df218d3d10e764fea3bd79485d81d3
+build/platform.js: 24874b8a9d5781c5d6a100a5f96ca28b6c556666
