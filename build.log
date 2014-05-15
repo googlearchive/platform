@@ -1,10 +1,10 @@
 BUILD LOG
 ---------
-Build Time: 2014-05-15T11:33:47
+Build Time: 2014-05-15T16:30:41
 
 NODEJS INFORMATION
 ==================
-nodejs: v0.10.28
+nodejs: v0.10.22
 chai: 1.9.1
 grunt: 0.4.4
 grunt-audit: 0.0.3
@@ -32,8 +32,8 @@ ShadowDOM: e25f9a71a13008f2a59364382d63065c12c05db9
 TemplateBinding: 1cee027fe67680c93ff2b6b070d32708226f6a83
 WeakMap: a0947a9a0f58f5733f464755c3b86de624b00a5d
 observe-js: adccb62bd0b6915179671d567b224d60b7c7ff20
-platform-dev: 16025401f7ef3bfddbfeb4949c1db6c5a466a8c7
+platform-dev: edce45d035d30e17e2c17975b339c0af06965659
 
 BUILD HASHES
 ============
-build/platform.js: 19282d57d235cf91e120a103809afd0a205ba91a
+build/platform.js: d277a0004a8e153b171a621fa84f9774f40c8c39
