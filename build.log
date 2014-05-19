@@ -1,6 +1,6 @@
 BUILD LOG
 ---------
-Build Time: 2014-05-16T18:15:14
+Build Time: 2014-05-19T12:02:36
 
 NODEJS INFORMATION
 ==================
@@ -25,7 +25,7 @@ Platform: 0.2.4
 
 REPO REVISIONS
 ==============
-CustomElements: 9b997ca97533147f5f17bd666c06e5fa1a13219e
+CustomElements: edeaaba9935b55fd25516cf47ef3fcdda8f57bc7
 HTMLImports: 1ee73575c760350b9b670b5e414468ce6b94f529
 NodeBind: c47bc1b40d1cf0123b29620820a7111471e83ff3
 ShadowDOM: e25f9a71a13008f2a59364382d63065c12c05db9
@@ -36,4 +36,4 @@ platform-dev: 15e4e51efe8c8bb78b13ec345a1f705727b71474
 
 BUILD HASHES
 ============
-build/platform.js: 165ac90a7f45ad771e267ed862abc7c6b254a850
+build/platform.js: cafa361eff03f775851f17874daa03737e640f5a
