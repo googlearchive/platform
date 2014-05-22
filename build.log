@@ -1,10 +1,10 @@
 BUILD LOG
 ---------
-Build Time: 2014-05-19T12:02:36
+Build Time: 2014-05-22T10:47:37
 
 NODEJS INFORMATION
 ==================
-nodejs: v0.10.22
+nodejs: v0.10.28
 chai: 1.9.1
 grunt: 0.4.4
 grunt-audit: 0.0.3
@@ -25,15 +25,15 @@ Platform: 0.2.4
 
 REPO REVISIONS
 ==============
-CustomElements: edeaaba9935b55fd25516cf47ef3fcdda8f57bc7
-HTMLImports: 1ee73575c760350b9b670b5e414468ce6b94f529
+CustomElements: 107ebde1b17e08fc56a545f51c6f081151e52d24
+HTMLImports: 611e52e30af53772fc1d458eb99ec6ab8442523f
 NodeBind: c47bc1b40d1cf0123b29620820a7111471e83ff3
-ShadowDOM: e25f9a71a13008f2a59364382d63065c12c05db9
-TemplateBinding: 1cee027fe67680c93ff2b6b070d32708226f6a83
+ShadowDOM: 9d2bdaa70a37df25e71abed658088cb117be7473
+TemplateBinding: 5b9a3be40682e1ccd5e6c0b04fbe2c54d74b5d1e
 WeakMap: a0947a9a0f58f5733f464755c3b86de624b00a5d
-observe-js: adccb62bd0b6915179671d567b224d60b7c7ff20
-platform-dev: 15e4e51efe8c8bb78b13ec345a1f705727b71474
+observe-js: 2d25cb0c4be8167bb0844e42a4831f705f63979f
+platform-dev: aebb7a78331215503b5c8368d6c6162274e1ede4
 
 BUILD HASHES
 ============
-build/platform.js: cafa361eff03f775851f17874daa03737e640f5a
+build/platform.js: a066c860d2309968eed99c11e501375c80b3e0de
