@@ -1,6 +1,6 @@
 BUILD LOG
 ---------
-Build Time: 2014-05-27T16:51:55
+Build Time: 2014-05-27T16:52:25
 
 NODEJS INFORMATION
 ==================
@@ -36,4 +36,4 @@ platform-dev: 42aff7d7d5ff6077abb8d0735941485e1d3bdadd
 
 BUILD HASHES
 ============
-build/platform.js: cdad2e1ff59b1d2bb949516b7ee7bb2f623ffd37
+build/platform.js: 3612e5e0cd30cfcd62e87fef5cfeb5edcb0d634f
