@@ -1,6 +1,6 @@
 BUILD LOG
 ---------
-Build Time: 2014-05-22T10:47:37
+Build Time: 2014-05-27T16:51:33
 
 NODEJS INFORMATION
 ==================
@@ -21,19 +21,19 @@ karma-mocha: 0.1.3
 karma-safari-launcher: 0.1.1
 karma-script-launcher: 0.1.0
 mocha: 1.18.2
-Platform: 0.2.4
+Platform: 0.3.0
 
 REPO REVISIONS
 ==============
 CustomElements: 107ebde1b17e08fc56a545f51c6f081151e52d24
-HTMLImports: 611e52e30af53772fc1d458eb99ec6ab8442523f
+HTMLImports: 1d3508510cb2d47c03cc463c5b1294416ee310f3
 NodeBind: c47bc1b40d1cf0123b29620820a7111471e83ff3
-ShadowDOM: 9d2bdaa70a37df25e71abed658088cb117be7473
-TemplateBinding: 5b9a3be40682e1ccd5e6c0b04fbe2c54d74b5d1e
+ShadowDOM: 6a06e8468689a5a2f84293bf22c1be1ea1ca44d6
+TemplateBinding: 3168309eb131921f08e3a74e9d7197c903762bda
 WeakMap: a0947a9a0f58f5733f464755c3b86de624b00a5d
-observe-js: 2d25cb0c4be8167bb0844e42a4831f705f63979f
-platform-dev: aebb7a78331215503b5c8368d6c6162274e1ede4
+observe-js: d99eff16a4d5e2d7f55ebb2a7103a160ec1fbd6e
+platform-dev: 42aff7d7d5ff6077abb8d0735941485e1d3bdadd
 
 BUILD HASHES
 ============
-build/platform.js: a066c860d2309968eed99c11e501375c80b3e0de
+build/platform.js: cdad2e1ff59b1d2bb949516b7ee7bb2f623ffd37
