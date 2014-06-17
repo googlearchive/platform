@@ -1,10 +1,10 @@
 BUILD LOG
 ---------
-Build Time: 2014-06-13T10:44:42
+Build Time: 2014-06-17T13:56:33
 
 NODEJS INFORMATION
 ==================
-nodejs: v0.10.22
+nodejs: v0.10.28
 chai: 1.9.1
 grunt: 0.4.4
 grunt-audit: 0.0.3
