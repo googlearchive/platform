@@ -1,21 +1,21 @@
 BUILD LOG
 ---------
-Build Time: 2014-07-29T10:54:44
+Build Time: 2014-07-31T11:04:24
 
 NODEJS INFORMATION
 ==================
 nodejs: v0.10.28
 chai: 1.9.1
 grunt: 0.4.4
-grunt-audit: 0.0.3
 grunt-concat-sourcemap: 0.4.1
+grunt-audit: 0.0.3
 grunt-contrib-concat: 0.4.0
 grunt-contrib-uglify: 0.5.0
 grunt-contrib-yuidoc: 0.5.2
-grunt-karma: 0.8.3
 karma: 0.12.14
-karma-crbot-reporter: 0.0.4
+grunt-karma: 0.8.3
 karma-firefox-launcher: 0.1.3
+karma-crbot-reporter: 0.0.4
 karma-ie-launcher: 0.1.5
 karma-mocha: 0.1.4
 karma-safari-launcher: 0.1.1
@@ -28,12 +28,12 @@ REPO REVISIONS
 CustomElements: d9ee3ab38fef61c632c6a33d4adfd7556024e8b5
 HTMLImports: fe9a92700b7a0bc7a9d582f4767ab23ec195a423
 NodeBind: c47bc1b40d1cf0123b29620820a7111471e83ff3
-ShadowDOM: f2c05d342631b3e5143103aabf7940074141172c
+ShadowDOM: a41dccfd50f71b932cbc125de36e62916455d19c
 TemplateBinding: 2a006d1635241b6a0b8ba11a8250ec1d8dacad7a
-WeakMap: a0947a9a0f58f5733f464755c3b86de624b00a5d
+WeakMap: fc3d02dbf1c214c0085905fda7a7d8750d434da3
 observe-js: 5979d82c514df5499c2be5512973a1cb0b41d4ba
 platform-dev: 3debf490ea4a3db66c72449d0035af86bd5289a9
 
 BUILD HASHES
 ============
-build/platform.js: a2bdff2d3cff54ad04146c8f6c74c0b95680bc1a
+build/platform.js: 1097fcc07fc74e911aa58b86acb1e0dd872ccb22
