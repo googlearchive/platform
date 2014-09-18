@@ -1,10 +1,10 @@
 BUILD LOG
 ---------
-Build Time: 2014-09-10T16:28:24
+Build Time: 2014-09-18T12:47:10
 
 NODEJS INFORMATION
 ==================
-nodejs: v0.10.31
+nodejs: v0.10.32
 chai: 1.9.1
 grunt: 0.4.5
 grunt-audit: 0.0.3
@@ -22,11 +22,11 @@ mocha: 1.21.4
 
 REPO REVISIONS
 ==============
-CustomElements: 33f92f250660815123eb8de0b0c8e2c2bfdd9f65
-HTMLImports: 0d443fe0aad9478f1dd4e2bde678b08b795b48c7
-ShadowDOM: b5abcf144c678f0bdfbf9ef8e64bcecd004445bf
-platform-dev: a66279fe4ad392e7f2f868bb3ebf7705a325872d
+CustomElements: 17e73cd3abddf66275d4b4ea8780709240ac2768
+HTMLImports: af95b49435e0636a71d76d2d7ca5aad6e5520378
+ShadowDOM: b73456aebcedb0717fcbdd598311bb2843e0d8f7
+platform-dev: 180cd5f04134e91ff31331292a583760edf42ab4
 
 BUILD HASHES
 ============
-build/platform.js: 5785e188fa9beb41841fe49d23eb58cfe252f87f
+build/platform.js: 703bfc5a8a447db1987af5ecfd95d8c93ea70974
